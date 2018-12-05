@@ -1,6 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import Book from './Book'
 
-const BooksList = () => (
+const BooksList = ({ books }) => (
   <table>
     <thead>
       <tr>
@@ -9,8 +11,17 @@ const BooksList = () => (
         <th>Category</th>
       </tr>
     </thead>
-    <tbody />
+    <tbody>
+      {Object.values(books).map(book => (
+        <Book key={book.id} book={book} />
+      ))}
+    </tbody>
   </table>
 )
 
-export default BooksList
+const mapStateToProps = ({ books }) => ({ books })
+
+export default connect(
+  mapStateToProps,
+  null
+)(BooksList)
