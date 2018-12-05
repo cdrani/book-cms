@@ -1,11 +1,20 @@
 import React from 'react'
 
-const Book = ({ book: { id, title, category } }) => (
-  <tr>
-    <td>{id}</td>
-    <td>{title}</td>
-    <td>{category}</td>
-  </tr>
-)
+const Book = ({ book, handleRemoveBook }) => {
+  const handleClick = () => {
+    handleRemoveBook(book)
+  }
+
+  return (
+    <tr>
+      <td>{book.id}</td>
+      <td>{book.title}</td>
+      <td>{book.category}</td>
+      <td>
+        <button onClick={handleClick}>Delete</button>
+      </td>
+    </tr>
+  )
+}
 
 export default Book

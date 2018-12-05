@@ -5,11 +5,8 @@ export default handleActions(
   {
     CREATE_BOOK: (state, { payload: book }) => ({ ...state, [book.id]: book }),
     REMOVE_BOOK: (state, { payload: book }) => {
-      const { [book.id]: omit, ...books } = state.books
-      return {
-        ...state,
-        books
-      }
+      const { [book.id]: omit, ...books } = state
+      return { ...books }
     }
   },
   getBooks(20)
