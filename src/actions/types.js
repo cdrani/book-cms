@@ -1,4 +1,5 @@
 export const CREATE_BOOK = 'CREATE_BOOK'
 export const REMOVE_BOOK = 'REMOVE_BOOK'
 export const SET_ACTIVE_CATEGORY = 'SET_ACTIVE_CATEGORY'
+export const SET_FILTER = 'SET_FILTER'
 export const SET_TITLE = 'SET_TITLE'
