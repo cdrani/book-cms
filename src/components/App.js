@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import BooksList from '../containers/BooksList'
-import BooksForm from './BooksForm'
+import BooksForm from '../containers/BooksForm'
 
 class App extends Component {
   render() {
