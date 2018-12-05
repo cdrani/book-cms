@@ -1,9 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setActiveCategory, setTitle } from '../actions'
+import shortid from 'shortid'
+import { setActiveCategory, setTitle, createBook } from '../actions'
 import { categories } from '../constants'
 
-const BooksForm = ({ activeCategory, setActiveCategory, setTitle, title }) => {
+const BooksForm = ({
+  activeCategory,
+  createBook,
+  setActiveCategory,
+  setTitle,
+  title
+}) => {
   const handleSetActiveCategory = e => {
     const activeCategory = e.target.value
     setActiveCategory(activeCategory)
@@ -16,7 +23,15 @@ const BooksForm = ({ activeCategory, setActiveCategory, setTitle, title }) => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    console.log(e.target.elements)
+    const id = shortid.generate()
+    const elements = e.target.elements
+    const [title, category] = getFormFields(elements)
+    createBook({ id, title, category })
+  }
+
+  const getFormFields = (elements, id) => {
+    const fields = ['title', 'category']
+    return fields.map(field => elements.namedItem(field).value)
   }
 
   return (
@@ -48,5 +63,5 @@ const mapStateToProps = ({ activeCategory, title }) => ({
 
 export default connect(
   mapStateToProps,
-  { setActiveCategory, setTitle }
+  { setActiveCategory, setTitle, createBook }
 )(BooksForm)
