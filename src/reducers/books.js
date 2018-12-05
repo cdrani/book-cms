@@ -1,3 +1,5 @@
+import { handleActions } from 'redux-actions'
+
 const initialState = {
   1: {
     id: 1,
@@ -12,4 +14,16 @@ const initialState = {
   }
 }
 
-export default (state = initialState, action) => state
+export default handleActions(
+  {
+    CREATE_BOOK: (state, { payload: book }) => ({ ...state, [book.id]: book }),
+    REMOVE_BOOK: (state, { payload: book }) => {
+      const { [book.id]: omit, ...books } = state.books
+      return {
+        ...state,
+        books
+      }
+    }
+  },
+  initialState
+)

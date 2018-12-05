@@ -1,1 +1,3 @@
 export const SET_ACTIVE_CATEGORY = 'SET_ACTIVE_CATEGORY'
+export const CREATE_BOOK = 'CREATE_BOOK'
+export const REMOVE_BOOK = 'REMOVE_BOOK'
