@@ -1,18 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { setActiveCategory, setTitle } from '../actions'
+import { categories } from '../constants'
 
 const BooksForm = ({ activeCategory, setActiveCategory, setTitle, title }) => {
-  const categories = [
-    'Novel',
-    'Biography',
-    'History',
-    'Horror',
-    'Kids',
-    'Learning',
-    'Sci-Fi'
-  ]
-
   const handleSetActiveCategory = e => {
     const activeCategory = e.target.value
     setActiveCategory(activeCategory)
@@ -23,10 +14,24 @@ const BooksForm = ({ activeCategory, setActiveCategory, setTitle, title }) => {
     setTitle(title)
   }
 
+  const handleSubmit = e => {
+    e.preventDefault()
+    console.log(e.target.elements)
+  }
+
   return (
-    <form>
-      <input value={title} onChange={handleSetTitle} placeholder="title" />
-      <select onChange={handleSetActiveCategory} value={activeCategory}>
+    <form onSubmit={handleSubmit}>
+      <input
+        name="title"
+        value={title}
+        onChange={handleSetTitle}
+        placeholder="title"
+      />
+      <select
+        name="category"
+        onChange={handleSetActiveCategory}
+        value={activeCategory}
+      >
         {categories.map(category => (
           <option key={category}>{category}</option>
         ))}

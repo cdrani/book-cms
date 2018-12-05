@@ -1,18 +1,5 @@
 import { handleActions } from 'redux-actions'
-
-const initialState = {
-  1: {
-    id: 1,
-    title: 'Strides',
-    category: 'Novel'
-  },
-
-  2: {
-    id: 2,
-    title: "Losing Joe's Place",
-    category: 'Novel'
-  }
-}
+import { getBooks } from '../static-data'
 
 export default handleActions(
   {
@@ -25,5 +12,5 @@ export default handleActions(
       }
     }
   },
-  initialState
+  getBooks(20)
 )
