@@ -1,6 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { setActiveCategory } from '../actions'
 
-const BooksForm = () => {
+const BooksForm = ({ activeCategory, setActiveCategory }) => {
   const categories = [
     'Novel',
     'Biography',
@@ -11,10 +13,15 @@ const BooksForm = () => {
     'Sci-Fi'
   ]
 
+  const handleSetActiveCategory = e => {
+    const activeCategory = e.target.value
+    setActiveCategory(activeCategory)
+  }
+
   return (
     <form>
       <input placeholder="title" />
-      <select>
+      <select onChange={handleSetActiveCategory} value={activeCategory}>
         {categories.map(category => (
           <option key={category}>{category}</option>
         ))}
@@ -23,5 +30,9 @@ const BooksForm = () => {
     </form>
   )
 }
+const mapStateToProps = ({ activeCategory }) => ({ activeCategory })
 
-export default BooksForm
+export default connect(
+  mapStateToProps,
+  { setActiveCategory }
+)(BooksForm)
