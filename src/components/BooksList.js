@@ -8,8 +8,8 @@ const BooksList = () => (
         <th>Title</th>
         <th>Category</th>
       </tr>
-      <tbody />
     </thead>
+    <tbody />
   </table>
 )
 
