@@ -29,7 +29,7 @@ const BooksForm = ({
     createBook({ id, title, category })
   }
 
-  const getFormFields = (elements, id) => {
+  const getFormFields = elements => {
     const fields = ['title', 'category']
     return fields.map(field => elements.namedItem(field).value)
   }
