@@ -22,19 +22,7 @@ const BooksList = ({ books, filter, removeBook }) => {
     }
   }
 
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>Book ID</th>
-          <th>Title</th>
-          <th>Category</th>
-          <th>Remove Book</th>
-        </tr>
-      </thead>
-      <tbody>{renderBooks()}</tbody>
-    </table>
-  )
+  return renderBooks()
 }
 
 const mapStateToProps = ({ books, filter }) => ({ books, filter })
