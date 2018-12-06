@@ -1,8 +1,55 @@
 import React from 'react'
+import styled from 'styled-components'
 import { connect } from 'react-redux'
 import shortid from 'shortid'
 import { setActiveCategory, setTitle, createBook } from '../actions'
 import { categories } from '../constants'
+
+const H3 = styled.h3`
+  letter-spacing: -0.2px;
+  color: #888888;
+`
+
+const Form = styled.form`
+  display: flex;
+  justify-content: space-between;
+`
+
+const InputWrapper = styled.div`
+  width: 85%;
+  height: 45px;
+  justify-items: space-between;
+  font-size: 1.5rem;
+  color: #c4c4c4;
+  opacity: 0.85;
+  background-color: #fff;
+`
+
+const Input = styled.input`
+  width: 60%;
+  margin-right: 15px;
+  padding: 10px;
+  border-radius: 4px;
+  border: solid 1px #e8e8e8;
+  outline: 0;
+`
+
+const Select = styled.select`
+  width: 32%;
+  height: 40px;
+  font-size: 1rem;
+  border: solid 1px #e8e8e8;
+  background-color: #fff;
+  opacity: 0.85;
+  outline: 0;
+`
+
+const Button = styled.button`
+  width: 15%;
+  color: #fff;
+  border-radius: 3px;
+  background-color: #0290ff;
+`
 
 const BooksForm = ({
   activeCategory,
@@ -35,24 +82,29 @@ const BooksForm = ({
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        name="title"
-        value={title}
-        onChange={handleSetTitle}
-        placeholder="title"
-      />
-      <select
-        name="category"
-        onChange={handleSetActiveCategory}
-        value={activeCategory}
-      >
-        {categories.map(category => (
-          <option key={category}>{category}</option>
-        ))}
-      </select>
-      <button>Submit</button>
-    </form>
+    <div>
+      <H3>ADD NEW BOOK</H3>
+      <Form onSubmit={handleSubmit}>
+        <InputWrapper>
+          <Input
+            name="title"
+            value={title}
+            onChange={handleSetTitle}
+            placeholder="title"
+          />
+          <Select
+            name="category"
+            onChange={handleSetActiveCategory}
+            value={activeCategory}
+          >
+            {categories.map(category => (
+              <option key={category}>{category}</option>
+            ))}
+          </Select>
+        </InputWrapper>
+        <Button>Submit</Button>
+      </Form>
+    </div>
   )
 }
 

@@ -15,7 +15,6 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-content: center;
-  font-size: 13px;
   font-weight: bold;
   font-style: normal;
   font-stretch: normal;
@@ -31,15 +30,8 @@ const LinkWrapper = styled.div`
 `
 
 const Link = styled.a`
-  color: #121212;
-  font-size: 0.8rem;
   text-decoration: none;
   text-transform: uppercase;
-  font-weight: normal;
-`
-
-const LargeLink = styled(Link)`
-  font-weight: bold;
   font-size: 1.8rem;
   color: #0290ff;
   text-transform: none;
@@ -58,7 +50,7 @@ const Header = () => (
   <HeaderWrapper>
     <Nav>
       <LinkWrapper>
-        <LargeLink>BookStore CMS</LargeLink>
+        <Link>BookStore CMS</Link>
       </LinkWrapper>
       <Profile>
         <Img src="./profile.png" alt="profile" />
