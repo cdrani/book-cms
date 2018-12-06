@@ -19,7 +19,7 @@ const CircleCompletion = styled(Circle)`
 
 const CompletionCircle = ({ percentage }) => {
   const sqSize = 80
-  const strokeWidth = 5
+  const strokeWidth = 10
   const radius = (sqSize - strokeWidth) / 2
   const viewBox = `0 0 ${sqSize} ${sqSize}`
   const dashArray = radius * Math.PI * 2
