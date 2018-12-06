@@ -20,7 +20,7 @@ const BookInfoWrapper = styled.div`
   width: 45%;
 `
 
-const H2 = styled.h2`
+const H3 = styled.h3`
   margin: 0;
 `
 
@@ -74,6 +74,37 @@ const LargeCompletionText = styled(CompletionText)`
   font-size: 2rem;
 `
 
+const ChapterWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  align-items: baseline;
+  padding-left: 3rem;
+`
+
+const ChapterHeader = styled.h3`
+  font-family: RobotoSlab, serif;
+  font-weight: 300;
+  opacity: 0.5;
+  color: #121212;
+  margin: 0;
+  padding: 0;
+`
+
+const CurrentChapter = styled.p`
+  font-size: 1.1rem;
+`
+
+const UpdateButton = styled.button`
+  padding: 10px 25px;
+  font-size: 1rem;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  border-radius: 3px;
+  background-color: #0290ff;
+  color: #ffffff;
+`
+
 const Book = ({ book, handleRemoveBook }) => {
   const handleClick = () => {
     handleRemoveBook(book)
@@ -83,7 +114,7 @@ const Book = ({ book, handleRemoveBook }) => {
     <BooksWrapper>
       <BookInfoWrapper>
         <Genre>{book.category}</Genre>
-        <H2>{book.title}</H2>
+        <H3>{book.title}</H3>
         <Author>Mackenzie Burns</Author>
         <LinksWrapper>
           <BorderedLink onClick={handleClick}>Remove</BorderedLink>
@@ -97,6 +128,11 @@ const Book = ({ book, handleRemoveBook }) => {
           <CompletionText>In Progress</CompletionText>
         </AmountCompletedWrapper>
       </BookCompletionWrapper>
+      <ChapterWrapper>
+        <ChapterHeader>CHAPTER</ChapterHeader>
+        <CurrentChapter>Chapter 5</CurrentChapter>
+        <UpdateButton>Update Chapter</UpdateButton>
+      </ChapterWrapper>
     </BooksWrapper>
   )
 }
