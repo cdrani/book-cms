@@ -1,28 +1,40 @@
 import React from 'react'
+import styled from 'styled-components'
+
+const Svg = styled.svg`
+  margin-top: -1.2rem;
+  margin-right: 1rem;
+  display: inline-block;
+`
+const Circle = styled.circle`
+  stroke: #ddd;
+  fill: none;
+`
+
+const CircleCompletion = styled(Circle)`
+  stroke: #007bff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+`
 
 const CompletionCircle = ({ percentage }) => {
-  const sqSize = 90
-  const strokeWidth = 8
+  const sqSize = 80
+  const strokeWidth = 5
   const radius = (sqSize - strokeWidth) / 2
   const viewBox = `0 0 ${sqSize} ${sqSize}`
   const dashArray = radius * Math.PI * 2
   const dashOffset = dashArray - dashArray * (percentage / 100)
 
   return (
-    <svg
-      className="progress-circle"
-      width={sqSize}
-      height={sqSize}
-      viewBox={viewBox}
-    >
-      <circle
+    <Svg width={sqSize} height={sqSize} viewBox={viewBox}>
+      <Circle
         className="circle-background"
         cx={sqSize / 2}
         cy={sqSize / 2}
         r={radius}
         strokeWidth={`${strokeWidth}px`}
       />
-      <circle
+      <CircleCompletion
         className="circle-progress"
         cx={sqSize / 2}
         cy={sqSize / 2}
@@ -34,8 +46,8 @@ const CompletionCircle = ({ percentage }) => {
           strokeDashoffset: dashOffset
         }}
       />
-    </svg>
+    </Svg>
   )
 }
 
-export default ProgressCircle
+export default CompletionCircle

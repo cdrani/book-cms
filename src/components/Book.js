@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import CompletionCircle from './CompletionCircle'
 
 const BooksWrapper = styled.div`
   display: flex;
@@ -63,6 +64,7 @@ const Book = ({ book, handleRemoveBook }) => {
           <BorderedLink onClick={handleClick}>Remove</BorderedLink>
           <Link>Edit</Link>
         </LinksWrapper>
+        <CompletionCircle percentage={45} />
       </BookWrapper>
     </BooksWrapper>
   )
