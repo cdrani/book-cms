@@ -10,15 +10,15 @@ const LOGIN = gql`
   }
 `
 
-export default function SignIn() {
+const SignIn = () => {
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
 
-  function handleNameChange(e) {
+  const handleNameChange = e => {
     setName(e.target.value)
   }
 
-  function handlePasswordChange(e) {
+  const handlePasswordChange = e => {
     setPassword(e.target.value)
   }
 
@@ -36,6 +36,8 @@ export default function SignIn() {
               variables: { input: { login: name, password } }
             })
             localStorage.setItem('token', token)
+            setName('')
+            setPassword('')
           }}
         >
           <input
@@ -55,3 +57,5 @@ export default function SignIn() {
     </Mutation>
   )
 }
+
+export default SignIn
