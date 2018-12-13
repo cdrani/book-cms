@@ -4,6 +4,7 @@ import BooksList from '../containers/BooksList'
 import BooksForm from '../containers/BooksForm'
 import CategoryFilter from '../containers/CategoryFilter'
 import Header from './Header'
+import SignIn from './SignIn'
 
 const MainContainer = styled.main`
   display: flex;
@@ -24,6 +25,7 @@ class App extends Component {
     return (
       <div>
         <Header />
+        <SignIn />
         <MainContainer>
           <MainContent>
             <CategoryFilter />
