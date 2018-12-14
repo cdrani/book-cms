@@ -72,22 +72,28 @@ const LabelContainer = styled.div`
   width: 100%;
 `
 
-const SIGNUP = gql`
-  mutation SignUp($input: signUpInput!) {
-    signUp(input: $input) {
-      token
+const CREATEBOOK = gql`
+  mutation CreateBook($input: createBookInput!) {
+    createBook(input: $input) {
+      id
+      title
+      author
+      currentPage
+      pages
+      currentChapter
+      chapters
     }
   }
 `
 
 const BooksForm = () => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [category, setCategory] = useState('Novel')
-  const [pages, setPages] = useState(1)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [chapters, setChapters] = useState(1)
-  const [currentChapter, setCurrentChapter] = useState(1)
+  const [bookTitle, setTitle] = useState('')
+  const [bookAuthor, setAuthor] = useState('')
+  const [bookCategory, setCategory] = useState('Novel')
+  const [bookPages, setPages] = useState(1)
+  const [bookCurrentPage, setCurrentPage] = useState(1)
+  const [bookChapters, setChapters] = useState(1)
+  const [bookCurrentChapter, setCurrentChapter] = useState(1)
 
   const handleTitle = e => {
     setTitle(e.target.value)
@@ -120,7 +126,7 @@ const BooksForm = () => {
   return (
     <div>
       <H3>ADD NEW BOOK</H3>
-      <Mutation mutation={SIGNUP}>
+      <Mutation mutation={CREATEBOOK}>
         {(createBook, { data }) => (
           <Form
             onSubmit={async e => {
@@ -131,7 +137,6 @@ const BooksForm = () => {
                     id,
                     title,
                     author,
-                    category,
                     currentPage,
                     pages,
                     chapters,
@@ -141,13 +146,12 @@ const BooksForm = () => {
               } = await createBook({
                 variables: {
                   input: {
-                    title,
-                    author,
-                    category,
-                    currentPage,
-                    pages,
-                    chapters,
-                    currentChapter
+                    title: bookTitle,
+                    author: bookAuthor,
+                    currentPage: parseInt(bookCurrentPage, 10),
+                    pages: parseInt(bookPages, 10),
+                    chapters: parseInt(bookChapters, 10),
+                    currentChapter: parseInt(bookCurrentChapter, 10)
                   }
                 }
               })
@@ -157,7 +161,7 @@ const BooksForm = () => {
               <LabelContainer>
                 <Label>Title</Label>
                 <Input
-                  value={title}
+                  value={bookTitle}
                   onChange={handleTitle}
                   placeholder="title"
                 />
@@ -165,7 +169,7 @@ const BooksForm = () => {
               <LabelContainer>
                 <Label>Author</Label>
                 <Input
-                  value={author}
+                  value={bookAuthor}
                   onChange={handleAuthor}
                   placeholder="author"
                 />
@@ -175,7 +179,7 @@ const BooksForm = () => {
                 <Select
                   name="category"
                   onChange={handleCategory}
-                  value={category}
+                  value={bookCategory}
                 >
                   {categories.map(category => (
                     <option key={category}>{category}</option>
@@ -189,7 +193,7 @@ const BooksForm = () => {
                 <Number
                   min="1"
                   type="number"
-                  value={currentPage}
+                  value={bookCurrentPage}
                   onChange={handleCurrentPage}
                 />
               </LabelContainer>
@@ -199,7 +203,7 @@ const BooksForm = () => {
                 <Number
                   min="1"
                   type="number"
-                  value={pages}
+                  value={bookPages}
                   onChange={handlePages}
                 />
               </LabelContainer>
@@ -209,7 +213,7 @@ const BooksForm = () => {
                 <Number
                   min="1"
                   type="number"
-                  value={currentChapter}
+                  value={bookCurrentChapter}
                   onChange={handleCurrentChapter}
                 />
               </LabelContainer>
@@ -219,7 +223,7 @@ const BooksForm = () => {
                 <Number
                   min="1"
                   type="number"
-                  value={chapters}
+                  value={bookChapters}
                   onChange={handleChapters}
                 />
               </LabelContainer>
