@@ -4,6 +4,7 @@ import { removeBook } from '../actions'
 import Book from '../components/Book'
 
 const BooksList = ({ books, filter, removeBook }) => {
+  console.log(books, filter)
   const isFilterable = filter !== 'All'
 
   const renderBooks = () => {

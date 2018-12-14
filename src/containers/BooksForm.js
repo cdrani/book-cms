@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
-import { categories } from '../constants'
+import { connect } from 'react-redux'
+import { categories, CREATEBOOK } from '../constants'
+import { createABook } from '../actions'
 
 const H3 = styled.h3`
   letter-spacing: -0.2px;
@@ -72,21 +73,7 @@ const LabelContainer = styled.div`
   width: 100%;
 `
 
-const CREATEBOOK = gql`
-  mutation CreateBook($input: createBookInput!) {
-    createBook(input: $input) {
-      id
-      title
-      author
-      currentPage
-      pages
-      currentChapter
-      chapters
-    }
-  }
-`
-
-const BooksForm = () => {
+const BooksForm = ({ createBook }) => {
   const [bookTitle, setTitle] = useState('')
   const [bookAuthor, setAuthor] = useState('')
   const [bookCategory, setCategory] = useState('Novel')
@@ -131,30 +118,26 @@ const BooksForm = () => {
           <Form
             onSubmit={async e => {
               e.preventDefault()
-              const {
-                data: {
-                  createBook: {
-                    id,
-                    title,
-                    author,
-                    currentPage,
-                    pages,
-                    chapters,
-                    currentChapter
-                  }
-                }
-              } = await createBook({
+              await createBook({
                 variables: {
                   input: {
                     title: bookTitle,
                     author: bookAuthor,
                     currentPage: parseInt(bookCurrentPage, 10),
                     pages: parseInt(bookPages, 10),
-                    chapters: parseInt(bookChapters, 10),
-                    currentChapter: parseInt(bookCurrentChapter, 10)
+                    currentChapter: parseInt(bookCurrentChapter, 10),
+                    chapters: parseInt(bookChapters, 10)
                   }
                 }
               })
+
+              setTitle('')
+              setAuthor('')
+              setCurrentPage(1)
+              setPages(1)
+              setCurrentChapter(1)
+              setChapters(1)
+              setCategory('Novel')
             }}
           >
             <InputWrapper>
@@ -237,4 +220,7 @@ const BooksForm = () => {
   )
 }
 
-export default BooksForm
+export default connect(
+  null,
+  { createABook }
+)(BooksForm)
