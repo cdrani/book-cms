@@ -39,3 +39,18 @@ export const GETBOOKS = gql`
     }
   }
 `
+
+export const getCurrentBook = gql`
+  query {
+    currentBook @client {
+      id
+      title
+      author
+      category
+      pages
+      currentPage
+      chapters
+      currentChapter
+    }
+  }
+`

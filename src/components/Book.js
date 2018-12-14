@@ -109,28 +109,31 @@ const Book = ({ book, handleRemoveBook }) => {
   const handleClick = () => {
     handleRemoveBook(book)
   }
+  const percentComplete = book.currentPage / book.pages
 
   return (
     <BooksWrapper>
       <BookInfoWrapper>
         <Genre>{book.category}</Genre>
         <H3>{book.title}</H3>
-        <Author>Mackenzie Burns</Author>
+        <Author>{book.author}</Author>
         <LinksWrapper>
           <BorderedLink onClick={handleClick}>Remove</BorderedLink>
           <Link>Edit</Link>
         </LinksWrapper>
       </BookInfoWrapper>
       <BookCompletionWrapper>
-        <CompletionCircle percentage={45} />
+        <CompletionCircle percentage={percentComplete} />
         <AmountCompletedWrapper>
-          <LargeCompletionText>45%</LargeCompletionText>
+          <LargeCompletionText>
+            {Math.round(percentComplete * 100)}%
+          </LargeCompletionText>
           <CompletionText>In Progress</CompletionText>
         </AmountCompletedWrapper>
       </BookCompletionWrapper>
       <ChapterWrapper>
-        <ChapterHeader>CHAPTER</ChapterHeader>
-        <CurrentChapter>Chapter 5</CurrentChapter>
+        <ChapterHeader>CHAPTERS</ChapterHeader>
+        <CurrentChapter>{book.currentChapter} / { book.chapters}</CurrentChapter>
         <UpdateButton>Update Chapter</UpdateButton>
       </ChapterWrapper>
     </BooksWrapper>

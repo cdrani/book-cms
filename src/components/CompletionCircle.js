@@ -18,12 +18,13 @@ const CircleCompletion = styled(Circle)`
 `
 
 const CompletionCircle = ({ percentage }) => {
+  console.log('percentage', percentage)
   const sqSize = 80
   const strokeWidth = 10
   const radius = (sqSize - strokeWidth) / 2
   const viewBox = `0 0 ${sqSize} ${sqSize}`
   const dashArray = radius * Math.PI * 2
-  const dashOffset = dashArray - dashArray * (percentage / 100)
+  const dashOffset = dashArray - dashArray * (percentage)
 
   return (
     <Svg width={sqSize} height={sqSize} viewBox={viewBox}>

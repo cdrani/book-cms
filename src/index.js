@@ -19,17 +19,26 @@ const BOOKCMS_API = 'https://bookcms-api.herokuapp.com/graphql'
 const cache = new InMemoryCache()
 
 const defaultState = {
-  myBooks: {
-    __typename: 'MyBooks',
-    library: {}
-  }
+  currentBook: [
+    {
+      __typename: 'CurrentBook',
+      id: '1',
+      title: 'Quay',
+      author: 'Leonard Sequoy',
+      category: 'Novel',
+      pages: 215,
+      currentPage: 175,
+      chapters: 15,
+      currentChapter: 8
+    }
+  ]
 }
 
 const httpLink = new HttpLink({
   uri: BOOKCMS_API
 })
 
-const stateLink = withClientState(cache, defaultState)
+const stateLink = withClientState({ cache, defaults: defaultState })
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token')
@@ -42,7 +51,7 @@ const authLink = setContext((_, { headers }) => {
 })
 
 const client = new ApolloClient({
-  link: ApolloLink.from([stateLink, authLink.concat(httpLink)]),
+  link: ApolloLink.from([stateLink, authLink, httpLink]),
   cache
 })
 
