@@ -6,6 +6,8 @@ import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { setContext } from 'apollo-link-context'
+import { withClientState } from 'apollo-link-state'
+import { ApolloLink } from 'apollo-link'
 
 import { store } from './store'
 import './index.css'
@@ -14,9 +16,20 @@ import * as serviceWorker from './serviceWorker'
 
 const BOOKCMS_API = 'https://bookcms-api.herokuapp.com/graphql'
 
+const cache = new InMemoryCache()
+
+const defaultState = {
+  myBooks: {
+    __typename: 'MyBooks',
+    library: {}
+  }
+}
+
 const httpLink = new HttpLink({
   uri: BOOKCMS_API
 })
+
+const stateLink = withClientState(cache, defaultState)
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token')
@@ -29,8 +42,8 @@ const authLink = setContext((_, { headers }) => {
 })
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache()
+  link: ApolloLink.from([stateLink, authLink.concat(httpLink)]),
+  cache
 })
 
 ReactDOM.render(
