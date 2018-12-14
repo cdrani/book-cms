@@ -121,8 +121,38 @@ const BooksForm = () => {
     <div>
       <H3>ADD NEW BOOK</H3>
       <Mutation mutation={SIGNUP}>
-        {(signUp, { data }) => (
-          <Form>
+        {(createBook, { data }) => (
+          <Form
+            onSubmit={async e => {
+              e.preventDefault()
+              const {
+                data: {
+                  createBook: {
+                    id,
+                    title,
+                    author,
+                    category,
+                    currentPage,
+                    pages,
+                    chapters,
+                    currentChapter
+                  }
+                }
+              } = await createBook({
+                variables: {
+                  input: {
+                    title,
+                    author,
+                    category,
+                    currentPage,
+                    pages,
+                    chapters,
+                    currentChapter
+                  }
+                }
+              })
+            }}
+          >
             <InputWrapper>
               <LabelContainer>
                 <Label>Title</Label>
