@@ -8,7 +8,6 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { setContext } from 'apollo-link-context'
 import { withClientState } from 'apollo-link-state'
 import { ApolloLink } from 'apollo-link'
-import gql from 'graphql-tag'
 
 import { store } from './store'
 import './index.css'
@@ -20,30 +19,7 @@ const BOOKCMS_API = 'https://bookcms-api.herokuapp.com/graphql'
 const cache = new InMemoryCache()
 
 const defaultState = {
-  currentBook: [
-    {
-      __typename: 'CurrentBook',
-      id: '1',
-      title: 'Quay',
-      author: 'Leonard Sequoy',
-      category: 'Novel',
-      currentPage: 175,
-      pages: 215,
-      currentChapter: 8,
-      chapters: 15
-    },
-    {
-      __typename: 'CurrentBook',
-      id: '2',
-      title: 'Amara',
-      author: 'Leonard Sequoy',
-      category: 'Novel',
-      currentPage: 15,
-      pages: 175,
-      currentChapter: 1,
-      chapters: 12
-    }
-  ]
+  myBooks: []
 }
 
 const httpLink = new HttpLink({
@@ -52,7 +28,7 @@ const httpLink = new HttpLink({
 
 const stateLink = withClientState({
   cache,
-  defaults: defaultState,
+  defaults: defaultState
 })
 
 const authLink = setContext((_, { headers }) => {

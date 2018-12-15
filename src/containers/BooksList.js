@@ -1,14 +1,20 @@
 import React from 'react'
-import { graphql, compose } from 'react-apollo'
+import { Query } from 'react-apollo'
 
 import Book from '../components/Book'
-import { getCurrentBook } from '../constants'
+import { MYBOOKS } from '../constants'
 
-const BooksList = ({ currentBook }) =>
-  currentBook.map(book => <Book key={book.id} book={book} />)
+const BooksList = () => {
+  return (
+    <Query query={MYBOOKS}>
+      {({ loading, error, data }) => {
+        if (loading) return 'loading'
+        if (error) return 'error'
+        const { books } = data.me
+        return books.map(book => <Book key={book.id} book={book} />)
+      }}
+    </Query>
+  )
+}
 
-export default compose(
-  graphql(getCurrentBook, {
-    props: ({ data: { currentBook } }) => ({ currentBook })
-  })
-)(BooksList)
+export default BooksList

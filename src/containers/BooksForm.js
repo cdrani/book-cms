@@ -2,11 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Mutation } from 'react-apollo'
 
-import {
-  categories,
-  CREATEBOOK,
-  getCurrentBook
-} from '../constants'
+import { categories, CREATEBOOK, MYBOOKS } from '../constants'
 
 const H3 = styled.h3`
   letter-spacing: -0.2px;
@@ -119,7 +115,7 @@ const BooksForm = ({ createBook }) => {
       <Mutation
         mutation={CREATEBOOK}
         update={(cache, { data: { createBook } }) => {
-          const { currentBook } = cache.readQuery({ query: getCurrentBook })
+          const { currentBook } = cache.readQuery({ query: MYBOOKS })
           const {
             id,
             title,
@@ -131,11 +127,11 @@ const BooksForm = ({ createBook }) => {
             chapters
           } = createBook
           cache.writeQuery({
-            query: getCurrentBook,
+            query: MYBOOKS,
             data: {
-              __typename: 'CurrentBook',
-              currentBook: currentBook.concat({
-                __typename: 'CurrentBook',
+              __typename: 'MYBOOKS',
+              myBooks: currentBook.concat({
+                __typename: 'MYBOOKS',
                 id,
                 title,
                 author,
