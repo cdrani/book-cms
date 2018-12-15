@@ -16,6 +16,7 @@ export const CREATEBOOK = gql`
       id
       title
       author
+      category
       currentPage
       pages
       currentChapter
@@ -31,11 +32,41 @@ export const GETBOOKS = gql`
         id
         title
         author
+        category
         currentPage
         pages
         currentChapter
         chapters
       }
+    }
+  }
+`
+
+export const addNewBook = gql`
+  mutation addNewBook($input: createBookInput!) {
+    addNewBook(input: $input) {
+      id
+      title
+      author
+      category
+      currentPage
+      pages
+      currentChapter
+      chapters
+  }
+}
+`
+
+export const myBooks = gql`
+  query Me {
+    books {
+      title
+      author
+      category
+      currentChapter
+      chapters
+      currentPage
+      pages
     }
   }
 `

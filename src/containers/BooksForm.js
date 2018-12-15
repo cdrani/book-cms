@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Mutation } from 'react-apollo'
-import { connect } from 'react-redux'
-import { categories, CREATEBOOK } from '../constants'
-import { createABook } from '../actions'
+
+import {
+  categories,
+  CREATEBOOK,
+  getCurrentBook
+} from '../constants'
 
 const H3 = styled.h3`
   letter-spacing: -0.2px;
@@ -113,7 +116,39 @@ const BooksForm = ({ createBook }) => {
   return (
     <div>
       <H3>ADD NEW BOOK</H3>
-      <Mutation mutation={CREATEBOOK}>
+      <Mutation
+        mutation={CREATEBOOK}
+        update={(cache, { data: { createBook } }) => {
+          const { currentBook } = cache.readQuery({ query: getCurrentBook })
+          const {
+            id,
+            title,
+            author,
+            category,
+            currentPage,
+            pages,
+            currentChapter,
+            chapters
+          } = createBook
+          cache.writeQuery({
+            query: getCurrentBook,
+            data: {
+              __typename: 'CurrentBook',
+              currentBook: currentBook.concat({
+                __typename: 'CurrentBook',
+                id,
+                title,
+                author,
+                category,
+                currentPage,
+                pages,
+                currentChapter,
+                chapters
+              })
+            }
+          })
+        }}
+      >
         {(createBook, { data }) => (
           <Form
             onSubmit={async e => {
@@ -123,6 +158,7 @@ const BooksForm = ({ createBook }) => {
                   input: {
                     title: bookTitle,
                     author: bookAuthor,
+                    category: bookCategory,
                     currentPage: parseInt(bookCurrentPage, 10),
                     pages: parseInt(bookPages, 10),
                     currentChapter: parseInt(bookCurrentChapter, 10),
@@ -133,11 +169,11 @@ const BooksForm = ({ createBook }) => {
 
               setTitle('')
               setAuthor('')
+              setCategory('Novel')
               setCurrentPage(1)
               setPages(1)
               setCurrentChapter(1)
               setChapters(1)
-              setCategory('Novel')
             }}
           >
             <InputWrapper>
@@ -220,7 +256,4 @@ const BooksForm = ({ createBook }) => {
   )
 }
 
-export default connect(
-  null,
-  { createABook }
-)(BooksForm)
+export default BooksForm

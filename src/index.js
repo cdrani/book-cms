@@ -8,6 +8,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { setContext } from 'apollo-link-context'
 import { withClientState } from 'apollo-link-state'
 import { ApolloLink } from 'apollo-link'
+import gql from 'graphql-tag'
 
 import { store } from './store'
 import './index.css'
@@ -26,10 +27,21 @@ const defaultState = {
       title: 'Quay',
       author: 'Leonard Sequoy',
       category: 'Novel',
-      pages: 215,
       currentPage: 175,
-      chapters: 15,
-      currentChapter: 8
+      pages: 215,
+      currentChapter: 8,
+      chapters: 15
+    },
+    {
+      __typename: 'CurrentBook',
+      id: '2',
+      title: 'Amara',
+      author: 'Leonard Sequoy',
+      category: 'Novel',
+      currentPage: 15,
+      pages: 175,
+      currentChapter: 1,
+      chapters: 12
     }
   ]
 }
@@ -38,7 +50,10 @@ const httpLink = new HttpLink({
   uri: BOOKCMS_API
 })
 
-const stateLink = withClientState({ cache, defaults: defaultState })
+const stateLink = withClientState({
+  cache,
+  defaults: defaultState,
+})
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token')
