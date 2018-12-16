@@ -18,17 +18,12 @@ const BOOKCMS_API = 'https://bookcms-api.herokuapp.com/graphql'
 
 const cache = new InMemoryCache()
 
-const defaultState = {
-  myBooks: []
-}
-
 const httpLink = new HttpLink({
   uri: BOOKCMS_API
 })
 
 const stateLink = withClientState({
-  cache,
-  defaults: defaultState
+  cache
 })
 
 const authLink = setContext((_, { headers }) => {

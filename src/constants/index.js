@@ -26,9 +26,10 @@ export const CREATEBOOK = gql`
 `
 
 export const MYBOOKS = gql`
-  query GetMyBooks {
-    me @client {
-      books {
+  query GetMyBooks($input: booksInput!) {
+    myBooks(input: $input) {
+      edges {
+        __typename
         id
         title
         author
@@ -37,6 +38,11 @@ export const MYBOOKS = gql`
         pages
         currentChapter
         chapters
+      }
+
+      pageInfo {
+        endCursor
+        hasNextPage
       }
     }
   }

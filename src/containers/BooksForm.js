@@ -72,7 +72,7 @@ const LabelContainer = styled.div`
   width: 100%;
 `
 
-const BooksForm = ({ createBook }) => {
+const BooksForm = () => {
   const [bookTitle, setTitle] = useState('')
   const [bookAuthor, setAuthor] = useState('')
   const [bookCategory, setCategory] = useState('Novel')
@@ -109,42 +109,31 @@ const BooksForm = ({ createBook }) => {
     setCurrentChapter(e.target.value)
   }
 
+  const updateCache = (cache, { data: { createBook } }) => {
+    const {
+      myBooks: { edges, pageInfo }
+    } = cache.readQuery({
+      query: MYBOOKS,
+      variables: { input: { limit: 5 } }
+    })
+
+    cache.writeQuery({
+      query: MYBOOKS,
+      variables: { input: { limit: 5 } },
+      data: {
+        myBooks: {
+          __typename: 'BookConnection',
+          edges: [...edges, Object.assign(createBook, { __typename: 'Book' })],
+          pageInfo
+        }
+      }
+    })
+  }
+
   return (
     <div>
       <H3>ADD NEW BOOK</H3>
-      <Mutation
-        mutation={CREATEBOOK}
-        update={(cache, { data: { createBook } }) => {
-          const { currentBook } = cache.readQuery({ query: MYBOOKS })
-          const {
-            id,
-            title,
-            author,
-            category,
-            currentPage,
-            pages,
-            currentChapter,
-            chapters
-          } = createBook
-          cache.writeQuery({
-            query: MYBOOKS,
-            data: {
-              __typename: 'MYBOOKS',
-              myBooks: currentBook.concat({
-                __typename: 'MYBOOKS',
-                id,
-                title,
-                author,
-                category,
-                currentPage,
-                pages,
-                currentChapter,
-                chapters
-              })
-            }
-          })
-        }}
-      >
+      <Mutation mutation={CREATEBOOK} update={updateCache}>
         {(createBook, { data }) => (
           <Form
             onSubmit={async e => {
