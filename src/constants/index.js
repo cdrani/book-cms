@@ -10,6 +10,21 @@ export const categories = [
   'Sci-Fi'
 ]
 
+export const LOGIN = gql`
+  mutation SignIn($input: signInInput!) {
+    signIn(input: $input) {
+      token
+    }
+  }
+`
+
+export const SIGNUP = gql`
+  mutation SignUp($input: signUpInput!) {
+    signUp(input: $input) {
+      token
+    }
+  }
+`
 export const CREATEBOOK = gql`
   mutation CreateBook($input: createBookInput!) {
     createBook(input: $input) {

@@ -1,14 +1,8 @@
 import React, { useState } from 'react'
-import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
 
-const LOGIN = gql`
-  mutation SignIn($input: signInInput!) {
-    signIn(input: $input) {
-      token
-    }
-  }
-`
+import { LOGIN } from '../constants'
+
 
 const SignIn = () => {
   const [name, setName] = useState('')

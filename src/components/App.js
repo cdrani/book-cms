@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+
 import BooksList from '../containers/BooksList'
 import BooksForm from '../containers/BooksForm'
 import CategoryFilter from '../containers/CategoryFilter'
 import Header from './Header'
 import SignIn from './SignIn'
+import SignUp from './SignUp'
 
 const MainContainer = styled.main`
   display: flex;
@@ -25,6 +27,7 @@ class App extends Component {
     return (
       <div>
         <Header />
+        <SignUp />
         <SignIn />
         <MainContainer>
           <MainContent>
