@@ -26,15 +26,18 @@ const updateQuery = (previousResult, { fetchMoreResult }) => {
 const BooksList = () => {
   return (
     <Query query={MYBOOKS} variables={{ input: { limit: 5 } }}>
-      {({ loading, error, data, fetchMore }) => {
-        if (loading) return 'loading'
-        if (error) {
-          return error.toString()
+      {({ loading, data, fetchMore }) => {
+        if (data === undefined || Object.keys(data).length === 0) {
+          return <p>Add a new book below</p>
         }
 
         const {
           myBooks: { edges: books, pageInfo }
         } = data
+
+        if (!Boolean(books.length)) {
+          return <p>Add a new book below</p>
+        }
 
         return (
           <Fragment>
