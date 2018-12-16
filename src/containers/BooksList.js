@@ -15,7 +15,11 @@ const updateQuery = (previousResult, { fetchMoreResult }) => {
       ...previousResult.myBooks,
       ...fetchMoreResult.myBooks
     },
-    edges: [...previousResult.myBooks.edges, ...fetchMoreResult.myBooks.edges]
+    edges: [...fetchMoreResult.myBooks.edges, ...previousResult.myBooks.edges],
+    pageInfo: {
+      endCursor: fetchMoreResult.myBooks.pageInfo.endCursor,
+      hasNextPage: fetchMoreResult.myBooks.pageInfo.hasNextPage
+    }
   }
 }
 
@@ -37,18 +41,19 @@ const BooksList = () => {
             {books.map(book => (
               <Book key={book.id} book={book} pageInfo={pageInfo} />
             ))}
-
             {pageInfo.hasNextPage && (
               <button
                 type="button"
                 onClick={() =>
                   fetchMore({
-                    variables: { input: { cursor: pageInfo.endCursor } },
+                    variables: {
+                      input: { limit: 5, cursor: pageInfo.endCursor }
+                    },
                     updateQuery
                   })
                 }
               >
-                Fetch More Books
+                more
               </button>
             )}
           </Fragment>
