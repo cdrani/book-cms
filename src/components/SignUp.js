@@ -2,6 +2,15 @@ import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
 
 import { SIGNUP } from '../constants'
+import {
+  Button,
+  Form,
+  InputWrapper,
+  Input,
+  Label,
+  LabelContainer
+} from '../constants'
+
 
 const SignUp = () => {
   const [username, setUsername] = useState('')
@@ -23,7 +32,7 @@ const SignUp = () => {
   return (
     <Mutation mutation={SIGNUP}>
       {(signUp, { data }) => (
-        <form
+        <Form
           onSubmit={async e => {
             e.preventDefault()
             const {
@@ -39,25 +48,36 @@ const SignUp = () => {
             setPassword('')
           }}
         >
-          <input
-            type="text"
-            value={username}
-            onChange={handleUsernameChange}
-            placeholder="username"
-          />
-          <input
-            type="email"
-            value={email}
-            onChange={handleEmailChange}
-            placeholder="email"
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-          <button type="submit">Sign Up</button>
-        </form>
+          <InputWrapper>
+            <LabelContainer>
+              <Label>Username</Label>
+              <Input
+                type="text"
+                value={username}
+                onChange={handleUsernameChange}
+                placeholder="username"
+              />
+            </LabelContainer>
+            <LabelContainer>
+              <Label>Email</Label>
+              <Input
+                type="email"
+                value={email}
+                onChange={handleEmailChange}
+                placeholder="email"
+              />
+            </LabelContainer>
+            <LabelContainer>
+              <Label>Password</Label>
+              <Input
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+              />
+            </LabelContainer>
+            <Button type="submit">Sign Up</Button>
+          </InputWrapper>
+        </Form>
       )}
     </Mutation>
   )

@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const HeaderWrapper = styled.header`
   background-color: #fff;
@@ -22,14 +23,14 @@ const Nav = styled.nav`
   letter-spacing: normal;
 `
 
-const LinkWrapper = styled.div`
+const AnchorWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 50%;
 `
 
-const Link = styled.a`
+const Anchor = styled.a`
   text-decoration: none;
   text-transform: uppercase;
   font-size: 1.8rem;
@@ -46,12 +47,20 @@ const Img = styled.img`
   object-fit: cover;
 `
 
+const renderRegistrationButtons = () =>
+  localStorage.token ? (
+    <Link to="/signin">Login</Link>
+  ) : (
+    <Link to="/signup">SignUp</Link>
+  )
+
 const Header = () => (
   <HeaderWrapper>
     <Nav>
-      <LinkWrapper>
-        <Link>BookStore CMS</Link>
-      </LinkWrapper>
+      <AnchorWrapper>
+        <Anchor>BookStore CMS</Anchor>
+      </AnchorWrapper>
+      {renderRegistrationButtons()}
       <Profile>
         <Img src="./profile.png" alt="profile" />
       </Profile>

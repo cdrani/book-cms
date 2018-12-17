@@ -1,5 +1,14 @@
 import gql from 'graphql-tag'
 
+import {
+  Button,
+  Form,
+  Input,
+  InputWrapper,
+  Label,
+  LabelContainer
+} from './styledComponents'
+
 export const categories = [
   'Novel',
   'Biography',
@@ -77,3 +86,5 @@ export const addNewBook = gql`
     }
   }
 `
+
+export { Button, Form, Input, InputWrapper, Label, LabelContainer }

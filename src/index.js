@@ -26,12 +26,11 @@ const stateLink = withClientState({
   cache
 })
 
-const authLink = setContext((_, { headers }) => {
+const authLink = setContext(() => {
   const token = localStorage.getItem('token')
   return {
     headers: {
-      ...headers,
-      'x-token': token ? token : ''
+      'x-token': token ? token : null
     }
   }
 })
