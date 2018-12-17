@@ -11,6 +11,7 @@ import {
   LargeLabel,
   NumberInput,
   LargeInputWrapper,
+  SmallButton,
   SmallInputWrapper,
   SmallLabel,
   Select
@@ -42,6 +43,7 @@ export {
   LargeLabel,
   LargeInputWrapper,
   NumberInput,
+  SmallButton,
   SmallInputWrapper,
   SmallLabel,
   Select,

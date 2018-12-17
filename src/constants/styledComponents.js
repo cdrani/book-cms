@@ -11,6 +11,10 @@ const Button = styled.button`
   background-color: #0290ff;
 `
 
+const SmallButton = styled(Button)`
+  width: 22%;
+`
+
 const LargeButton = styled(Button)`
   width: 44%;
 `
@@ -108,6 +112,7 @@ export {
   LargeInputWrapper,
   NumberInput,
   Select,
+  SmallButton,
   SmallLabel,
   SmallInputWrapper
 }

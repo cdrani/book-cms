@@ -3,14 +3,13 @@ import { Mutation } from 'react-apollo'
 
 import { SIGNUP } from '../constants'
 import {
-  Button,
   Form,
   InputWrapper,
   Input,
   Label,
-  LabelContainer
+  LabelContainer,
+  SmallButton,
 } from '../constants'
-
 
 const SignUp = () => {
   const [username, setUsername] = useState('')
@@ -42,7 +41,13 @@ const SignUp = () => {
             } = await signUp({
               variables: { input: { email, username, password } }
             })
+
+            if (localStorage.getItem('token')) {
+              localStorage.removeItem('token')
+            }
+
             localStorage.setItem('token', token)
+
             setUsername('')
             setEmail('')
             setPassword('')
@@ -55,7 +60,6 @@ const SignUp = () => {
                 type="text"
                 value={username}
                 onChange={handleUsernameChange}
-                placeholder="username"
               />
             </LabelContainer>
             <LabelContainer>
@@ -64,7 +68,6 @@ const SignUp = () => {
                 type="email"
                 value={email}
                 onChange={handleEmailChange}
-                placeholder="email"
               />
             </LabelContainer>
             <LabelContainer>
@@ -75,7 +78,7 @@ const SignUp = () => {
                 onChange={handlePasswordChange}
               />
             </LabelContainer>
-            <Button type="submit">Sign Up</Button>
+            <SmallButton type="submit">Sign Up</SmallButton>
           </InputWrapper>
         </Form>
       )}

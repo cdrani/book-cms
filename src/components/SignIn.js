@@ -1,8 +1,15 @@
 import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
 
-import { SIGNIN } from '../constants'
-
+import {
+  Form,
+  Input,
+  InputWrapper,
+  LabelContainer,
+  SmallButton,
+  SmallLabel,
+  SIGNIN
+} from '../constants'
 
 const SignIn = () => {
   const [name, setName] = useState('')
@@ -19,7 +26,7 @@ const SignIn = () => {
   return (
     <Mutation mutation={SIGNIN}>
       {(signIn, { data }) => (
-        <form
+        <Form
           onSubmit={async e => {
             e.preventDefault()
             const {
@@ -29,24 +36,34 @@ const SignIn = () => {
             } = await signIn({
               variables: { input: { login: name, password } }
             })
+
+            if (localStorage.getItem('token')) {
+              localStorage.removeItem('token')
+            }
+
             localStorage.setItem('token', token)
+
             setName('')
             setPassword('')
           }}
         >
-          <input
-            type="text"
-            value={name}
-            onChange={handleNameChange}
-            placeholder="username/email"
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-          <button type="submit">Sign In</button>
-        </form>
+          <InputWrapper>
+            <LabelContainer>
+              <SmallLabel>username</SmallLabel>
+              <Input type="text" value={name} onChange={handleNameChange} />
+            </LabelContainer>
+
+            <LabelContainer>
+              <SmallLabel>Password</SmallLabel>
+              <Input
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+              />
+            </LabelContainer>
+            <SmallButton type="submit">Sign In</SmallButton>
+          </InputWrapper>
+        </Form>
       )}
     </Mutation>
   )

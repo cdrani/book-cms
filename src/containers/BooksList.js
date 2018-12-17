@@ -2,8 +2,7 @@ import React, { Fragment } from 'react'
 import { Query } from 'react-apollo'
 
 import Book from '../components/Book'
-import { MYBOOKS } from '../constants'
-import { Button } from '../constants'
+import { Button, MYBOOKS } from '../constants'
 
 const updateQuery = (previousResult, { fetchMoreResult }) => {
   if (!fetchMoreResult) {
