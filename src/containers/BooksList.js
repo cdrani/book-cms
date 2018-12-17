@@ -3,6 +3,7 @@ import { Query } from 'react-apollo'
 
 import Book from '../components/Book'
 import { MYBOOKS } from '../constants'
+import { Button } from '../constants'
 
 const updateQuery = (previousResult, { fetchMoreResult }) => {
   if (!fetchMoreResult) {
@@ -45,7 +46,7 @@ const BooksList = () => {
               <Book key={book.id} book={book} pageInfo={pageInfo} />
             ))}
             {pageInfo.hasNextPage && (
-              <button
+              <Button
                 type="button"
                 onClick={() =>
                   fetchMore({
@@ -57,7 +58,7 @@ const BooksList = () => {
                 }
               >
                 more
-              </button>
+              </Button>
             )}
           </Fragment>
         )

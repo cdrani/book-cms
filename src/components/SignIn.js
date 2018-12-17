@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
 
-import { LOGIN } from '../constants'
+import { SIGNIN } from '../constants'
 
 
 const SignIn = () => {
@@ -17,7 +17,7 @@ const SignIn = () => {
   }
 
   return (
-    <Mutation mutation={LOGIN}>
+    <Mutation mutation={SIGNIN}>
       {(signIn, { data }) => (
         <form
           onSubmit={async e => {

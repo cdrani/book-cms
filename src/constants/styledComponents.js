@@ -4,6 +4,8 @@ const Button = styled.button`
   align-self: flex-end;
   width: 32%;
   height: 40px;
+  font-size: 1.125em;
+  cursor: pointer;
   color: #fff;
   border-radius: 3px;
   background-color: #0290ff;
@@ -31,7 +33,7 @@ const LabelContainer = styled.div`
 `
 
 const Input = styled.input`
-  width: 80%;
+  width: 90%;
   margin-bottom: 20px;
   padding: 10px;
   border-radius: 4px;

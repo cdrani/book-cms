@@ -1,5 +1,3 @@
-import gql from 'graphql-tag'
-
 import {
   Button,
   Form,
@@ -9,7 +7,9 @@ import {
   LabelContainer
 } from './styledComponents'
 
-export const categories = [
+import {  CREATEBOOK, MYBOOKS, SIGNIN, SIGNUP } from './graphql'
+
+const categories = [
   'Novel',
   'Biography',
   'History',
@@ -19,72 +19,16 @@ export const categories = [
   'Sci-Fi'
 ]
 
-export const LOGIN = gql`
-  mutation SignIn($input: signInInput!) {
-    signIn(input: $input) {
-      token
-    }
-  }
-`
-
-export const SIGNUP = gql`
-  mutation SignUp($input: signUpInput!) {
-    signUp(input: $input) {
-      token
-    }
-  }
-`
-export const CREATEBOOK = gql`
-  mutation CreateBook($input: createBookInput!) {
-    createBook(input: $input) {
-      id
-      title
-      author
-      category
-      currentPage
-      pages
-      currentChapter
-      chapters
-    }
-  }
-`
-
-export const MYBOOKS = gql`
-  query GetMyBooks($input: booksInput!) {
-    myBooks(input: $input) {
-      edges {
-        __typename
-        id
-        title
-        author
-        category
-        currentPage
-        pages
-        currentChapter
-        chapters
-      }
-
-      pageInfo {
-        endCursor
-        hasNextPage
-      }
-    }
-  }
-`
-
-export const addNewBook = gql`
-  mutation addNewBook($input: createBookInput!) {
-    addNewBook(input: $input) {
-      id
-      title
-      author
-      category
-      currentPage
-      pages
-      currentChapter
-      chapters
-    }
-  }
-`
-
-export { Button, Form, Input, InputWrapper, Label, LabelContainer }
+export {
+  categories,
+  Button,
+  Form,
+  Input,
+  InputWrapper,
+  Label,
+  LabelContainer,
+  CREATEBOOK,
+  MYBOOKS,
+  SIGNIN,
+  SIGNUP
+}
