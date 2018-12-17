@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
 
 import BooksList from '../containers/BooksList'
 import BooksForm from '../containers/BooksForm'
@@ -22,23 +23,25 @@ const MainContent = styled.div`
   margin-bottom: 30px;
 `
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <Header />
-        <SignUp />
-        <SignIn />
-        <MainContainer>
-          <MainContent>
-            <CategoryFilter />
-            <BooksList />
-            <BooksForm />
-          </MainContent>
-        </MainContainer>
-      </div>
-    )
-  }
-}
+const App = () => (
+  <Router>
+    <div>
+      <Header />
+      <Switch>
+        <Route path="/signup" component={SignUp} />
+        <Route path="/signin" component={SignIn} />
+        <Route path="/books">
+          <MainContainer>
+            <MainContent>
+              <CategoryFilter />
+              <BooksList />
+              <BooksForm />
+            </MainContent>
+          </MainContainer>
+        </Route>
+      </Switch>
+    </div>
+  </Router>
+)
 
 export default App

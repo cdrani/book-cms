@@ -123,7 +123,7 @@ const BooksForm = () => {
       data: {
         myBooks: {
           __typename: 'BookConnection',
-          edges: [...edges, Object.assign(createBook, { __typename: 'Book' })],
+          edges: [Object.assign(createBook, { __typename: 'Book' }), ...edges],
           pageInfo
         }
       }
