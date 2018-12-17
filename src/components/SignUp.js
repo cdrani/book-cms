@@ -11,7 +11,7 @@ import {
   SmallButton,
 } from '../constants'
 
-const SignUp = () => {
+const SignUp = ({ history }) => {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -42,15 +42,11 @@ const SignUp = () => {
               variables: { input: { email, username, password } }
             })
 
-            if (localStorage.getItem('token')) {
+            if (!!localStorage.getItem('token')) {
               localStorage.removeItem('token')
             }
 
             localStorage.setItem('token', token)
-
-            setUsername('')
-            setEmail('')
-            setPassword('')
           }}
         >
           <InputWrapper>

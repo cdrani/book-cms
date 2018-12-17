@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
-
+import { Link, Redirect } from 'react-router-dom'
 
 const HeaderWrapper = styled.header`
   background-color: #fff;
@@ -48,25 +47,41 @@ const Img = styled.img`
   object-fit: cover;
 `
 
-const renderRegistrationButtons = () =>
-  localStorage.token ? (
-    <Link to="/signin">Login</Link>
-  ) : (
-    <Link to="/signup">SignUp</Link>
-  )
+/*eslint no-restricted-globals:  'warn' */
 
-const Header = () => (
-  <HeaderWrapper>
-    <Nav>
-      <AnchorWrapper>
-        <Anchor>BookStore CMS</Anchor>
-      </AnchorWrapper>
-      {renderRegistrationButtons()}
-      <Profile>
-        <Img src="./profile.png" alt="profile" />
-      </Profile>
-    </Nav>
-  </HeaderWrapper>
+const renderRegistrationButtons = !!localStorage.getItem('token') ? (
+  <Fragment>
+    <Link
+      to="/"
+      innerRef={() => {
+        localStorage.removeItem('token')
+        return <Redirect to="/" />
+      }}
+    >
+      Signout
+    </Link>
+  </Fragment>
+) : (
+  <Fragment>
+    <Link to="/signin">SignIn</Link>
+    <Link to="/signup">SignUp</Link>
+  </Fragment>
 )
+
+const Header = ({ history }) => {
+  return (
+    <HeaderWrapper>
+      <Nav>
+        <AnchorWrapper>
+          <Anchor>BookStore CMS</Anchor>
+        </AnchorWrapper>
+        {renderRegistrationButtons}
+        <Profile>
+          <Img src="./profile.png" alt="profile" />
+        </Profile>
+      </Nav>
+    </HeaderWrapper>
+  )
+}
 
 export default Header

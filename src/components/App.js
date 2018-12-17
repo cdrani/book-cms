@@ -1,27 +1,22 @@
 import React from 'react'
-import styled from 'styled-components'
-import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
+// import styled from 'styled-components'
+import {
+  Redirect,
+  Route,
+  Switch,
+  BrowserRouter as Router
+} from 'react-router-dom'
 
-import BooksList from '../containers/BooksList'
-import BooksForm from '../containers/BooksForm'
-import CategoryFilter from '../containers/CategoryFilter'
+import MainPage from './MainPage'
+// import BooksList from '../containers/BooksList'
+// import BooksForm from '../containers/BooksForm'
+// import CategoryFilter from '../containers/CategoryFilter'
 import Header from './Header'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
 
-const MainContainer = styled.main`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`
 
-const MainContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 85.7%;
-  margin-bottom: 30px;
-`
+const loggedIn = () => !!localStorage.getItem('token')
 
 const App = () => (
   <Router>
@@ -30,15 +25,15 @@ const App = () => (
       <Switch>
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />
-        <Route path="/books">
-          <MainContainer>
-            <MainContent>
-              <CategoryFilter />
-              <BooksList />
-              <BooksForm />
-            </MainContent>
-          </MainContainer>
-        </Route>
+        <Route
+          path="/books"
+          render={() => {
+            if (!loggedIn()) {
+              return <Redirect to="/" />
+            }
+            return <MainPage />
+          }}
+        />
       </Switch>
     </div>
   </Router>

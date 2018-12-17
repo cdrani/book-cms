@@ -28,15 +28,16 @@ const stateLink = withClientState({
 
 const authLink = setContext(() => {
   const token = localStorage.getItem('token')
+
   return {
     headers: {
-      'x-token': token ? token : null
+      'x-token': token ? token : ''
     }
   }
 })
 
 const client = new ApolloClient({
-  link: ApolloLink.from([stateLink, authLink, httpLink]),
+  link: ApolloLink.from([authLink, stateLink, httpLink]),
   cache
 })
 

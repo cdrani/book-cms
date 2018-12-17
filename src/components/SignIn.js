@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
+import { Redirect } from 'react-router-dom'
 
 import {
   Form,
@@ -11,9 +12,10 @@ import {
   SIGNIN
 } from '../constants'
 
-const SignIn = () => {
+const SignIn = ({ history }) => {
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
+  const [loggedIn, setLoggedIn] = useState(false)
 
   const handleNameChange = e => {
     setName(e.target.value)
@@ -21,6 +23,11 @@ const SignIn = () => {
 
   const handlePasswordChange = e => {
     setPassword(e.target.value)
+  }
+
+
+  if (loggedIn) {
+    return <Redirect to="/books" push={true} />
   }
 
   return (
@@ -37,20 +44,19 @@ const SignIn = () => {
               variables: { input: { login: name, password } }
             })
 
+
             if (localStorage.getItem('token')) {
               localStorage.removeItem('token')
             }
 
             localStorage.setItem('token', token)
-
-            setName('')
-            setPassword('')
+            if (token) { setLoggedIn(true)}
           }}
         >
           <InputWrapper>
             <LabelContainer>
               <SmallLabel>username</SmallLabel>
-              <Input type="text" value={name} onChange={handleNameChange} />
+              <Input autoFocus type="text" value={name} onChange={handleNameChange} />
             </LabelContainer>
 
             <LabelContainer>
