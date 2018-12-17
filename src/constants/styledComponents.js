@@ -11,11 +11,24 @@ const Button = styled.button`
   background-color: #0290ff;
 `
 
+const LargeButton = styled(Button)`
+  width: 44%;
+`
+
 const Form = styled.form`
   display: flex;
   justify-content: space-between;
   width: 50%;
   margin: 0 auto;
+`
+
+const FullWidthForm = styled(Form)`
+  width: 100%;
+`
+
+const H3 = styled.h3`
+  letter-spacing: -0.2px;
+  color: #888888;
 `
 
 const Input = styled.input`
@@ -52,6 +65,16 @@ const LabelContainer = styled.div`
   width: 100%;
 `
 
+const LargeLabel = styled(Label)`
+  width: 60%;
+  opacity: 1;
+  font-size: 1.25rem;
+`
+
+const NumberInput = styled(Input)`
+  text-align: center;
+  width: 40%;
+`
 
 const Select = styled.select`
   width: 95%;
@@ -67,4 +90,24 @@ const SmallInputWrapper = styled(InputWrapper)`
   width: 35%;
 `
 
-export { Button, Form, Input, InputWrapper, Label, LabelContainer, LargeInputWrapper, Select, SmallInputWrapper }
+const SmallLabel = styled.label`
+  width: 30%;
+`
+
+export {
+  Button,
+  Form,
+  FullWidthForm,
+  H3,
+  Input,
+  InputWrapper,
+  Label,
+  LargeButton,
+  LabelContainer,
+  LargeLabel,
+  LargeInputWrapper,
+  NumberInput,
+  Select,
+  SmallLabel,
+  SmallInputWrapper
+}
