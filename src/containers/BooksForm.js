@@ -2,7 +2,16 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Mutation } from 'react-apollo'
 
-import { categories, CREATEBOOK, MYBOOKS } from '../constants'
+import {
+  categories,
+  CREATEBOOK,
+  MYBOOKS,
+  Button,
+  Input,
+  LargeInputWrapper,
+  SmallInputWrapper,
+  Select
+} from '../constants'
 
 const H3 = styled.h3`
   letter-spacing: -0.2px;
@@ -12,51 +21,13 @@ const H3 = styled.h3`
 const Form = styled.form`
   display: flex;
   justify-content: space-between;
-`
-
-const InputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-items: space-around;
   width: 100%;
-  padding: 25px;
-  font-size: 1.5rem;
-  color: #c4c4c4;
-  opacity: 0.85;
-  background-color: #fff;
-`
-
-const Input = styled.input`
-  width: 90%;
-  margin-right: 30px;
-  margin-bottom: 20px;
-  padding: 10px;
-  border-radius: 4px;
-  border: solid 1px #e8e8e8;
-  outline: 0;
+  margin: 0 auto;
 `
 
 const Number = styled(Input)`
-  width: 30%;
-`
-
-const Select = styled.select`
-  margin-right: 30px;
-  width: 95%;
-  height: 40px;
-  border-radius: 4px;
-  border: solid 1px #e8e8e8;
-  background-color: #fff;
-  opacity: 0.85;
-  outline: 0;
-`
-
-const Button = styled.button`
-  width: 32%;
-  height: 40px;
-  color: #fff;
-  border-radius: 3px;
-  background-color: #0290ff;
+  text-align: center;
+  width: 40%;
 `
 
 const Label = styled.label`
@@ -161,7 +132,7 @@ const BooksForm = () => {
               setChapters(1)
             }}
           >
-            <InputWrapper>
+            <LargeInputWrapper>
               <LabelContainer>
                 <Label>Title</Label>
                 <Input
@@ -170,6 +141,7 @@ const BooksForm = () => {
                   placeholder="title"
                 />
               </LabelContainer>
+
               <LabelContainer>
                 <Label>Author</Label>
                 <Input
@@ -178,6 +150,7 @@ const BooksForm = () => {
                   placeholder="author"
                 />
               </LabelContainer>
+
               <LabelContainer>
                 <Label>Category</Label>
                 <Select
@@ -190,8 +163,9 @@ const BooksForm = () => {
                   ))}
                 </Select>
               </LabelContainer>
-            </InputWrapper>
-            <InputWrapper>
+            </LargeInputWrapper>
+
+            <SmallInputWrapper>
               <LabelContainer>
                 <LargeLabel>Current Page</LargeLabel>
                 <Number
@@ -231,9 +205,8 @@ const BooksForm = () => {
                   onChange={handleChapters}
                 />
               </LabelContainer>
-
-              <Button>Submit</Button>
-            </InputWrapper>
+              <Button type="submit">Submit</Button>
+            </SmallInputWrapper>
           </Form>
         )}
       </Mutation>

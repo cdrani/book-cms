@@ -11,6 +11,22 @@ const Button = styled.button`
   background-color: #0290ff;
 `
 
+const Form = styled.form`
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  margin: 0 auto;
+`
+
+const Input = styled.input`
+  width: 90%;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 4px;
+  border: solid 1px #e8e8e8;
+  outline: 0;
+`
+
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,6 +39,10 @@ const InputWrapper = styled.div`
   background-color: #fff;
 `
 
+const LargeInputWrapper = styled(InputWrapper)`
+  width: 70%;
+`
+
 const Label = styled.label`
   width: 50%;
 `
@@ -32,19 +52,19 @@ const LabelContainer = styled.div`
   width: 100%;
 `
 
-const Input = styled.input`
-  width: 90%;
-  margin-bottom: 20px;
-  padding: 10px;
+
+const Select = styled.select`
+  width: 95%;
+  height: 40px;
   border-radius: 4px;
   border: solid 1px #e8e8e8;
+  background-color: #fff;
+  opacity: 0.85;
   outline: 0;
 `
 
-const Form = styled.form`
-  display: flex;
-  justify-content: space-between;
-  width: 50%;
-  margin: 0 auto;
+const SmallInputWrapper = styled(InputWrapper)`
+  width: 35%;
 `
-export { Button, Form, Input, InputWrapper, Label, LabelContainer }
+
+export { Button, Form, Input, InputWrapper, Label, LabelContainer, LargeInputWrapper, Select, SmallInputWrapper }

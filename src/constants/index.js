@@ -4,7 +4,10 @@ import {
   Input,
   InputWrapper,
   Label,
-  LabelContainer
+  LabelContainer,
+  LargeInputWrapper,
+  SmallInputWrapper,
+  Select
 } from './styledComponents'
 
 import {  CREATEBOOK, MYBOOKS, SIGNIN, SIGNUP } from './graphql'
@@ -27,6 +30,9 @@ export {
   InputWrapper,
   Label,
   LabelContainer,
+  LargeInputWrapper,
+  SmallInputWrapper,
+  Select,
   CREATEBOOK,
   MYBOOKS,
   SIGNIN,
