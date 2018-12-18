@@ -24,7 +24,28 @@ const httpLink = new HttpLink({
 })
 
 const stateLink = withClientState({
-  cache
+  cache,
+  resolvers: {
+    Mutation: {
+      setCategoryFilter: (_, { category }, { cache }) => {
+        const data = {
+          filters: {
+            __typename: 'Filters',
+            category
+          }
+        }
+
+        cache.writeData({ data })
+        return null
+      }
+    }
+  },
+  defaults: {
+    filters: {
+      category: null,
+      __typename: 'Filters'
+    }
+  }
 })
 
 const authLink = setContext(() => ({
@@ -34,7 +55,7 @@ const authLink = setContext(() => ({
 }))
 
 const client = new ApolloClient({
-  link: ApolloLink.from([authLink, stateLink, httpLink]),
+  link: ApolloLink.from([stateLink, authLink, httpLink]),
   cache
 })
 
