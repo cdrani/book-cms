@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { useQuery } from 'react-apollo-hooks'
+import gql from 'graphql-tag'
+import { useMutation, useQuery } from 'react-apollo-hooks'
 
 import { MYBOOKS } from '../constants'
 
@@ -20,12 +21,21 @@ const extractCategories = ({ myBooks: { edges: books } }) => {
   return [...new Set(bookCategories)]
 }
 
+const SETCATEGORYFILTER = gql`
+  mutation SetCategoryFilter($category: String) {
+    setCategoryFilter(category: $category) @client
+  }
+`
+
 const FilterCategories = () => {
   const [filter, setFilter] = useState('All')
   const handleFilterChange = e => {
-    setFilter(e.target.value)
+    const category = e.target.value
+    setFilter(category)
+    setLanguageFilter({ variables: { category } })
   }
 
+  const setLanguageFilter = useMutation(SETCATEGORYFILTER)
   const { data } = useQuery(MYBOOKS, { variables: { input: { limit: 10 } } })
   const filterableCategories = extractCategories(data)
 

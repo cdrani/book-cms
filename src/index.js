@@ -28,6 +28,7 @@ const stateLink = withClientState({
   resolvers: {
     Mutation: {
       setCategoryFilter: (_, { category }, { cache }) => {
+        console.log(cache)
         const data = {
           filters: {
             __typename: 'Filters',
