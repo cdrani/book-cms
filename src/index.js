@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
+// import { Provider } from 'react-redux'
 import { ApolloProvider } from 'react-apollo'
+import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -9,7 +10,7 @@ import { setContext } from 'apollo-link-context'
 import { withClientState } from 'apollo-link-state'
 import { ApolloLink } from 'apollo-link'
 
-import { store } from './store'
+// import { store } from './store'
 import './index.css'
 import App from './components/App'
 import * as serviceWorker from './serviceWorker'
@@ -26,15 +27,11 @@ const stateLink = withClientState({
   cache
 })
 
-const authLink = setContext(() => {
-  const token = localStorage.getItem('token')
-
-  return {
-    headers: {
-      'x-token': token ? token : ''
-    }
+const authLink = setContext(() => ({
+  headers: {
+    'x-token': localStorage.getItem('token') || ''
   }
-})
+}))
 
 const client = new ApolloClient({
   link: ApolloLink.from([authLink, stateLink, httpLink]),
@@ -43,9 +40,15 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
+    <ApolloHooksProvider client={client}>
+      {/*
     <Provider store={store}>
+ */}
       <App />
+      {/*
     </Provider>
+ */}
+    </ApolloHooksProvider>
   </ApolloProvider>,
   document.getElementById('root')
 )

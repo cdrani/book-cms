@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import styled from 'styled-components'
 
 import BooksList from '../containers/BooksList'
 import BooksForm from '../containers/BooksForm'
-import CategoryFilter from '../containers/CategoryFilter'
+import FilterCategories from '../containers/FilterCategories'
 
 const MainContainer = styled.main`
   display: flex;
@@ -22,7 +22,9 @@ const MainContent = styled.div`
 const MainPage = () => (
   <MainContainer>
     <MainContent>
-      <CategoryFilter />
+      <Suspense fallback={<span>Loading</span>}>
+        <FilterCategories />
+      </Suspense>
       <BooksList />
       <BooksForm />
     </MainContent>
