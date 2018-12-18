@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-// import { Provider } from 'react-redux'
 import { ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import { ApolloClient } from 'apollo-client'
@@ -10,7 +9,6 @@ import { setContext } from 'apollo-link-context'
 import { withClientState } from 'apollo-link-state'
 import { ApolloLink } from 'apollo-link'
 
-// import { store } from './store'
 import './index.css'
 import App from './components/App'
 import * as serviceWorker from './serviceWorker'
@@ -28,10 +26,10 @@ const stateLink = withClientState({
   resolvers: {
     Mutation: {
       setCategoryFilter: (_, { category }, { cache }) => {
-        console.log(cache)
+        console.log('cache', cache)
         const data = {
-          filters: {
-            __typename: 'Filters',
+          filter: {
+            __typename: 'Filter',
             category
           }
         }
@@ -42,9 +40,9 @@ const stateLink = withClientState({
     }
   },
   defaults: {
-    filters: {
-      category: null,
-      __typename: 'Filters'
+    filter: {
+      __typename: 'Filter',
+      category: 'All'
     }
   }
 })
@@ -63,13 +61,7 @@ const client = new ApolloClient({
 ReactDOM.render(
   <ApolloProvider client={client}>
     <ApolloHooksProvider client={client}>
-      {/*
-    <Provider store={store}>
- */}
       <App />
-      {/*
-    </Provider>
- */}
     </ApolloHooksProvider>
   </ApolloProvider>,
   document.getElementById('root')

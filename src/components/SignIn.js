@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
-import { Redirect } from 'react-router-dom'
 
 import {
   Form,
@@ -15,7 +14,6 @@ import {
 const SignIn = ({ history }) => {
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
-  const [loggedIn, setLoggedIn] = useState(false)
 
   const handleNameChange = e => {
     setName(e.target.value)
@@ -25,9 +23,10 @@ const SignIn = ({ history }) => {
     setPassword(e.target.value)
   }
 
-
-  if (loggedIn) {
-    return <Redirect to="/books" push={true} />
+  const openSesame = token => {
+    if (token) {
+      history.push('/books')
+    }
   }
 
   return (
@@ -44,19 +43,19 @@ const SignIn = ({ history }) => {
               variables: { input: { login: name, password } }
             })
 
-
-            if (localStorage.getItem('token')) {
-              localStorage.removeItem('token')
-            }
-
             localStorage.setItem('token', token)
-            if (token) { setLoggedIn(true)}
+            openSesame(token)
           }}
         >
           <InputWrapper>
             <LabelContainer>
               <SmallLabel>username</SmallLabel>
-              <Input autoFocus type="text" value={name} onChange={handleNameChange} />
+              <Input
+                autoFocus
+                type="text"
+                value={name}
+                onChange={handleNameChange}
+              />
             </LabelContainer>
 
             <LabelContainer>

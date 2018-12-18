@@ -1,13 +1,26 @@
 import React, { Fragment } from 'react'
-import { Query } from 'react-apollo'
+import { Query, compose, graphql } from 'react-apollo'
 
 import Book from '../components/Book'
-import { Button, MYBOOKS } from '../constants'
+import { Button, MYBOOKS, GETCATEGORYFILTER } from '../constants'
 
-const updateQuery = (previousResult, { fetchMoreResult }) => {
+const filterBooksByCategoryFilter = (data, selectedCategory) =>
+  selectedCategory === 'All'
+    ? data
+    : data.filter(book => book.category === selectedCategory)
+
+const updateQuery = (
+  previousResult,
+  { fetchMoreResult }
+) => selectedCategory => {
   if (!fetchMoreResult) {
     return previousResult
   }
+
+  fetchMoreResult = filterBooksByCategoryFilter(
+    fetchMoreResult,
+    selectedCategory
+  )
 
   return {
     ...previousResult,
@@ -23,7 +36,7 @@ const updateQuery = (previousResult, { fetchMoreResult }) => {
   }
 }
 
-const BooksList = () => {
+const BooksList = ({ category }) => {
   return (
     <Query query={MYBOOKS} variables={{ input: { limit: 5 } }}>
       {({ loading, data, fetchMore }) => {
@@ -35,13 +48,15 @@ const BooksList = () => {
           myBooks: { edges: books, pageInfo }
         } = data
 
+        const fileteredBooks = filterBooksByCategoryFilter(books, category)
+
         if (!Boolean(books.length)) {
           return <p>Add a new book below</p>
         }
 
         return (
           <Fragment>
-            {books.map(book => (
+            {fileteredBooks.map(book => (
               <Book key={book.id} book={book} pageInfo={pageInfo} />
             ))}
             {pageInfo.hasNextPage && (
@@ -66,4 +81,12 @@ const BooksList = () => {
   )
 }
 
-export default BooksList
+export default compose(
+  graphql(GETCATEGORYFILTER, {
+    props: ({
+      data: {
+        filter: { category }
+      }
+    }) => ({ category })
+  })
+)(BooksList)

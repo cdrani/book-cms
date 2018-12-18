@@ -17,7 +17,14 @@ import {
   Select
 } from './styledComponents'
 
-import { CREATEBOOK, MYBOOKS, SIGNIN, SIGNUP } from './graphql'
+import {
+  CREATEBOOK,
+  GETCATEGORYFILTER,
+  MYBOOKS,
+  SETCATEGORYFILTER,
+  SIGNIN,
+  SIGNUP
+} from './graphql'
 
 const categories = [
   'Novel',
@@ -26,7 +33,16 @@ const categories = [
   'Horror',
   'Kids',
   'Learning',
-  'Sci-Fi'
+  'Sci-Fi',
+  'Non-Fiction',
+  'Fiction',
+  'Textbook',
+  'Dissertation',
+  'Essay',
+  'Manual',
+  'Youth',
+  'Young Adult',
+  'Mystery'
 ]
 
 export {
@@ -48,7 +64,9 @@ export {
   SmallLabel,
   Select,
   CREATEBOOK,
+  GETCATEGORYFILTER,
   MYBOOKS,
+  SETCATEGORYFILTER,
   SIGNIN,
   SIGNUP
 }

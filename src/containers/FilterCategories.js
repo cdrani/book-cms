@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import gql from 'graphql-tag'
-import { useMutation, useQuery } from 'react-apollo-hooks'
+import { useQuery } from 'react-apollo-hooks'
+import { graphql, compose } from 'react-apollo'
 
-import { MYBOOKS } from '../constants'
+import {
+  MYBOOKS,
+  GETCATEGORYFILTER,
+  SETCATEGORYFILTER
+} from '../constants'
 
 const Select = styled.select`
   width: 52%;
@@ -21,26 +25,15 @@ const extractCategories = ({ myBooks: { edges: books } }) => {
   return [...new Set(bookCategories)]
 }
 
-const SETCATEGORYFILTER = gql`
-  mutation SetCategoryFilter($category: String) {
-    setCategoryFilter(category: $category) @client
-  }
-`
-
-const FilterCategories = () => {
-  const [filter, setFilter] = useState('All')
-  const handleFilterChange = e => {
-    const category = e.target.value
-    setFilter(category)
-    setLanguageFilter({ variables: { category } })
-  }
-
-  const setLanguageFilter = useMutation(SETCATEGORYFILTER)
+const FilterCategories = ({ filter: { category }, setCategory }) => {
   const { data } = useQuery(MYBOOKS, { variables: { input: { limit: 10 } } })
   const filterableCategories = extractCategories(data)
 
   return (
-    <Select value={filter} onChange={handleFilterChange}>
+    <Select
+      value={category}
+      onChange={e => setCategory({ variables: { category: e.target.value } })}
+    >
       {['All', ...filterableCategories].map(category => (
         <option key={category}>{category}</option>
       ))}
@@ -48,4 +41,9 @@ const FilterCategories = () => {
   )
 }
 
-export default FilterCategories
+export default compose(
+  graphql(SETCATEGORYFILTER, { name: 'setCategory' }),
+  graphql(GETCATEGORYFILTER, {
+    props: ({ data: { filter } }) => ({ filter })
+  })
+)(FilterCategories)

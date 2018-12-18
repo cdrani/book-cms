@@ -54,4 +54,29 @@ const SIGNUP = gql`
   }
 `
 
-export { CREATEBOOK, MYBOOKS, SIGNIN, SIGNUP }
+const GETCATEGORYFILTER = gql`
+  query {
+    filter @client {
+      category
+    }
+  }
+`
+
+const SETCATEGORYFILTER = gql`
+  mutation SetCategoryFilter($category: String!) {
+    setCategoryFilter(category: $category) @client {
+      filter {
+        category
+      }
+    }
+  }
+`
+
+export {
+  CREATEBOOK,
+  GETCATEGORYFILTER,
+  MYBOOKS,
+  SETCATEGORYFILTER,
+  SIGNIN,
+  SIGNUP
+}
