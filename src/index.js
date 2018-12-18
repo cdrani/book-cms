@@ -13,6 +13,7 @@ import './index.css'
 import App from './components/App'
 import * as serviceWorker from './serviceWorker'
 
+import { GETFILTERABLECATEGORIES } from './constants'
 const BOOKCMS_API = 'https://bookcms-api.herokuapp.com/graphql'
 
 const cache = new InMemoryCache()
@@ -26,13 +27,34 @@ const stateLink = withClientState({
   resolvers: {
     Mutation: {
       setCategoryFilter: (_, { category }, { cache }) => {
-        console.log('cache', cache)
         const data = {
           filter: {
             __typename: 'Filter',
             category
           }
         }
+
+        cache.writeData({ data })
+        return null
+      },
+      addToFilterables: (_, { cats }, { cache }) => {
+        console.log('index cats', cats)
+        const previous = cache.readQuery({ query: GETFILTERABLECATEGORIES })
+        console.log('previous', previous)
+        const {
+          filterable: { categories }
+        } = previous
+
+        const removeDups = [...new Set(categories.concat(cats))]
+
+        const data = {
+          filterable: {
+            __typename: 'Filterable',
+            categories: removeDups
+          }
+        }
+
+        console.log('index data', data)
 
         cache.writeData({ data })
         return null
@@ -43,6 +65,10 @@ const stateLink = withClientState({
     filter: {
       __typename: 'Filter',
       category: 'All'
+    },
+    filterable: {
+      __typename: 'Filterable',
+      categories: ['All']
     }
   }
 })

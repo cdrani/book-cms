@@ -4,8 +4,10 @@ import { useQuery } from 'react-apollo-hooks'
 import { graphql, compose } from 'react-apollo'
 
 import {
+  ADDTOFILTERABLECATEGORIES,
   MYBOOKS,
   GETCATEGORYFILTER,
+  GETFILTERABLECATEGORIES,
   SETCATEGORYFILTER
 } from '../constants'
 
@@ -20,21 +22,32 @@ const Select = styled.select`
   margin-bottom: 20px;
 `
 
-const extractCategories = ({ myBooks: { edges: books } }) => {
+const extractCategories = books => {
   const bookCategories = books.map(book => book.category)
   return [...new Set(bookCategories)]
 }
 
-const FilterCategories = ({ filter: { category }, setCategory }) => {
-  const { data } = useQuery(MYBOOKS, { variables: { input: { limit: 10 } } })
-  const filterableCategories = extractCategories(data)
+const FilterCategories = ({
+  filter: { category },
+  setCategory,
+  categories,
+  addToCategories
+}) => {
+  const {
+    data: {
+      myBooks: { edges: books }
+    }
+  } = useQuery(MYBOOKS, { variables: { input: { limit: 10 } } })
+
+  const bookCategories = extractCategories(books)
+  addToCategories({ variables: { cats: bookCategories } })
 
   return (
     <Select
       value={category}
       onChange={e => setCategory({ variables: { category: e.target.value } })}
     >
-      {['All', ...filterableCategories].map(category => (
+      {categories.map(category => (
         <option key={category}>{category}</option>
       ))}
     </Select>
@@ -43,7 +56,15 @@ const FilterCategories = ({ filter: { category }, setCategory }) => {
 
 export default compose(
   graphql(SETCATEGORYFILTER, { name: 'setCategory' }),
+  graphql(ADDTOFILTERABLECATEGORIES, { name: 'addToCategories' }),
   graphql(GETCATEGORYFILTER, {
     props: ({ data: { filter } }) => ({ filter })
+  }),
+  graphql(GETFILTERABLECATEGORIES, {
+    props: ({
+      data: {
+        filterable: { categories }
+      }
+    }) => ({ categories })
   })
 )(FilterCategories)

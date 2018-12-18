@@ -36,7 +36,7 @@ const updateQuery = (
   }
 }
 
-const BooksList = ({ category }) => {
+const BooksList = ({ category, categories }) => {
   return (
     <Query query={MYBOOKS} variables={{ input: { limit: 5 } }}>
       {({ loading, data, fetchMore }) => {

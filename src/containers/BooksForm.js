@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { Mutation } from 'react-apollo'
+import { Mutation, compose, graphql } from 'react-apollo'
 
 import {
   categories,
+  ADDTOFILTERABLECATEGORIES,
   CREATEBOOK,
   MYBOOKS,
   FullWidthForm,
@@ -18,7 +19,7 @@ import {
   Select
 } from '../constants'
 
-const BooksForm = () => {
+const BooksForm = ({ addToCategories }) => {
   const [bookTitle, setTitle] = useState('')
   const [bookAuthor, setAuthor] = useState('')
   const [bookCategory, setCategory] = useState('Novel')
@@ -84,7 +85,11 @@ const BooksForm = () => {
           <FullWidthForm
             onSubmit={async e => {
               e.preventDefault()
-              await createBook({
+              const {
+                data: {
+                  createBook: { category }
+                }
+              } = await createBook({
                 variables: {
                   input: {
                     title: bookTitle,
@@ -97,6 +102,8 @@ const BooksForm = () => {
                   }
                 }
               })
+
+              addToCategories({ variables: { cats: [category] } })
 
               setTitle('')
               setAuthor('')
@@ -189,4 +196,6 @@ const BooksForm = () => {
   )
 }
 
-export default BooksForm
+export default compose(
+  graphql(ADDTOFILTERABLECATEGORIES, { name: 'addToCategories' })
+)(BooksForm)
