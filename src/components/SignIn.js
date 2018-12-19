@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Mutation } from 'react-apollo'
+import { compose, graphql, Mutation } from 'react-apollo'
 
 import {
   Form,
@@ -8,10 +8,11 @@ import {
   LabelContainer,
   SmallButton,
   SmallLabel,
+  UPDATELOGINSTATUS,
   SIGNIN
 } from '../constants'
 
-const SignIn = ({ history }) => {
+const SignIn = ({ history, updateLoginStatus }) => {
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
 
@@ -25,6 +26,8 @@ const SignIn = ({ history }) => {
 
   const openSesame = token => {
     if (token) {
+      localStorage.setItem('token', token)
+      updateLoginStatus({ variables: { loggedIn: true } })
       history.push('/books')
     }
   }
@@ -43,7 +46,6 @@ const SignIn = ({ history }) => {
               variables: { input: { login: name, password } }
             })
 
-            localStorage.setItem('token', token)
             openSesame(token)
           }}
         >
@@ -74,4 +76,6 @@ const SignIn = ({ history }) => {
   )
 }
 
-export default SignIn
+export default compose(
+  graphql(UPDATELOGINSTATUS, { name: 'updateLoginStatus' })
+)(SignIn)

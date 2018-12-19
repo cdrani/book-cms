@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
-import { Mutation } from 'react-apollo'
+import { compose, graphql, Mutation } from 'react-apollo'
 
-import { SIGNUP } from '../constants'
+import { SIGNUP, UPDATELOGINSTATUS } from '../constants'
 import {
   Form,
   InputWrapper,
   Input,
   Label,
   LabelContainer,
-  SmallButton,
+  SmallButton
 } from '../constants'
 
-const SignUp = ({ history }) => {
+const SignUp = ({ history, updateLoginStatus }) => {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -28,6 +28,14 @@ const SignUp = ({ history }) => {
     setPassword(e.target.value)
   }
 
+  const openSesame = token => {
+    if (token) {
+      localStorage.setItem('token', token)
+      updateLoginStatus({ variables: { loggedIn: true } })
+      history.push('/books')
+    }
+  }
+
   return (
     <Mutation mutation={SIGNUP}>
       {(signUp, { data }) => (
@@ -42,11 +50,7 @@ const SignUp = ({ history }) => {
               variables: { input: { email, username, password } }
             })
 
-            if (!!localStorage.getItem('token')) {
-              localStorage.removeItem('token')
-            }
-
-            localStorage.setItem('token', token)
+            openSesame(token)
           }}
         >
           <InputWrapper>
@@ -60,11 +64,7 @@ const SignUp = ({ history }) => {
             </LabelContainer>
             <LabelContainer>
               <Label>Email</Label>
-              <Input
-                type="email"
-                value={email}
-                onChange={handleEmailChange}
-              />
+              <Input type="email" value={email} onChange={handleEmailChange} />
             </LabelContainer>
             <LabelContainer>
               <Label>Password</Label>
@@ -82,4 +82,6 @@ const SignUp = ({ history }) => {
   )
 }
 
-export default SignUp
+export default compose(
+  graphql(UPDATELOGINSTATUS, { name: 'updateLoginStatus' })
+)(SignUp)

@@ -37,6 +37,20 @@ const GETFILTERABLECATEGORIES = gql`
   }
 `
 
+const GETLOGINSTATUS = gql`
+  query {
+    auth @client {
+      loggedIn
+    }
+  }
+`
+
+const UPDATELOGINSTATUS = gql`
+  mutation UpdateLoginStatus($loggedIn: Boolean!) {
+    updateLoginStatus(loggedIn: $loggedIn) @client
+  }
+`
+
 const MYBOOKS = gql`
   query GetMyBooks($input: booksInput!) {
     myBooks(input: $input) {
@@ -91,8 +105,10 @@ export {
   CREATEBOOK,
   GETCATEGORYFILTER,
   GETFILTERABLECATEGORIES,
+  GETLOGINSTATUS,
   MYBOOKS,
   SETCATEGORYFILTER,
   SIGNIN,
-  SIGNUP
+  SIGNUP,
+  UPDATELOGINSTATUS
 }

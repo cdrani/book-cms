@@ -1,6 +1,9 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
+import { compose, graphql } from 'react-apollo'
 import { Link, Redirect } from 'react-router-dom'
+
+import { UPDATELOGINSTATUS, GETLOGINSTATUS } from '../constants'
 
 const HeaderWrapper = styled.header`
   background-color: #fff;
@@ -49,39 +52,49 @@ const Img = styled.img`
 
 /*eslint no-restricted-globals:  'warn' */
 
-const renderRegistrationButtons = !!localStorage.getItem('token') ? (
-  <Fragment>
-    <Link
-      to="/"
-      innerRef={() => {
-        localStorage.removeItem('token')
-        return <Redirect to="/" />
-      }}
-    >
-      Signout
-    </Link>
-  </Fragment>
-) : (
-  <Fragment>
-    <Link to="/signin">SignIn</Link>
-    <Link to="/signup">SignUp</Link>
-  </Fragment>
-)
-
-const Header = ({ history }) => {
-  return (
-    <HeaderWrapper>
-      <Nav>
-        <AnchorWrapper>
-          <Anchor>BookStore CMS</Anchor>
-        </AnchorWrapper>
-        {renderRegistrationButtons}
-        <Profile>
-          <Img src="./profile.png" alt="profile" />
-        </Profile>
-      </Nav>
-    </HeaderWrapper>
+const renderRegistrationButtons = (loggedIn, updateLoginStatus) => {
+  return loggedIn ? (
+    <Fragment>
+      <Link
+        to="/"
+        innerRef={() => {
+          localStorage.removeItem('token')
+          updateLoginStatus({ variables: { loggedIn: false } })
+          return <Redirect to="/" />
+        }}
+      >
+        Signout
+      </Link>
+    </Fragment>
+  ) : (
+    <Fragment>
+      <Link to="/signin">SignIn</Link>
+      <Link to="/signup">SignUp</Link>
+    </Fragment>
   )
 }
 
-export default Header
+const Header = ({ history, loggedIn, updateLoginStatus }) => (
+  <HeaderWrapper>
+    <Nav>
+      <AnchorWrapper>
+        <Anchor>BookStore CMS</Anchor>
+      </AnchorWrapper>
+      {renderRegistrationButtons(loggedIn, updateLoginStatus)}
+      <Profile>
+        <Img src="./profile.png" alt="profile" />
+      </Profile>
+    </Nav>
+  </HeaderWrapper>
+)
+
+export default compose(
+  graphql(UPDATELOGINSTATUS, { name: 'updateLoginStatus' }),
+  graphql(GETLOGINSTATUS, {
+    props: ({
+      data: {
+        auth: { loggedIn }
+      }
+    }) => ({ loggedIn })
+  })
+)(Header)

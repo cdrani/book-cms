@@ -38,9 +38,7 @@ const stateLink = withClientState({
         return null
       },
       addToFilterables: (_, { cats }, { cache }) => {
-        console.log('index cats', cats)
         const previous = cache.readQuery({ query: GETFILTERABLECATEGORIES })
-        console.log('previous', previous)
         const {
           filterable: { categories }
         } = previous
@@ -54,7 +52,15 @@ const stateLink = withClientState({
           }
         }
 
-        console.log('index data', data)
+        cache.writeData({ data })
+        return null
+      },
+      updateLoginStatus: (_, { loggedIn }, { cache }) => {
+        console.log('index loggedIn', loggedIn)
+        const data = {
+          __typename: 'Auth',
+          loggedIn
+        }
 
         cache.writeData({ data })
         return null
@@ -69,6 +75,10 @@ const stateLink = withClientState({
     filterable: {
       __typename: 'Filterable',
       categories: ['All']
+    },
+    auth: {
+      __typename: 'Auth',
+      loggedIn: false
     }
   }
 })
