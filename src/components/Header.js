@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
 import { compose, graphql } from 'react-apollo'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router'
 
 import { UPDATELOGINSTATUS, GETLOGINSTATUS } from '../constants'
 
@@ -50,22 +51,27 @@ const Img = styled.img`
   object-fit: cover;
 `
 
-/*eslint no-restricted-globals:  'warn' */
+const renderNavButton = (history, loggedState, updateLoginStatus) => {
+  const updateCache = (cache, _) => {
+    cache.writeQuery({
+      query: GETLOGINSTATUS,
+      data: { auth: { __typename: 'Auth', loggedIn: false } }
+    })
+  }
 
-const renderRegistrationButtons = (loggedIn, updateLoginStatus) => {
-  return loggedIn ? (
-    <Fragment>
-      <Link
-        to="/"
-        innerRef={() => {
-          localStorage.removeItem('token')
-          updateLoginStatus({ variables: { loggedIn: false } })
-          return <Redirect to="/" />
-        }}
-      >
-        Signout
-      </Link>
-    </Fragment>
+  return loggedState ? (
+    <button
+      onClick={() => {
+        localStorage.removeItem('token')
+        updateLoginStatus({
+          variables: { loggedIn: false },
+          update: updateCache
+        })
+        history.push('/')
+      }}
+    >
+      SignOut
+    </button>
   ) : (
     <Fragment>
       <Link to="/signin">SignIn</Link>
@@ -74,27 +80,23 @@ const renderRegistrationButtons = (loggedIn, updateLoginStatus) => {
   )
 }
 
-const Header = ({ history, loggedIn, updateLoginStatus }) => (
-  <HeaderWrapper>
-    <Nav>
-      <AnchorWrapper>
-        <Anchor>BookStore CMS</Anchor>
-      </AnchorWrapper>
-      {renderRegistrationButtons(loggedIn, updateLoginStatus)}
-      <Profile>
-        <Img src="./profile.png" alt="profile" />
-      </Profile>
-    </Nav>
-  </HeaderWrapper>
-)
+const Header = ({ history, loggedState, updateLoginStatus }) => {
+  console.log('loggedIn', loggedState)
+  return (
+    <HeaderWrapper>
+      <Nav>
+        <AnchorWrapper>
+          <Anchor>BookStore CMS</Anchor>
+        </AnchorWrapper>
+        {renderNavButton(history, loggedState, updateLoginStatus)}
+        <Profile>
+          <Img src="./profile.png" alt="profile" />
+        </Profile>
+      </Nav>
+    </HeaderWrapper>
+  )
+}
 
 export default compose(
-  graphql(UPDATELOGINSTATUS, { name: 'updateLoginStatus' }),
-  graphql(GETLOGINSTATUS, {
-    props: ({
-      data: {
-        auth: { loggedIn }
-      }
-    }) => ({ loggedIn })
-  })
-)(Header)
+  graphql(UPDATELOGINSTATUS, { name: 'updateLoginStatus' })
+)(withRouter(Header))

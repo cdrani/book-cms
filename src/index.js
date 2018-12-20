@@ -8,6 +8,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { setContext } from 'apollo-link-context'
 import { withClientState } from 'apollo-link-state'
 import { ApolloLink } from 'apollo-link'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 import './index.css'
 import App from './components/App'
@@ -56,7 +57,6 @@ const stateLink = withClientState({
         return null
       },
       updateLoginStatus: (_, { loggedIn }, { cache }) => {
-        console.log('index loggedIn', loggedIn)
         const data = {
           __typename: 'Auth',
           loggedIn
@@ -95,11 +95,13 @@ const client = new ApolloClient({
 })
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <ApolloHooksProvider client={client}>
-      <App />
-    </ApolloHooksProvider>
-  </ApolloProvider>,
+  <Router>
+    <ApolloProvider client={client}>
+      <ApolloHooksProvider client={client}>
+        <App />
+      </ApolloHooksProvider>
+    </ApolloProvider>
+  </Router>,
   document.getElementById('root')
 )
 

@@ -27,26 +27,33 @@ const SignIn = ({ history, updateLoginStatus }) => {
   const openSesame = token => {
     if (token) {
       localStorage.setItem('token', token)
-      updateLoginStatus({ variables: { loggedIn: true } })
+      updateLoginStatus({
+        variables: { loggedIn: true },
+        update: (cache, _) => {
+          cache.writeData({
+            data: { auth: { __typename: 'Auth', loggedIn: true } }
+          })
+        }
+      })
       history.push('/books')
     }
   }
 
   return (
-    <Mutation mutation={SIGNIN}>
+    <Mutation
+      mutation={SIGNIN}
+      onCompleted={({ signIn: { token } }) => {
+        openSesame(token)
+        history.push('/books')
+      }}
+    >
       {(signIn, { data }) => (
         <Form
           onSubmit={async e => {
             e.preventDefault()
-            const {
-              data: {
-                signIn: { token }
-              }
-            } = await signIn({
+            await signIn({
               variables: { input: { login: name, password } }
             })
-
-            openSesame(token)
           }}
         >
           <InputWrapper>

@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 import { compose, graphql, Mutation } from 'react-apollo'
 
-import { SIGNUP, UPDATELOGINSTATUS } from '../constants'
 import {
   Form,
   InputWrapper,
   Input,
   Label,
   LabelContainer,
-  SmallButton
+  SmallButton,
+  SIGNUP,
+  UPDATELOGINSTATUS
 } from '../constants'
 
 const SignUp = ({ history, updateLoginStatus }) => {
@@ -31,26 +32,33 @@ const SignUp = ({ history, updateLoginStatus }) => {
   const openSesame = token => {
     if (token) {
       localStorage.setItem('token', token)
-      updateLoginStatus({ variables: { loggedIn: true } })
+      updateLoginStatus({
+        variables: { loggedIn: true },
+        update: (cache, _) => {
+          cache.writeData({
+            data: { auth: { __typename: 'Auth', loggedIn: true } }
+          })
+        }
+      })
       history.push('/books')
     }
   }
 
   return (
-    <Mutation mutation={SIGNUP}>
+    <Mutation
+      mutation={SIGNUP}
+      onCompleted={({ signIn: { token } }) => {
+        openSesame(token)
+        history.push('/books')
+      }}
+    >
       {(signUp, { data }) => (
         <Form
           onSubmit={async e => {
             e.preventDefault()
-            const {
-              data: {
-                signUp: { token }
-              }
-            } = await signUp({
+            await signUp({
               variables: { input: { email, username, password } }
             })
-
-            openSesame(token)
           }}
         >
           <InputWrapper>
