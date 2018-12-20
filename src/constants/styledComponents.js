@@ -97,7 +97,6 @@ const InputWrapper = styled.div`
   background-color: #fff;
 
   @media only screen and (max-device-width: 480px) {
-    margin: 5px;
     padding: 30px 10px;
     font-size: 1.125rem;
   }
@@ -105,6 +104,9 @@ const InputWrapper = styled.div`
 
 const Label = styled.label`
   width: 50%;
+  @media only screen and (max-device-width: 480px) {
+    width: 40%;
+  }
 `
 
 const LabelContainer = styled.div`
@@ -156,10 +158,11 @@ const Profile = styled.a`
 `
 
 const SmallButton = styled(Button)`
-  width: 22%;
+  width: 25%;
   height: unset;
   padding: 6px;
   @media only screen and (max-device-width: 480px) {
+    width: 30%;
     font-size: 1.25rem;
     margin-top: 10px;
     margin-right: 5px;

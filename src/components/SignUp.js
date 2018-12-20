@@ -82,7 +82,7 @@ const SignUp = ({ history, updateLoginStatus }) => {
                 onChange={handlePasswordChange}
               />
             </LabelContainer>
-            <SmallButton type="submit">Sign Up</SmallButton>
+            <SmallButton type="submit">SignUp</SmallButton>
           </InputWrapper>
         </Form>
       )}
