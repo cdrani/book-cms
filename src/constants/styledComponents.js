@@ -7,7 +7,8 @@ const Anchor = styled.a`
   color: #0290ff;
   text-transform: none;
   @media only screen and (max-device-width: 480px) {
-    font-size: 1rem;
+    font-size: 1.375rem;
+    justify-self: flex-start;
   }
 `
 
@@ -16,6 +17,11 @@ const AnchorWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  @media only screen and (max-device-width: 480px) {
+    font-size: 1.125rem;
+    justify-content: space-around;
+    width: 100%;
+  }
 `
 
 const Button = styled.button`
@@ -30,7 +36,8 @@ const Button = styled.button`
   outline: none;
 
   @media only screen and (max-device-width: 480px) {
-    font-size: 1rem;
+    font-size: 1.125rem;
+    width: 25%;
   }
 `
 
@@ -146,6 +153,10 @@ const Nav = styled.nav`
   font-stretch: normal;
   line-height: normal;
   letter-spacing: normal;
+  @media only screen and (max-device-width: 480px) {
+    width: 100%;
+    justify-content: flex-start;
+  }
 `
 
 const NumberInput = styled(Input)`

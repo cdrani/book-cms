@@ -38,7 +38,7 @@ const renderNavButton = (history, loggedState, updateLoginStatus) => {
     <div
       styles={{
         display: 'flex',
-        justifyContent: 'end',
+        justifyContent: 'flex-end',
         alignContent: 'space-between'
       }}
     >

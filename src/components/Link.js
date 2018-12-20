@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'
 const Linkage = styled(Link)`
   &&& {
     margin: 10px;
-    padding: 8px;
-    height: 30px;
+    padding: 4px;
+    height: 40px;
     text-decoration: none;
     color: #fff;
     font-size: 1.25rem;
@@ -16,10 +16,10 @@ const Linkage = styled(Link)`
     background-color: #0290ff;
 
     @media only screen and (max-width: 480px) {
-      font-size: 0.5rem;
+      font-size: 1.125rem;
       margin: 6px;
       padding: 4px;
-      height: 20px;
+      height: 40px;
     }
   }
 `
