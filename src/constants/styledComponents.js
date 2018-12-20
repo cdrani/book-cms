@@ -6,6 +6,9 @@ const Anchor = styled.a`
   font-size: 1.8rem;
   color: #0290ff;
   text-transform: none;
+  @media only screen and (max-device-width: 480px) {
+    font-size: 1rem;
+  }
 `
 
 const AnchorWrapper = styled.div`
@@ -25,12 +28,19 @@ const Button = styled.button`
   border-radius: 3px;
   background-color: #0290ff;
   outline: none;
+
+  @media only screen and (max-device-width: 480px) {
+    font-size: 1rem;
+  }
 `
 
 const HeaderWrapper = styled.header`
+  width: 100%;
   background-color: #fff;
   padding: 1px 0;
   margin-bottom: 30px;
+  @media only screen and (max-device-width: 480px) {
+  }
 `
 
 const Form = styled.form`

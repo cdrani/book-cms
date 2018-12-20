@@ -1,22 +1,31 @@
 import React from 'react'
+import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-const styles = {
-  margin: '10px',
-  padding: '8px',
-  height: '30px',
-  textDecoration: 'none',
-  color: '#fff',
-  fontSize: '1.25rem',
-  backgroundColor: '#0290ff',
-  border: 'solid 1px #0290ff',
-  borderRadius: '2px'
-}
+const Linkage = styled(Link)`
+  &&& {
+    margin: 10px;
+    padding: 8px;
+    height: 30px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.25rem;
+    background-color: #0290ff;
+    border: solid 1px #0290ff;
+    border-radius: 2px;
+    background-color: #0290ff;
+
+    @media only screen and (max-width: 480px) {
+      font-size: 0.5rem;
+      margin: 6px;
+      padding: 4px;
+      height: 20px;
+    }
+  }
+`
 
 const NavLink = ({ children, ...rest }) => (
-  <Link style={styles} {...rest}>
-    {children}
-  </Link>
+  <Linkage {...rest}>{children}</Linkage>
 )
 
 export default NavLink
