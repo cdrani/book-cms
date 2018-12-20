@@ -48,6 +48,10 @@ const Form = styled.form`
   justify-content: space-between;
   width: 50%;
   margin: 0 auto;
+
+  @media only screen and (max-width: 480px) {
+    width: 100%;
+  }
 `
 
 const FullWidthForm = styled(Form)`
@@ -71,6 +75,13 @@ const Input = styled.input`
   border-radius: 4px;
   border: solid 1px #e8e8e8;
   outline: 0;
+
+  @media only screen and (max-device-width: 480px) {
+    width: 100%;
+    height: 30px;
+    margin: 5px;
+    padding: 5px;
+  }
 `
 
 const InputWrapper = styled.div`
@@ -79,10 +90,17 @@ const InputWrapper = styled.div`
   justify-items: space-between;
   width: 100%;
   padding: 25px;
+  padding-top: 40px;
   font-size: 1.5rem;
   color: #c4c4c4;
   opacity: 0.85;
   background-color: #fff;
+
+  @media only screen and (max-device-width: 480px) {
+    margin: 5px;
+    padding: 30px 10px;
+    font-size: 1.125rem;
+  }
 `
 
 const Label = styled.label`
@@ -92,6 +110,10 @@ const Label = styled.label`
 const LabelContainer = styled.div`
   display: flex;
   width: 100%;
+  align-items: baseline;
+
+  @media only screen and (max-device-width: 480px) {
+  }
 `
 
 const LargeButton = styled(Button)`
@@ -137,6 +159,11 @@ const SmallButton = styled(Button)`
   width: 22%;
   height: unset;
   padding: 6px;
+  @media only screen and (max-device-width: 480px) {
+    font-size: 1.25rem;
+    margin-top: 10px;
+    margin-right: 5px;
+  }
 `
 
 const Select = styled.select`
@@ -155,6 +182,10 @@ const SmallInputWrapper = styled(InputWrapper)`
 
 const SmallLabel = styled.label`
   width: 30%;
+  @media only screen and (max-device-width: 480px) {
+    font-size: 1.125rem;
+    width: 35%;
+  }
 `
 
 export {

@@ -58,7 +58,7 @@ const SignIn = ({ history, updateLoginStatus }) => {
         >
           <InputWrapper>
             <LabelContainer>
-              <SmallLabel>username</SmallLabel>
+              <SmallLabel>Username</SmallLabel>
               <Input
                 autoFocus
                 type="text"
@@ -75,7 +75,7 @@ const SignIn = ({ history, updateLoginStatus }) => {
                 onChange={handlePasswordChange}
               />
             </LabelContainer>
-            <SmallButton type="submit">Sign In</SmallButton>
+            <SmallButton type="submit">SignIn</SmallButton>
           </InputWrapper>
         </Form>
       )}
