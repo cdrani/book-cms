@@ -71,7 +71,7 @@ const BooksList = ({ category, categories }) => {
                   })
                 }
               >
-                more
+                More
               </Button>
             )}
           </Fragment>

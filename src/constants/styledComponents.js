@@ -1,22 +1,36 @@
 import styled from 'styled-components'
 
+const Anchor = styled.a`
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.8rem;
+  color: #0290ff;
+  text-transform: none;
+`
+
+const AnchorWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`
+
 const Button = styled.button`
   align-self: flex-end;
-  width: 32%;
   height: 40px;
-  font-size: 1.125em;
+  width: 10%;
+  font-size: 1.25em;
   cursor: pointer;
   color: #fff;
   border-radius: 3px;
   background-color: #0290ff;
+  outline: none;
 `
 
-const SmallButton = styled(Button)`
-  width: 22%;
-`
-
-const LargeButton = styled(Button)`
-  width: 44%;
+const HeaderWrapper = styled.header`
+  background-color: #fff;
+  padding: 1px 0;
+  margin-bottom: 30px;
 `
 
 const Form = styled.form`
@@ -33,6 +47,11 @@ const FullWidthForm = styled(Form)`
 const H3 = styled.h3`
   letter-spacing: -0.2px;
   color: #888888;
+`
+
+const Img = styled.img`
+  width: 100%;
+  object-fit: cover;
 `
 
 const Input = styled.input`
@@ -56,10 +75,6 @@ const InputWrapper = styled.div`
   background-color: #fff;
 `
 
-const LargeInputWrapper = styled(InputWrapper)`
-  width: 70%;
-`
-
 const Label = styled.label`
   width: 50%;
 `
@@ -69,15 +84,49 @@ const LabelContainer = styled.div`
   width: 100%;
 `
 
+const LargeButton = styled(Button)`
+  width: 44%;
+  font-size: 1.5rem;
+`
+
+const LargeInputWrapper = styled(InputWrapper)`
+  width: 70%;
+`
+
 const LargeLabel = styled(Label)`
   width: 60%;
   opacity: 1;
   font-size: 1.25rem;
 `
 
+const Nav = styled.nav`
+  background-color: #fff;
+  width: 85.7%;
+  height: 8.7%;
+  margin: 23px auto 27px auto;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+`
+
 const NumberInput = styled(Input)`
   text-align: center;
   width: 40%;
+`
+
+const Profile = styled.a`
+  width: 50px;
+`
+
+const SmallButton = styled(Button)`
+  width: 22%;
+  height: unset;
+  padding: 6px;
 `
 
 const Select = styled.select`
@@ -99,10 +148,14 @@ const SmallLabel = styled.label`
 `
 
 export {
+  Anchor,
+  AnchorWrapper,
   Button,
   Form,
   FullWidthForm,
   H3,
+  HeaderWrapper,
+  Img,
   Input,
   InputWrapper,
   Label,
@@ -110,7 +163,9 @@ export {
   LabelContainer,
   LargeLabel,
   LargeInputWrapper,
+  Nav,
   NumberInput,
+  Profile,
   Select,
   SmallButton,
   SmallLabel,

@@ -1,55 +1,17 @@
-import React, { Fragment } from 'react'
-import styled from 'styled-components'
+import React from 'react'
 import { compose, graphql } from 'react-apollo'
-import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router'
 
-import { UPDATELOGINSTATUS, GETLOGINSTATUS } from '../constants'
-
-const HeaderWrapper = styled.header`
-  background-color: #fff;
-  padding: 1px 0;
-  margin-bottom: 30px;
-`
-
-const Nav = styled.nav`
-  background-color: #fff;
-  width: 85.7%;
-  height: 8.7%;
-  margin: 23px auto 27px auto;
-  display: flex;
-  justify-content: space-between;
-  align-content: center;
-  font-weight: bold;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-`
-
-const AnchorWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 50%;
-`
-
-const Anchor = styled.a`
-  text-decoration: none;
-  text-transform: uppercase;
-  font-size: 1.8rem;
-  color: #0290ff;
-  text-transform: none;
-`
-
-const Profile = styled.a`
-  width: 50px;
-`
-
-const Img = styled.img`
-  width: 100%;
-  object-fit: cover;
-`
+import {
+  Anchor,
+  Button,
+  AnchorWrapper,
+  HeaderWrapper,
+  Nav,
+  UPDATELOGINSTATUS,
+  GETLOGINSTATUS
+} from '../constants'
+import NavLink from './Link'
 
 const renderNavButton = (history, loggedState, updateLoginStatus) => {
   const updateCache = (cache, _) => {
@@ -60,7 +22,7 @@ const renderNavButton = (history, loggedState, updateLoginStatus) => {
   }
 
   return loggedState ? (
-    <button
+    <Button
       onClick={() => {
         localStorage.removeItem('token')
         updateLoginStatus({
@@ -71,31 +33,31 @@ const renderNavButton = (history, loggedState, updateLoginStatus) => {
       }}
     >
       SignOut
-    </button>
+    </Button>
   ) : (
-    <Fragment>
-      <Link to="/signin">SignIn</Link>
-      <Link to="/signup">SignUp</Link>
-    </Fragment>
+    <div
+      styles={{
+        display: 'flex',
+        justifyContent: 'end',
+        alignContent: 'space-between'
+      }}
+    >
+      <NavLink to="/signin">SignIn</NavLink>
+      <NavLink to="/signup">SignUp</NavLink>
+    </div>
   )
 }
 
-const Header = ({ history, loggedState, updateLoginStatus }) => {
-  console.log('loggedIn', loggedState)
-  return (
-    <HeaderWrapper>
-      <Nav>
-        <AnchorWrapper>
-          <Anchor>BookStore CMS</Anchor>
-        </AnchorWrapper>
+const Header = ({ history, loggedState, updateLoginStatus }) => (
+  <HeaderWrapper>
+    <Nav>
+      <AnchorWrapper>
+        <Anchor>BookStore CMS</Anchor>
         {renderNavButton(history, loggedState, updateLoginStatus)}
-        <Profile>
-          <Img src="./profile.png" alt="profile" />
-        </Profile>
-      </Nav>
-    </HeaderWrapper>
-  )
-}
+      </AnchorWrapper>
+    </Nav>
+  </HeaderWrapper>
+)
 
 export default compose(
   graphql(UPDATELOGINSTATUS, { name: 'updateLoginStatus' })

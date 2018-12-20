@@ -33,12 +33,14 @@ const LinksWrapper = styled.div`
   width: 50%;
   margin-top: 8%;
 `
+
 const Link = styled.a`
   padding: 1% 2%;
   cursor: pointer
   text-decoration: none;
   color: #4386bf;
 `
+
 const BorderedLink = styled(Link)`
   padding-right: 10px;
   margin-right: 10px;
@@ -96,10 +98,11 @@ const CurrentChapter = styled.p`
 `
 
 const UpdateButton = styled.button`
-  padding: 10px 25px;
-  font-size: 1rem;
+  padding: 10px;
+  width: 80%;
+  font-size: 1.25rem;
   font-weight: 300;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   border-radius: 3px;
   background-color: #0290ff;
   color: #ffffff;
