@@ -37,7 +37,7 @@ const Button = styled.button`
 
   @media only screen and (max-device-width: 480px) {
     font-size: 1.125rem;
-    width: 25%;
+    width: 28%;
   }
 `
 
@@ -46,25 +46,22 @@ const HeaderWrapper = styled.header`
   background-color: #fff;
   padding: 1px 0;
   margin-bottom: 30px;
-  @media only screen and (max-device-width: 480px) {
-  }
 `
 
 const Form = styled.form`
   display: flex;
   justify-content: space-between;
-  width: 50%;
+  width: 85%;
   margin: 0 auto;
 
   @media only screen and (max-width: 480px) {
-    width: 100%;
+    width: 95%;
   }
 `
 
 const FullWidthForm = styled(Form)`
   width: 100%;
   @media only screen and (max-device-width: 480px) {
-    width: 95%;
     flex-direction: column;
     padding: 0;
     margin: 0;
@@ -116,10 +113,7 @@ const InputWrapper = styled.div`
 `
 
 const Label = styled.label`
-  width: 50%;
-  @media only screen and (max-device-width: 480px) {
-    width: 40%;
-  }
+  width: 30%;
 `
 
 const LabelContainer = styled.div`
@@ -133,12 +127,15 @@ const LabelContainer = styled.div`
 `
 
 const LargeButton = styled(Button)`
-  width: 44%;
+  width: 40%;
   font-size: 1.5rem;
 `
 
 const LargeInputWrapper = styled(InputWrapper)`
   width: 70%;
+  padding: 10px;
+  padding-top: 20px;
+  font-size: 1.125rem;
   @media only screen and (max-device-width: 480px) {
     justify-content: row;
     width: 100%;
@@ -149,7 +146,7 @@ const LargeInputWrapper = styled(InputWrapper)`
 const LargeLabel = styled(Label)`
   width: 60%;
   opacity: 1;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   @media only screen and (max-device-width: 480px) {
     width: 75%;
   }
@@ -175,10 +172,11 @@ const Nav = styled.nav`
 `
 
 const NumberInput = styled(Input)`
+  justify-self: baseline;
   text-align: center;
-  width: 40%;
+  width: 30%;
   @media only screen and (max-device-width: 480px) {
-    width: 22%;
+    width: 25%;
     padding: 5px;
   }
 `
@@ -188,7 +186,7 @@ const Profile = styled.a`
 `
 
 const SmallButton = styled(Button)`
-  width: 25%;
+  width: 20%;
   height: unset;
   padding: 6px;
   @media only screen and (max-device-width: 480px) {
@@ -219,6 +217,8 @@ const Select = styled.select`
 
 const SmallInputWrapper = styled(InputWrapper)`
   width: 35%;
+  padding: 10px;
+  padding-top: 20px;
   @media only screen and (max-device-width: 480px) {
     width: 100%;
     padding-top: 0;
@@ -227,10 +227,11 @@ const SmallInputWrapper = styled(InputWrapper)`
 `
 
 const SmallLabel = styled.label`
+  justify-self: flex-start;
   width: 30%;
   @media only screen and (max-device-width: 480px) {
-    font-size: 1.125rem;
-    width: 35%;
+    //  font-size: 1.125rem;
+    //  width: 35%;
   }
 `
 

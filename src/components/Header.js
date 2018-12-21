@@ -52,7 +52,7 @@ const Header = ({ history, loggedState, updateLoginStatus }) => (
   <HeaderWrapper>
     <Nav>
       <AnchorWrapper>
-        <Anchor>BookStore CMS</Anchor>
+        <Anchor>BookCMS</Anchor>
         {renderNavButton(history, loggedState, updateLoginStatus)}
       </AnchorWrapper>
     </Nav>

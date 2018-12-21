@@ -6,11 +6,15 @@ const BooksWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2.5% 2.2%;
+  width: 100%;
   margin-bottom: 1.5rem;
   border-radius: 4px;
   border: solid 1px #e8e8e8;
   background-color: #fff;
+  @media only screen and (max-device-width: 480px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `
 
 const BookInfoWrapper = styled.div`
@@ -18,20 +22,43 @@ const BookInfoWrapper = styled.div`
   flex-direction: column;
   box-sizing: border-box;
   width: 45%;
+  padding: 2.5% 2.2%;
+  @media only screen and (max-device-width: 480px) {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    align-self: center;
+  }
+`
+
+const BookDetail = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
 `
 
 const H3 = styled.h3`
+  padding: 0;
   margin: 0;
 `
 
 const Genre = styled.p`
+  padding: 0;
+  margin: 0;
   color: #121212;
   opacity: 0.5;
 `
 
 const LinksWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
   width: 50%;
-  margin-top: 8%;
+  padding: 2.5% 2.2%;
+  font-size: 1.25rem;
+  @media only screen and (max-device-width: 480px) {
+    justify-content: center;
+  }
 `
 
 const Link = styled.a`
@@ -53,35 +80,47 @@ const Author = styled(Link)`
 
 const BookCompletionWrapper = styled.div`
   display: flex;
+  justify-content: space-around;
   width: 30%;
-  padding-right: 3rem;
-  border-right: solid 1px #e8e8e8;
+  padding: 2.5% 2.2%;
+  @media only screen and (max-device-width: 480px) {
+    width: 100%;
+    margin-top: 20px;
+    margin: 10px auto;
+  }
 `
 
 const AmountCompletedWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-content: space-between;
-  padding-left: 1rem;
+  margin-right: 30px;
 `
 
 const CompletionText = styled.p`
+  margin: 0;
+  padding: 0;
   opacity: 0.5;
   color: #121212;
-  margin: 0;
 `
 
 const LargeCompletionText = styled(CompletionText)`
   font-size: 2rem;
+  margin: 0;
+  margin-top: 10px;
 `
 
 const ChapterWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 30%;
-  align-items: baseline;
-  padding-left: 3rem;
+  width: 100%;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin-top: 20px;
+  @media only screen and (max-width: 480px) {
+    align-items: flex-end;
+    margin-top: 0;
+  }
 `
 
 const ChapterHeader = styled.h3`
@@ -94,51 +133,46 @@ const ChapterHeader = styled.h3`
 `
 
 const CurrentChapter = styled.p`
+  margin: 0;
+  padding: 0;
   font-size: 1.1rem;
-`
-
-const UpdateButton = styled.button`
-  padding: 10px;
-  width: 80%;
-  font-size: 1.25rem;
-  font-weight: 300;
-  letter-spacing: 1px;
-  border-radius: 3px;
-  background-color: #0290ff;
-  color: #ffffff;
 `
 
 const Book = ({ book, handleRemoveBook }) => {
   const handleClick = () => {
     handleRemoveBook(book)
   }
+
   const percentComplete = book.currentPage / book.pages
 
   return (
     <BooksWrapper>
       <BookInfoWrapper>
-        <Genre>{book.category}</Genre>
-        <H3>{book.title}</H3>
-        <Author>{book.author}</Author>
-        <LinksWrapper>
-          <BorderedLink onClick={handleClick}>Remove</BorderedLink>
-          <Link>Edit</Link>
-        </LinksWrapper>
+        <BookDetail>
+          <Genre>{book.category}</Genre>
+          <H3>{book.title}</H3>
+          <Author>{book.author}</Author>
+        </BookDetail>
+        <ChapterWrapper>
+          <ChapterHeader>CHAPTER</ChapterHeader>
+          <CurrentChapter>
+            {book.currentChapter} / {book.chapters}
+          </CurrentChapter>
+        </ChapterWrapper>
       </BookInfoWrapper>
       <BookCompletionWrapper>
-        <CompletionCircle percentage={percentComplete} />
         <AmountCompletedWrapper>
           <LargeCompletionText>
             {Math.round(percentComplete * 100)}%
           </LargeCompletionText>
-          <CompletionText>In Progress</CompletionText>
+          <CompletionText>Completed</CompletionText>
         </AmountCompletedWrapper>
+        <CompletionCircle percentage={percentComplete} />
       </BookCompletionWrapper>
-      <ChapterWrapper>
-        <ChapterHeader>CHAPTERS</ChapterHeader>
-        <CurrentChapter>{book.currentChapter} / { book.chapters}</CurrentChapter>
-        <UpdateButton>Update Chapter</UpdateButton>
-      </ChapterWrapper>
+      <LinksWrapper>
+        <BorderedLink onClick={handleClick}>Remove</BorderedLink>
+        <Link>Edit</Link>
+      </LinksWrapper>
     </BooksWrapper>
   )
 }

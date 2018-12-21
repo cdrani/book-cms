@@ -1,11 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Svg = styled.svg`
-  margin-top: -1.2rem;
-  margin-right: 1rem;
-  display: inline-block;
-`
 const Circle = styled.circle`
   stroke: #ddd;
   fill: none;
@@ -19,14 +14,14 @@ const CircleCompletion = styled(Circle)`
 
 const CompletionCircle = ({ percentage }) => {
   const sqSize = 80
-  const strokeWidth = 10
+  const strokeWidth = 6 
   const radius = (sqSize - strokeWidth) / 2
   const viewBox = `0 0 ${sqSize} ${sqSize}`
   const dashArray = radius * Math.PI * 2
   const dashOffset = dashArray - dashArray * percentage
 
   return (
-    <Svg width={sqSize} height={sqSize} viewBox={viewBox}>
+    <svg width={sqSize} height={sqSize} viewBox={viewBox}>
       <Circle
         className="circle-background"
         cx={sqSize / 2}
@@ -46,7 +41,7 @@ const CompletionCircle = ({ percentage }) => {
           strokeDashoffset: dashOffset
         }}
       />
-    </Svg>
+    </svg>
   )
 }
 

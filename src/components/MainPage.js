@@ -10,7 +10,6 @@ const MainContainer = styled.main`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
 `
 
 const MainContent = styled.div`
