@@ -10,6 +10,7 @@ const MainContainer = styled.main`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 `
 
 const MainContent = styled.div`
@@ -17,6 +18,9 @@ const MainContent = styled.div`
   flex-direction: column;
   width: 85.7%;
   margin-bottom: 30px;
+  @media only screen and (max-device-width: 480px) {
+    width: 95%;
+  }
 `
 
 const MainPage = () => (

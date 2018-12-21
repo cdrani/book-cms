@@ -17,10 +17,11 @@ import {
   Nav,
   NumberInput,
   Profile,
+  Select,
   SmallButton,
   SmallInputWrapper,
   SmallLabel,
-  Select
+  SmallLabelContainer
 } from './styledComponents'
 
 import {
@@ -78,6 +79,7 @@ export {
   SmallButton,
   SmallInputWrapper,
   SmallLabel,
+  SmallLabelContainer,
   Select,
   CREATEBOOK,
   ADDTOFILTERABLECATEGORIES,

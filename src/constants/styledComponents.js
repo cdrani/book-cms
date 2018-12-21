@@ -63,6 +63,12 @@ const Form = styled.form`
 
 const FullWidthForm = styled(Form)`
   width: 100%;
+  @media only screen and (max-device-width: 480px) {
+    width: 95%;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+  }
 `
 
 const H3 = styled.h3`
@@ -84,10 +90,10 @@ const Input = styled.input`
   outline: 0;
 
   @media only screen and (max-device-width: 480px) {
-    width: 100%;
+    width: 94%;
     height: 30px;
-    margin: 5px;
-    padding: 5px;
+    margin-top: 10px;
+    font-size: 1.25rem;
   }
 `
 
@@ -122,6 +128,7 @@ const LabelContainer = styled.div`
   align-items: baseline;
 
   @media only screen and (max-device-width: 480px) {
+    flex-direction: column;
   }
 `
 
@@ -132,12 +139,20 @@ const LargeButton = styled(Button)`
 
 const LargeInputWrapper = styled(InputWrapper)`
   width: 70%;
+  @media only screen and (max-device-width: 480px) {
+    justify-content: row;
+    width: 100%;
+    padding: 10px;
+  }
 `
 
 const LargeLabel = styled(Label)`
   width: 60%;
   opacity: 1;
   font-size: 1.25rem;
+  @media only screen and (max-device-width: 480px) {
+    width: 75%;
+  }
 `
 
 const Nav = styled.nav`
@@ -162,6 +177,10 @@ const Nav = styled.nav`
 const NumberInput = styled(Input)`
   text-align: center;
   width: 40%;
+  @media only screen and (max-device-width: 480px) {
+    width: 22%;
+    padding: 5px;
+  }
 `
 
 const Profile = styled.a`
@@ -183,15 +202,28 @@ const SmallButton = styled(Button)`
 const Select = styled.select`
   width: 95%;
   height: 40px;
+  padding: 10px;
   border-radius: 4px;
   border: solid 1px #e8e8e8;
   background-color: #fff;
   opacity: 0.85;
   outline: 0;
+  @media only screen and (max-device-width: 480px) {
+    height: 50px;
+    width: 100%;
+    margin-top: 10px;
+    margin-right: 4px;
+    font-size: 1.25rem;
+  }
 `
 
 const SmallInputWrapper = styled(InputWrapper)`
   width: 35%;
+  @media only screen and (max-device-width: 480px) {
+    width: 100%;
+    padding-top: 0;
+    font-size: 1.125rem;
+  }
 `
 
 const SmallLabel = styled.label`
@@ -199,6 +231,14 @@ const SmallLabel = styled.label`
   @media only screen and (max-device-width: 480px) {
     font-size: 1.125rem;
     width: 35%;
+  }
+`
+
+const SmallLabelContainer = styled(LabelContainer)`
+  @media only screen and (max-device-width: 480px) {
+    flex-direction: row;
+    width: 100%;
+    font-size: 1.125rem;
   }
 `
 
@@ -223,6 +263,7 @@ export {
   Profile,
   Select,
   SmallButton,
+  SmallInputWrapper,
   SmallLabel,
-  SmallInputWrapper
+  SmallLabelContainer
 }

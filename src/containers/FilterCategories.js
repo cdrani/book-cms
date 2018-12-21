@@ -20,6 +20,10 @@ const Select = styled.select`
   opacity: 0.85;
   outline: 0;
   margin-bottom: 20px;
+  @media only screen and (max-device-width: 480px) {
+    align-self: center;
+    width: 100%;
+  }
 `
 
 const extractCategories = books => {

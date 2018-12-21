@@ -16,6 +16,7 @@ import {
   NumberInput,
   SmallInputWrapper,
   SmallLabel,
+  SmallLabelContainer,
   Select
 } from '../constants'
 
@@ -148,7 +149,7 @@ const BooksForm = ({ addToCategories }) => {
             </LargeInputWrapper>
 
             <SmallInputWrapper>
-              <LabelContainer>
+              <SmallLabelContainer>
                 <LargeLabel>Current Page</LargeLabel>
                 <NumberInput
                   min="1"
@@ -156,9 +157,9 @@ const BooksForm = ({ addToCategories }) => {
                   value={bookCurrentPage}
                   onChange={handleCurrentPage}
                 />
-              </LabelContainer>
+              </SmallLabelContainer>
 
-              <LabelContainer>
+              <SmallLabelContainer>
                 <LargeLabel>Num of Pages</LargeLabel>
                 <NumberInput
                   min="1"
@@ -166,9 +167,9 @@ const BooksForm = ({ addToCategories }) => {
                   value={bookPages}
                   onChange={handlePages}
                 />
-              </LabelContainer>
+              </SmallLabelContainer>
 
-              <LabelContainer>
+              <SmallLabelContainer>
                 <LargeLabel>Current Chapter</LargeLabel>
                 <NumberInput
                   min="1"
@@ -176,9 +177,9 @@ const BooksForm = ({ addToCategories }) => {
                   value={bookCurrentChapter}
                   onChange={handleCurrentChapter}
                 />
-              </LabelContainer>
+              </SmallLabelContainer>
 
-              <LabelContainer>
+              <SmallLabelContainer>
                 <LargeLabel>Num of Chapters</LargeLabel>
                 <NumberInput
                   min="1"
@@ -186,7 +187,7 @@ const BooksForm = ({ addToCategories }) => {
                   value={bookChapters}
                   onChange={handleChapters}
                 />
-              </LabelContainer>
+              </SmallLabelContainer>
               <LargeButton type="submit">Submit</LargeButton>
             </SmallInputWrapper>
           </FullWidthForm>
