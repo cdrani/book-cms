@@ -27,7 +27,7 @@ const AnchorWrapper = styled.div`
 const Button = styled.button`
   align-self: flex-end;
   height: 40px;
-  width: 10%;
+  width: 15%;
   font-size: 1.25em;
   cursor: pointer;
   color: #fff;

@@ -48,7 +48,7 @@ const BooksList = ({ category, categories }) => {
           myBooks: { edges: books, pageInfo }
         } = data
 
-        const fileteredBooks = filterBooksByCategoryFilter(books, category)
+        const filteredBooks = filterBooksByCategoryFilter(books, category)
 
         if (!Boolean(books.length)) {
           return <p>Add a new book below</p>
@@ -56,7 +56,7 @@ const BooksList = ({ category, categories }) => {
 
         return (
           <Fragment>
-            {fileteredBooks.map(book => (
+            {filteredBooks.map(book => (
               <Book key={book.id} book={book} pageInfo={pageInfo} />
             ))}
             {pageInfo.hasNextPage && (
