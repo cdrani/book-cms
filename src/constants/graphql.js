@@ -100,9 +100,16 @@ const SIGNUP = gql`
   }
 `
 
+const DELETEBOOK = gql`
+  mutation DeleteBook($input: deleteBookInput!) {
+    deleteBook(input: $input)
+  }
+`
+
 export {
   ADDTOFILTERABLECATEGORIES,
   CREATEBOOK,
+  DELETEBOOK,
   GETCATEGORYFILTER,
   GETFILTERABLECATEGORIES,
   GETLOGINSTATUS,

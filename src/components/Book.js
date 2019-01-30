@@ -1,6 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useMutation } from 'react-apollo-hooks'
+
 import CompletionCircle from './CompletionCircle'
+import { MYBOOKS, DELETEBOOK } from '../constants'
 
 const BooksWrapper = styled.div`
   display: flex;
@@ -138,12 +141,38 @@ const CurrentChapter = styled.p`
   font-size: 1.1rem;
 `
 
-const Book = ({ book, handleRemoveBook }) => {
-  const handleClick = () => {
-    handleRemoveBook(book)
-  }
-
+const Book = ({ book }) => {
   const percentComplete = book.currentPage / book.pages
+
+  const handleBookDelete = useMutation(DELETEBOOK, {
+    variables: { input: { id: book.id } },
+    update: cache => {
+      const {
+        myBooks: { edges, pageInfo }
+      } = cache.readQuery({
+        query: MYBOOKS,
+        variables: { input: { limit: 5 } }
+      })
+
+      const remainingBooks = edges.filter(node => node.id !== book.id)
+
+      cache.writeQuery({
+        query: MYBOOKS,
+        variables: {
+          input: {
+            limit: 5
+          }
+        },
+        data: {
+          myBooks: {
+            __typename: 'BookConnection',
+            edges: remainingBooks,
+            pageInfo
+          }
+        }
+      })
+    }
+  })
 
   return (
     <BooksWrapper>
@@ -170,7 +199,7 @@ const Book = ({ book, handleRemoveBook }) => {
         <CompletionCircle percentage={percentComplete} />
       </BookCompletionWrapper>
       <LinksWrapper>
-        <BorderedLink onClick={handleClick}>Remove</BorderedLink>
+        <BorderedLink onClick={handleBookDelete}>Remove</BorderedLink>
         <Link>Edit</Link>
       </LinksWrapper>
     </BooksWrapper>
