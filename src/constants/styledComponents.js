@@ -66,12 +66,12 @@ const Form = styled.form`
 `
 
 const RegistrationForm = styled(Form)`
-  @media only screen and (max-device-width: 480px) {
-    width: 95%;
+  @media only screen and (min-width: 480px) {
+    width: 85%;
   }
 
-  @media only screen and (min-device-width: 768px) {
-    width: 60%;
+  @media only screen and (min-width: 768px) {
+    width: 45%;
   }
 `
 
