@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { compose, graphql, Mutation } from 'react-apollo'
 
 import {
-  Form,
   Input,
   InputWrapper,
   LabelContainer,
+  RegistrationForm,
   SmallButton,
-  SmallLabel,
+  Label,
   UPDATELOGINSTATUS,
   SIGNIN
 } from '../constants'
@@ -48,7 +48,7 @@ const SignIn = ({ history, updateLoginStatus }) => {
       }}
     >
       {(signIn, { data }) => (
-        <Form
+        <RegistrationForm
           onSubmit={async e => {
             e.preventDefault()
             await signIn({
@@ -58,7 +58,7 @@ const SignIn = ({ history, updateLoginStatus }) => {
         >
           <InputWrapper>
             <LabelContainer>
-              <SmallLabel>Username</SmallLabel>
+              <Label>Username</Label>
               <Input
                 autoFocus
                 type="text"
@@ -66,18 +66,19 @@ const SignIn = ({ history, updateLoginStatus }) => {
                 onChange={handleNameChange}
               />
             </LabelContainer>
-
             <LabelContainer>
-              <SmallLabel>Password</SmallLabel>
+              <Label>Password</Label>
               <Input
                 type="password"
                 value={password}
                 onChange={handlePasswordChange}
               />
             </LabelContainer>
-            <SmallButton type="submit">SignIn</SmallButton>
+            <LabelContainer>
+              <SmallButton type="submit">SignIn</SmallButton>
+            </LabelContainer>
           </InputWrapper>
-        </Form>
+        </RegistrationForm>
       )}
     </Mutation>
   )

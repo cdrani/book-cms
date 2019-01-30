@@ -9,11 +9,10 @@ import {
   FullWidthForm,
   H3,
   Input,
-  LargeButton,
+  InputWrapper,
   LabelContainer,
-  LargeLabel,
-  LargeInputWrapper,
   NumberInput,
+  SmallButton,
   SmallInputWrapper,
   SmallLabel,
   SmallLabelContainer,
@@ -115,7 +114,7 @@ const BooksForm = ({ addToCategories }) => {
               setChapters(1)
             }}
           >
-            <LargeInputWrapper>
+            <InputWrapper>
               <LabelContainer>
                 <SmallLabel>Title</SmallLabel>
                 <Input
@@ -146,11 +145,11 @@ const BooksForm = ({ addToCategories }) => {
                   ))}
                 </Select>
               </LabelContainer>
-            </LargeInputWrapper>
+            </InputWrapper>
 
             <SmallInputWrapper>
               <SmallLabelContainer>
-                <LargeLabel>Curr. Page</LargeLabel>
+                <SmallLabel>Current Page</SmallLabel>
                 <NumberInput
                   min="1"
                   type="number"
@@ -160,7 +159,7 @@ const BooksForm = ({ addToCategories }) => {
               </SmallLabelContainer>
 
               <SmallLabelContainer>
-                <LargeLabel># of Pages</LargeLabel>
+                <SmallLabel>Number of Pages</SmallLabel>
                 <NumberInput
                   min="1"
                   type="number"
@@ -170,7 +169,7 @@ const BooksForm = ({ addToCategories }) => {
               </SmallLabelContainer>
 
               <SmallLabelContainer>
-                <LargeLabel>Curr. Chap.</LargeLabel>
+                <SmallLabel>Current Chapter</SmallLabel>
                 <NumberInput
                   min="1"
                   type="number"
@@ -180,7 +179,7 @@ const BooksForm = ({ addToCategories }) => {
               </SmallLabelContainer>
 
               <SmallLabelContainer>
-                <LargeLabel># of Chaps.</LargeLabel>
+                <SmallLabel>Number of Chapters</SmallLabel>
                 <NumberInput
                   min="1"
                   type="number"
@@ -188,7 +187,7 @@ const BooksForm = ({ addToCategories }) => {
                   onChange={handleChapters}
                 />
               </SmallLabelContainer>
-              <LargeButton type="submit">Save</LargeButton>
+              <SmallButton type="submit">Save</SmallButton>
             </SmallInputWrapper>
           </FullWidthForm>
         )}

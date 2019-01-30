@@ -12,8 +12,10 @@ import {
 } from '../constants'
 
 const Select = styled.select`
-  width: 52%;
-  height: 40px;
+  display: flex;
+  align-self: flex-end;
+  width: 100%;
+  height: 50px;
   font-size: 1rem;
   border: solid 1px #e8e8e8;
   background-color: #fff;
@@ -21,10 +23,6 @@ const Select = styled.select`
   outline: 0;
   margin-bottom: 20px;
   padding: 10px;
-  @media only screen and (max-device-width: 480px) {
-    align-self: center;
-    width: 100%;
-  }
 `
 
 const extractCategories = books => {

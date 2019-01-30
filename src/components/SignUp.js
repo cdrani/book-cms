@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { compose, graphql, Mutation } from 'react-apollo'
 
 import {
-  Form,
+  RegistrationForm,
   InputWrapper,
   Input,
   Label,
@@ -53,7 +53,7 @@ const SignUp = ({ history, updateLoginStatus }) => {
       }}
     >
       {(signUp, { data }) => (
-        <Form
+        <RegistrationForm
           onSubmit={async e => {
             e.preventDefault()
             await signUp({
@@ -82,9 +82,11 @@ const SignUp = ({ history, updateLoginStatus }) => {
                 onChange={handlePasswordChange}
               />
             </LabelContainer>
-            <SmallButton type="submit">SignUp</SmallButton>
+            <LabelContainer>
+              <SmallButton type="submit">SignUp</SmallButton>
+            </LabelContainer>
           </InputWrapper>
-        </Form>
+        </RegistrationForm>
       )}
     </Mutation>
   )

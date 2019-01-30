@@ -23,14 +23,12 @@ const CompletionCircle = ({ percentage }) => {
   return (
     <svg width={sqSize} height={sqSize} viewBox={viewBox}>
       <Circle
-        className="circle-background"
         cx={sqSize / 2}
         cy={sqSize / 2}
         r={radius}
         strokeWidth={`${strokeWidth}px`}
       />
       <CircleCompletion
-        className="circle-progress"
         cx={sqSize / 2}
         cy={sqSize / 2}
         r={radius}

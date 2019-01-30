@@ -6,6 +6,7 @@ const Anchor = styled.a`
   font-size: 1.8rem;
   color: #0290ff;
   text-transform: none;
+
   @media only screen and (max-device-width: 480px) {
     font-size: 1.375rem;
     justify-self: flex-start;
@@ -17,6 +18,7 @@ const AnchorWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+
   @media only screen and (max-device-width: 480px) {
     font-size: 1.125rem;
     justify-content: space-around;
@@ -51,20 +53,40 @@ const HeaderWrapper = styled.header`
 const Form = styled.form`
   display: flex;
   justify-content: space-between;
-  width: 85%;
+  width: 95%;
   margin: 0 auto;
 
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-device-width: 480px) {
+    width: 85%;
+  }
+
+  @media only screen and (max-device-width: 768px) {
+    width: 60%;
+  }
+`
+
+const RegistrationForm = styled(Form)`
+  @media only screen and (max-device-width: 480px) {
     width: 95%;
+  }
+
+  @media only screen and (min-device-width: 768px) {
+    width: 60%;
   }
 `
 
 const FullWidthForm = styled(Form)`
+  flex-direction: column;
   width: 100%;
-  @media only screen and (max-device-width: 480px) {
+
+  @media only screen and (min-device-width: 420px) {
+    flex-direction: row;
+  }
+
+  @media only screen and (max-device-width: 768px) {
     flex-direction: column;
-    padding: 0;
-    margin: 0;
+    align-items: baseline;
+    width: 100%;
   }
 `
 
@@ -79,18 +101,18 @@ const Img = styled.img`
 `
 
 const Input = styled.input`
-  width: 90%;
+  align-self: flex-end;
+  width: 100%;
+  height: 50px;
   margin-bottom: 20px;
   padding: 10px;
   border-radius: 4px;
   border: solid 1px #e8e8e8;
   outline: 0;
+  font-size: 1.25rem;
 
   @media only screen and (max-device-width: 480px) {
-    width: 94%;
-    height: 30px;
     margin-top: 10px;
-    font-size: 1.25rem;
   }
 `
 
@@ -110,6 +132,10 @@ const InputWrapper = styled.div`
     padding: 30px 10px;
     font-size: 1.125rem;
   }
+
+  @media only screen and (max-device-width: 768px) {
+    padding-top: 20px;
+  }
 `
 
 const Label = styled.label`
@@ -118,12 +144,9 @@ const Label = styled.label`
 
 const LabelContainer = styled.div`
   display: flex;
-  width: 100%;
+  flex-direction: column;
   align-items: baseline;
-
-  @media only screen and (max-device-width: 480px) {
-    flex-direction: column;
-  }
+  width: 100%;
 `
 
 const LargeButton = styled(Button)`
@@ -136,6 +159,7 @@ const LargeInputWrapper = styled(InputWrapper)`
   padding: 10px;
   padding-top: 20px;
   font-size: 1.125rem;
+
   @media only screen and (max-device-width: 480px) {
     justify-content: row;
     width: 100%;
@@ -165,6 +189,7 @@ const Nav = styled.nav`
   font-stretch: normal;
   line-height: normal;
   letter-spacing: normal;
+
   @media only screen and (max-device-width: 480px) {
     width: 100%;
     justify-content: flex-start;
@@ -175,8 +200,17 @@ const NumberInput = styled(Input)`
   justify-self: baseline;
   text-align: center;
   width: 30%;
+  margin-top: 0;
+
   @media only screen and (max-device-width: 480px) {
     width: 25%;
+    padding: 5px;
+    margin-top: 0;
+  }
+
+  @media only screen and (min-device-width: 768px) {
+    justify-self: flex-start;
+    width: 100%;
     padding: 5px;
   }
 `
@@ -186,29 +220,30 @@ const Profile = styled.a`
 `
 
 const SmallButton = styled(Button)`
-  width: 20%;
-  height: unset;
+  align-self: flex-end;
+  width: 100px;
+  height: 50px;
   padding: 6px;
+  font-size: 1.25rem;
+
   @media only screen and (max-device-width: 480px) {
-    width: 30%;
-    font-size: 1.25rem;
     margin-top: 10px;
-    margin-right: 5px;
+    font-size: 1.125rem;
+    width: 120px;
   }
 `
 
 const Select = styled.select`
-  width: 95%;
-  height: 40px;
+  width: 100%;
+  height: 50px;
   padding: 10px;
   border-radius: 4px;
   border: solid 1px #e8e8e8;
   background-color: #fff;
   opacity: 0.85;
   outline: 0;
+
   @media only screen and (max-device-width: 480px) {
-    height: 50px;
-    width: 100%;
     margin-top: 10px;
     margin-right: 4px;
     font-size: 1.25rem;
@@ -216,28 +251,41 @@ const Select = styled.select`
 `
 
 const SmallInputWrapper = styled(InputWrapper)`
-  width: 35%;
-  padding: 10px;
+  width: 100%;
+  padding: 25px;
   padding-top: 20px;
+  margin: 0 auto;
+
   @media only screen and (max-device-width: 480px) {
-    width: 100%;
     padding-top: 0;
     font-size: 1.125rem;
+    padding-top: 20px;
+  }
+
+  @media only screen and (min-device-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    padding-top: 40px;
   }
 `
 
 const SmallLabel = styled.label`
-  justify-self: flex-start;
-  width: 30%;
-  @media only screen and (max-device-width: 480px) {
-    //  font-size: 1.125rem;
-    //  width: 35%;
-  }
+  align-self: baseline;
+  font-size: 1.5rem;
 `
 
 const SmallLabelContainer = styled(LabelContainer)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
   @media only screen and (max-device-width: 480px) {
-    flex-direction: row;
+    width: 100%;
+    font-size: 1.125rem;
+  }
+
+  @media only screen and (min-device-width: 768px) {
+    flex-direction: column;
     width: 100%;
     font-size: 1.125rem;
   }
@@ -262,6 +310,7 @@ export {
   Nav,
   NumberInput,
   Profile,
+  RegistrationForm,
   Select,
   SmallButton,
   SmallInputWrapper,
