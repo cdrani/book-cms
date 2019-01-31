@@ -24,9 +24,7 @@ const BooksForm = ({ addToCategories }) => {
   const [bookAuthor, setAuthor] = useState('')
   const [bookCategory, setCategory] = useState('Novel')
   const [bookPages, setPages] = useState(1)
-  const [bookCurrentPage, setCurrentPage] = useState(1)
   const [bookChapters, setChapters] = useState(1)
-  const [bookCurrentChapter, setCurrentChapter] = useState(1)
 
   const handleTitle = e => {
     setTitle(e.target.value)
@@ -44,16 +42,8 @@ const BooksForm = ({ addToCategories }) => {
     setPages(e.target.value)
   }
 
-  const handleCurrentPage = e => {
-    setCurrentPage(e.target.value)
-  }
-
   const handleChapters = e => {
     setChapters(e.target.value)
-  }
-
-  const handleCurrentChapter = e => {
-    setCurrentChapter(e.target.value)
   }
 
   const updateCache = (cache, { data: { createBook } }) => {
@@ -95,9 +85,7 @@ const BooksForm = ({ addToCategories }) => {
                     title: bookTitle,
                     author: bookAuthor,
                     category: bookCategory,
-                    currentPage: parseInt(bookCurrentPage, 10),
                     pages: parseInt(bookPages, 10),
-                    currentChapter: parseInt(bookCurrentChapter, 10),
                     chapters: parseInt(bookChapters, 10)
                   }
                 }
@@ -108,9 +96,7 @@ const BooksForm = ({ addToCategories }) => {
               setTitle('')
               setAuthor('')
               setCategory('Novel')
-              setCurrentPage(1)
               setPages(1)
-              setCurrentChapter(1)
               setChapters(1)
             }}
           >
@@ -120,7 +106,7 @@ const BooksForm = ({ addToCategories }) => {
                 <Input
                   value={bookTitle}
                   onChange={handleTitle}
-                  placeholder="title"
+                  placeholder="Strides"
                 />
               </LabelContainer>
 
@@ -129,10 +115,9 @@ const BooksForm = ({ addToCategories }) => {
                 <Input
                   value={bookAuthor}
                   onChange={handleAuthor}
-                  placeholder="author"
+                  placeholder="Stephen Hill"
                 />
               </LabelContainer>
-
               <LabelContainer>
                 <SmallLabel>Category</SmallLabel>
                 <Select
@@ -149,32 +134,12 @@ const BooksForm = ({ addToCategories }) => {
 
             <SmallInputWrapper>
               <SmallLabelContainer>
-                <SmallLabel>Current Page</SmallLabel>
-                <NumberInput
-                  min="1"
-                  type="number"
-                  value={bookCurrentPage}
-                  onChange={handleCurrentPage}
-                />
-              </SmallLabelContainer>
-
-              <SmallLabelContainer>
                 <SmallLabel>Number of Pages</SmallLabel>
                 <NumberInput
                   min="1"
                   type="number"
                   value={bookPages}
                   onChange={handlePages}
-                />
-              </SmallLabelContainer>
-
-              <SmallLabelContainer>
-                <SmallLabel>Current Chapter</SmallLabel>
-                <NumberInput
-                  min="1"
-                  type="number"
-                  value={bookCurrentChapter}
-                  onChange={handleCurrentChapter}
                 />
               </SmallLabelContainer>
 
