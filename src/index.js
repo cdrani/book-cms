@@ -85,7 +85,7 @@ const stateLink = withClientState({
 
 const authLink = setContext(() => ({
   headers: {
-    'x-token': localStorage.getItem('token') || ''
+    token: localStorage.getItem('token') || ''
   }
 }))
 
