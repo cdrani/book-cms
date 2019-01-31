@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Query, compose, graphql } from 'react-apollo'
 
 import Book from '../components/Book'
@@ -55,7 +55,7 @@ const BooksList = ({ category, categories }) => {
         }
 
         return (
-          <Fragment>
+          <>
             {filteredBooks.map(book => (
               <Book key={book.id} book={book} pageInfo={pageInfo} />
             ))}
@@ -74,7 +74,7 @@ const BooksList = ({ category, categories }) => {
                 More
               </Button>
             )}
-          </Fragment>
+          </>
         )
       }}
     </Query>

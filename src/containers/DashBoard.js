@@ -14,13 +14,11 @@ export default class DashBoard extends Component {
   }
 
   render() {
-    const { buttonText, children } = this.props
+    const { children } = this.props
 
     return (
       <>
-        <button type="button" onClick={this.showModal}>
-          {buttonText}
-        </button>
+        <button onClick={this.showModal}>ADD BOOK</button>
         <Modal show={this.state.modal} handleClose={this.hideModal}>
           {children}
         </Modal>
