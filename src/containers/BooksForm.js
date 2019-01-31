@@ -19,7 +19,7 @@ import {
   Select
 } from '../constants'
 
-const BooksForm = ({ addToCategories }) => {
+const BooksForm = ({ addToCategories, handleClose }) => {
   const [bookTitle, setTitle] = useState('')
   const [bookAuthor, setAuthor] = useState('')
   const [bookCategory, setCategory] = useState('Novel')
@@ -98,6 +98,7 @@ const BooksForm = ({ addToCategories }) => {
               setCategory('Novel')
               setPages(1)
               setChapters(1)
+              handleClose()
             }}
           >
             <InputWrapper>

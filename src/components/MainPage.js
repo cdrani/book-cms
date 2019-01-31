@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react'
 import styled from 'styled-components'
 
+import DashBoard from '../containers/DashBoard'
 import BooksList from '../containers/BooksList'
 import BooksForm from '../containers/BooksForm'
 import FilterCategories from '../containers/FilterCategories'
@@ -28,8 +29,10 @@ const MainPage = () => (
       <Suspense fallback={<span>Loading</span>}>
         <FilterCategories />
       </Suspense>
+      <DashBoard buttonText="ADD BOOK">
+        <BooksForm />
+      </DashBoard>
       <BooksList />
-      <BooksForm />
     </MainContent>
   </MainContainer>
 )
