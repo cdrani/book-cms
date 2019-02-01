@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Modal = ({ handleClose, show, children }) => {
+const Modal = ({ bookId, handleClose, show, children }) => {
   const ModalContainer = styled.div`
     display: ${show ? 'block' : 'none'};
     position: fixed;

@@ -106,10 +106,26 @@ const DELETEBOOK = gql`
   }
 `
 
+const EDITBOOK = gql`
+  mutation EditBook($input: editBookInput!) {
+    editBook(input: $input) {
+      id
+      title
+      author
+      category
+      currentPage
+      pages
+      currentChapter
+      chapters
+    }
+  }
+`
+
 export {
   ADDTOFILTERABLECATEGORIES,
   CREATEBOOK,
   DELETEBOOK,
+  EDITBOOK,
   GETCATEGORYFILTER,
   GETFILTERABLECATEGORIES,
   GETLOGINSTATUS,

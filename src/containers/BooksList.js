@@ -57,7 +57,11 @@ const BooksList = ({ category, categories }) => {
         return (
           <>
             {filteredBooks.map(book => (
-              <Book key={book.id} book={book} pageInfo={pageInfo} />
+              <Book
+                key={book.id}
+                book={book}
+                pageInfo={pageInfo}
+              />
             ))}
             {pageInfo.hasNextPage && (
               <Button

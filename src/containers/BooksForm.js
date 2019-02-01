@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { Mutation, compose, graphql } from 'react-apollo'
+import { compose, graphql } from 'react-apollo'
 import { useMutation } from 'react-apollo-hooks'
 
 import {
   categories,
   ADDTOFILTERABLECATEGORIES,
   CREATEBOOK,
+  EDITBOOK,
   MYBOOKS,
   FullWidthForm,
   Input,
@@ -19,7 +20,13 @@ import {
   Select
 } from '../constants'
 
-const BooksForm = ({ addToCategories, handleClose }) => {
+const BooksForm = ({
+  book,
+  bookId,
+  addToCategories,
+  formType,
+  handleClose
+}) => {
   const [bookTitle, setTitle] = useState('')
   const [bookAuthor, setAuthor] = useState('')
   const [bookCategory, setCategory] = useState('Novel')
@@ -72,35 +79,47 @@ const BooksForm = ({ addToCategories, handleClose }) => {
     }
   })
 
-  const editBook = useMutation()
+  const editBookData = useMutation(EDITBOOK)
 
   return (
     <FullWidthForm
       onSubmit={async e => {
         e.preventDefault()
-        const {
-          data: {
-            createBook: { category }
+        const type = e.target.elements[5].textContent
+        let category
+
+        const variables = {
+          input: {
+            title: bookTitle,
+            author: bookAuthor,
+            category: bookCategory,
+            pages: parseInt(bookPages, 10),
+            chapters: parseInt(bookChapters, 10)
           }
-        } = await addBook({
-          variables: {
-            input: {
-              title: bookTitle,
-              author: bookAuthor,
-              category: bookCategory,
-              pages: parseInt(bookPages, 10),
-              chapters: parseInt(bookChapters, 10)
-            }
-          }
-        })
+        }
+
+        if (type === 'SAVE') {
+          const {
+            data: { createBook }
+          } = await addBook({ variables })
+
+          category = createBook.category
+          setTitle('')
+          setAuthor('')
+          setCategory('Novel')
+          setPages(1)
+          setChapters(1)
+        } else {
+          variables.input.id = bookId
+          const {
+            data: { editBook }
+          } = await editBookData({ variables })
+
+          category = editBook.category
+        }
 
         addToCategories({ variables: { cats: [category] } })
 
-        setTitle('')
-        setAuthor('')
-        setCategory('Novel')
-        setPages(1)
-        setChapters(1)
         handleClose()
       }}
     >
@@ -156,7 +175,7 @@ const BooksForm = ({ addToCategories, handleClose }) => {
             onChange={handleChapters}
           />
         </SmallLabelContainer>
-        <SmallButton type="submit">Save</SmallButton>
+        <SmallButton type="submit">{formType}</SmallButton>
       </SmallInputWrapper>
     </FullWidthForm>
   )

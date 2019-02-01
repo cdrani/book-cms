@@ -203,7 +203,7 @@ const Book = ({ book }) => {
       <LinksWrapper>
         <BorderedLink onClick={handleBookDelete}>Remove</BorderedLink>
         <DashBoard buttonText="Edit">
-          <BooksForm />
+          <BooksForm book={book} bookId={book.id} formType="Update" />
         </DashBoard>
       </LinksWrapper>
     </BooksWrapper>

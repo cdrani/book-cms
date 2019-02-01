@@ -30,7 +30,7 @@ const MainPage = () => (
         <FilterCategories />
       </Suspense>
       <DashBoard buttonText="ADD BOOK">
-        <BooksForm />
+        <BooksForm  formType="SAVE" />
       </DashBoard>
       <BooksList />
     </MainContent>
