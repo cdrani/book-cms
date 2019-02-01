@@ -1,6 +1,15 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
 
 import Modal from '../components/Modal'
+
+
+const Link = styled.a`
+  padding: 1% 2%;
+  cursor: pointer
+  text-decoration: none;
+  color: #4386bf;
+`
 
 export default class DashBoard extends Component {
   state = { modal: false }
@@ -14,11 +23,11 @@ export default class DashBoard extends Component {
   }
 
   render() {
-    const { children } = this.props
+    const { buttonText, children } = this.props
 
     return (
       <>
-        <button onClick={this.showModal}>ADD BOOK</button>
+        <Link onClick={this.showModal}>{buttonText}</Link>
         <Modal show={this.state.modal} handleClose={this.hideModal}>
           {children}
         </Modal>

@@ -7,7 +7,6 @@ import {
   CREATEBOOK,
   MYBOOKS,
   FullWidthForm,
-  H3,
   Input,
   InputWrapper,
   LabelContainer,
@@ -68,97 +67,94 @@ const BooksForm = ({ addToCategories, handleClose }) => {
   }
 
   return (
-    <div>
-      <H3>ADD NEW BOOK</H3>
-      <Mutation mutation={CREATEBOOK} update={updateCache}>
-        {(createBook, { data }) => (
-          <FullWidthForm
-            onSubmit={async e => {
-              e.preventDefault()
-              const {
-                data: {
-                  createBook: { category }
+    <Mutation mutation={CREATEBOOK} update={updateCache}>
+      {(createBook, { data }) => (
+        <FullWidthForm
+          onSubmit={async e => {
+            e.preventDefault()
+            const {
+              data: {
+                createBook: { category }
+              }
+            } = await createBook({
+              variables: {
+                input: {
+                  title: bookTitle,
+                  author: bookAuthor,
+                  category: bookCategory,
+                  pages: parseInt(bookPages, 10),
+                  chapters: parseInt(bookChapters, 10)
                 }
-              } = await createBook({
-                variables: {
-                  input: {
-                    title: bookTitle,
-                    author: bookAuthor,
-                    category: bookCategory,
-                    pages: parseInt(bookPages, 10),
-                    chapters: parseInt(bookChapters, 10)
-                  }
-                }
-              })
+              }
+            })
 
-              addToCategories({ variables: { cats: [category] } })
+            addToCategories({ variables: { cats: [category] } })
 
-              setTitle('')
-              setAuthor('')
-              setCategory('Novel')
-              setPages(1)
-              setChapters(1)
-              handleClose()
-            }}
-          >
-            <InputWrapper>
-              <LabelContainer>
-                <SmallLabel>Title</SmallLabel>
-                <Input
-                  value={bookTitle}
-                  onChange={handleTitle}
-                  placeholder="Strides"
-                />
-              </LabelContainer>
+            setTitle('')
+            setAuthor('')
+            setCategory('Novel')
+            setPages(1)
+            setChapters(1)
+            handleClose()
+          }}
+        >
+          <InputWrapper>
+            <LabelContainer>
+              <SmallLabel>Title</SmallLabel>
+              <Input
+                value={bookTitle}
+                onChange={handleTitle}
+                placeholder="Strides"
+              />
+            </LabelContainer>
 
-              <LabelContainer>
-                <SmallLabel>Author</SmallLabel>
-                <Input
-                  value={bookAuthor}
-                  onChange={handleAuthor}
-                  placeholder="Stephen Hill"
-                />
-              </LabelContainer>
-              <LabelContainer>
-                <SmallLabel>Category</SmallLabel>
-                <Select
-                  name="category"
-                  onChange={handleCategory}
-                  value={bookCategory}
-                >
-                  {categories.map(category => (
-                    <option key={category}>{category}</option>
-                  ))}
-                </Select>
-              </LabelContainer>
-            </InputWrapper>
+            <LabelContainer>
+              <SmallLabel>Author</SmallLabel>
+              <Input
+                value={bookAuthor}
+                onChange={handleAuthor}
+                placeholder="Stephen Hill"
+              />
+            </LabelContainer>
+            <LabelContainer>
+              <SmallLabel>Category</SmallLabel>
+              <Select
+                name="category"
+                onChange={handleCategory}
+                value={bookCategory}
+              >
+                {categories.map(category => (
+                  <option key={category}>{category}</option>
+                ))}
+              </Select>
+            </LabelContainer>
+          </InputWrapper>
 
-            <SmallInputWrapper>
-              <SmallLabelContainer>
-                <SmallLabel>Number of Pages</SmallLabel>
-                <NumberInput
-                  min="1"
-                  type="number"
-                  value={bookPages}
-                  onChange={handlePages}
-                />
-              </SmallLabelContainer>
+          <SmallInputWrapper>
+            <SmallLabelContainer>
+              <SmallLabel>Number of Pages</SmallLabel>
+              <NumberInput
+                min="1"
+                type="number"
+                value={bookPages}
+                onChange={handlePages}
+              />
+            </SmallLabelContainer>
 
-              <SmallLabelContainer>
-                <SmallLabel>Number of Chapters</SmallLabel>
-                <NumberInput
-                  min="1"
-                  type="number"
-                  value={bookChapters}
-                  onChange={handleChapters}
-                />
-              </SmallLabelContainer>
-              <SmallButton type="submit">Save</SmallButton>
-            </SmallInputWrapper>
-          </FullWidthForm>
-        )}
-      </Mutation>
-    </div>
+            <SmallLabelContainer>
+              <SmallLabel>Number of Chapters</SmallLabel>
+              <NumberInput
+                min="1"
+                type="number"
+                value={bookChapters}
+                onChange={handleChapters}
+              />
+            </SmallLabelContainer>
+            <SmallButton type="submit">Save</SmallButton>
+          </SmallInputWrapper>
+        </FullWidthForm>
+      )}
+    </Mutation>
   )
 }
 

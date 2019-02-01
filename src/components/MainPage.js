@@ -29,7 +29,7 @@ const MainPage = () => (
       <Suspense fallback={<span>Loading</span>}>
         <FilterCategories />
       </Suspense>
-      <DashBoard>
+      <DashBoard buttonText="ADD BOOK">
         <BooksForm />
       </DashBoard>
       <BooksList />

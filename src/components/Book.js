@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { useMutation } from 'react-apollo-hooks'
 
+import DashBoard from '../containers/DashBoard'
+import BooksForm from '../containers/BooksForm'
 import CompletionCircle from './CompletionCircle'
 import { MYBOOKS, DELETEBOOK } from '../constants'
 
@@ -200,7 +202,9 @@ const Book = ({ book }) => {
       </BookCompletionWrapper>
       <LinksWrapper>
         <BorderedLink onClick={handleBookDelete}>Remove</BorderedLink>
-        <Link>Edit</Link>
+        <DashBoard buttonText="Edit">
+          <BooksForm />
+        </DashBoard>
       </LinksWrapper>
     </BooksWrapper>
   )
