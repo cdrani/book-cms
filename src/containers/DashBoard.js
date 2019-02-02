@@ -15,21 +15,21 @@ const Link = styled.a`
 `
 
 const LinkButton = styled.button`
+  position: relative;
   display: flex;
-  position: absolute;
-  top: 0;
+  align-content: center;
+  justify-content: center;
   left: 100%;
-  width: 30px;
-  height: 30px;
-  //transform: transition(-10%, -50%);
+  width: 40px;
+  height: 40px;
+  z-index: 1;
+  padding: 0 20px;
+  transform: translate(-50%, 50%);
+  border: none;
+  color: white;
+  font-size: 1.25rem;
   background-color: pink;
   border-radius: 50%;
-`
-
-const Plus = styled.span`
-  // position: absolute;
-  // top: 1%;
-  // left: 3%;
 `
 
 export default class DashBoard extends Component {
@@ -44,18 +44,17 @@ export default class DashBoard extends Component {
   }
 
   conditionalButton = () => {
-    const { ButtonComponent } = this.props.children.props
-    return ButtonComponent ? (
-      <ButtonComponent onClick={this.showModal}>
-        <Plus>{this.props.buttonText}</Plus>
-      </ButtonComponent>
+    const { buttonText } = this.props
+    return buttonText === '+' ? (
+      <LinkButton onClick={this.showModal}>
+        <span>{this.props.buttonText}</span>
+      </LinkButton>
     ) : (
       <Link onClick={this.showModal}>{this.props.buttonText}</Link>
     )
   }
 
   render() {
-    console.log(this.props.children.props)
     return (
       <>
         {this.conditionalButton()}

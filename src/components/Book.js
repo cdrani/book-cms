@@ -145,23 +145,6 @@ const CurrentChapter = styled.p`
   font-size: 1.1rem;
 `
 
-const LinkButton = styled.button`
-  position: relative;
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  border: none;
-  color: white;
-  padding: 0 20px;
-  font-size: 1.25rem;
-  left: 100%;
-  width: 40px;
-  height: 40px;
-  z-index: 1;
-  transform: translate(-50%, 50%);
-  background-color: pink;
-  border-radius: 50%;
-`
 
 const Book = ({ book }) => {
   const percentComplete = book.currentPage / book.pages
@@ -203,7 +186,6 @@ const Book = ({ book }) => {
           book={book}
           bookId={book.id}
           formType="Update"
-          ButtonComponent={LinkButton}
         />
       </DashBoard>
       <BooksWrapper>
