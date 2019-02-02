@@ -14,7 +14,7 @@ import {
 import NavLink from './Link'
 
 const renderNavButton = (history, loggedState, updateLoginStatus) => {
-  const updateCache = (cache, _) => {
+  const updateCache = cache => {
     cache.writeQuery({
       query: GETLOGINSTATUS,
       data: { auth: { __typename: 'Auth', loggedIn: false } }

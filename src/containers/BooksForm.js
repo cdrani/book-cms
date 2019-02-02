@@ -36,10 +36,8 @@ const BooksForm = ({
   })
 
   const handleChange = key => e => {
-    console.log('before', bookDetail)
     const updatedValue = { [key]: e.target.value }
     setBookDetail(prevState => ({ ...prevState, ...updatedValue }))
-    console.log('after', bookDetail)
   }
 
   const addBook = useMutation(CREATEBOOK, {

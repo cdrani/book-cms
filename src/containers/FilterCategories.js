@@ -46,8 +46,12 @@ const FilterCategories = ({
     })
   }
 
+  const handleCategoryUpdate = e => {
+    setCategory({ variables: { category: e.target.value } })
+  }
+
   return (
-    <Select value={category} onChange={e => setCategory(e.target.value)}>
+    <Select value={category} onChange={handleCategoryUpdate}>
       {categories.map(category => (
         <option key={category}>{category}</option>
       ))}
