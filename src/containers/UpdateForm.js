@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useMutation } from 'react-apollo-hooks'
 
 import {
   FullWidthForm,
@@ -7,13 +8,13 @@ import {
   NumberInput,
   SmallButton,
   SmallLabel,
-  SmallLabelContainer
+  UPDATEBOOKMARK
 } from '../constants'
 
-const UpdateForm = ({ book, bookId }) => {
+const UpdateForm = ({ book, bookId, handleClose }) => {
   const [updateBookDetail, setUpdateBookDetail] = useState({
-    currentChapter: '',
-    currentPages: ''
+    currentChapter: book ? book.currentChapter : '',
+    currentPage: book ? book.currentPage : ''
   })
 
   const handleChange = key => e => {
@@ -21,8 +22,30 @@ const UpdateForm = ({ book, bookId }) => {
     setUpdateBookDetail(prevState => ({ ...prevState, ...updatedValue }))
   }
 
+  const updateBook = useMutation(UPDATEBOOKMARK)
+
   return (
-    <FullWidthForm>
+    <FullWidthForm
+      onSubmit={async e => {
+        e.preventDefault()
+
+        const { currentChapter, currentPage } = updateBookDetail
+
+        const variables = {
+          input: {
+            id: book.id,
+            currentChapter: parseInt(currentChapter, 10),
+            currentPage: parseInt(currentPage, 10)
+          }
+        }
+
+        await updateBook({
+          variables
+        })
+
+        handleClose()
+      }}
+    >
       <InputWrapper>
         <LabelContainer>
           <SmallLabel>Current Chapter</SmallLabel>
@@ -33,7 +56,7 @@ const UpdateForm = ({ book, bookId }) => {
               book ? book.currentChapter : updateBookDetail.currentChapter
             }
             onChange={handleChange('currentChapter')}
-            max={book.currentChapter}
+            max={book.chapters}
           />
         </LabelContainer>
         <LabelContainer>

@@ -117,6 +117,21 @@ const EDITBOOK = gql`
   }
 `
 
+const UPDATEBOOKMARK = gql`
+  mutation UpdateBookMark($input: updateBookMarkInput!) {
+    updateBookMark(input: $input) {
+      id
+      title
+      author
+      category
+      pages
+      chapters
+      currentChapter
+      currentPage
+    }
+  }
+`
+
 export {
   ADDTOFILTERABLECATEGORIES,
   CREATEBOOK,
@@ -129,5 +144,6 @@ export {
   SETCATEGORYFILTER,
   SIGNIN,
   SIGNUP,
+  UPDATEBOOKMARK,
   UPDATELOGINSTATUS
 }
