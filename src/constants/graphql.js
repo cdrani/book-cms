@@ -13,10 +13,8 @@ const CREATEBOOK = gql`
       title
       author
       category
-      currentPage
-      pages
-      currentChapter
       chapters
+      pages
     }
   }
 `
@@ -113,9 +111,7 @@ const EDITBOOK = gql`
       title
       author
       category
-      currentPage
       pages
-      currentChapter
       chapters
     }
   }

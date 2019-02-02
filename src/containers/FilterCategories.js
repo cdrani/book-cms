@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { useQuery } from 'react-apollo-hooks'
 import { graphql, compose } from 'react-apollo'
@@ -36,25 +36,18 @@ const FilterCategories = ({
   categories,
   addToCategories
 }) => {
-  const selectRef = useRef('All')
+  const bookQuery = useQuery(MYBOOKS, { variables: { input: { limit: 10 } } })
 
-  const {
-    data: {
-      myBooks: { edges: books }
-    }
-  } = useQuery(MYBOOKS, { variables: { input: { limit: 10 } } })
-
-  const handleCategoryUpdate = () => {
-    setCategory({
-      variables: { category: selectRef.current.value }
+  if (bookQuery.data.myBooks) {
+    const books = bookQuery.data.myBooks.edges
+    const bookCategories = extractCategories(books)
+    addToCategories({
+      variables: { cats: bookCategories }
     })
   }
 
-  const bookCategories = extractCategories(books)
-  addToCategories({ variables: { cats: bookCategories } })
-
   return (
-    <Select ref={selectRef} value={category} onChange={handleCategoryUpdate}>
+    <Select value={category} onChange={e => setCategory(e.target.value)}>
       {categories.map(category => (
         <option key={category}>{category}</option>
       ))}

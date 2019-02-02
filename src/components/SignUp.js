@@ -47,7 +47,7 @@ const SignUp = ({ history, updateLoginStatus }) => {
   return (
     <Mutation
       mutation={SIGNUP}
-      onCompleted={({ signIn: { token } }) => {
+      onCompleted={({ signUp: { token } }) => {
         openSesame(token)
         history.push('/books')
       }}

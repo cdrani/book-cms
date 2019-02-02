@@ -14,7 +14,7 @@ import {
   LabelContainer,
   NumberInput,
   SmallButton,
-  SmallInputWrapper,
+  // SmallInputWrapper,
   SmallLabel,
   SmallLabelContainer,
   Select
@@ -27,34 +27,26 @@ const BooksForm = ({
   formType,
   handleClose
 }) => {
-  const [bookTitle, setTitle] = useState('')
-  const [bookAuthor, setAuthor] = useState('')
-  const [bookCategory, setCategory] = useState('Novel')
-  const [bookPages, setPages] = useState(1)
-  const [bookChapters, setChapters] = useState(1)
+  const [bookDetail, setBookDetail] = useState({
+    title: book ? book.title : '',
+    author: book ? book.author : '',
+    category: book ? book.category : 'Novel',
+    pages: book ? book.pages : 125,
+    chapters: book? book.chapters : 13
+  })
 
-  const handleTitle = e => {
-    setTitle(e.target.value)
-  }
-
-  const handleAuthor = e => {
-    setAuthor(e.target.value)
-  }
-
-  const handleCategory = e => {
-    setCategory(e.target.value)
-  }
-
-  const handlePages = e => {
-    setPages(e.target.value)
-  }
-
-  const handleChapters = e => {
-    setChapters(e.target.value)
+  const handleChange = key => e => {
+    console.log('before', bookDetail)
+    const updatedValue = { [key]: e.target.value }
+    setBookDetail(prevState => ({ ...prevState, ...updatedValue }))
+    console.log('after', bookDetail)
   }
 
   const addBook = useMutation(CREATEBOOK, {
     update: (cache, { data: { createBook } }) => {
+      createBook.currentPage = 0
+      createBook.currentChapter = 1
+
       const {
         myBooks: { edges, pageInfo }
       } = cache.readQuery({
@@ -86,15 +78,16 @@ const BooksForm = ({
       onSubmit={async e => {
         e.preventDefault()
         const type = e.target.elements[5].textContent
-        let category
+        let categoryVal
 
+        const { title, author, category, pages, chapters } = bookDetail
         const variables = {
           input: {
-            title: bookTitle,
-            author: bookAuthor,
-            category: bookCategory,
-            pages: parseInt(bookPages, 10),
-            chapters: parseInt(bookChapters, 10)
+            title,
+            author,
+            category,
+            pages: parseInt(pages, 10),
+            chapters: parseInt(chapters, 10)
           }
         }
 
@@ -103,22 +96,19 @@ const BooksForm = ({
             data: { createBook }
           } = await addBook({ variables })
 
-          category = createBook.category
-          setTitle('')
-          setAuthor('')
-          setCategory('Novel')
-          setPages(1)
-          setChapters(1)
+          categoryVal = createBook.category
         } else {
           variables.input.id = bookId
+
           const {
             data: { editBook }
           } = await editBookData({ variables })
 
-          category = editBook.category
+          setBookDetail(prevState => ({...prevState, ...variables.input}))
+          categoryVal = editBook.category
         }
 
-        addToCategories({ variables: { cats: [category] } })
+        addToCategories({ variables: { cats: [categoryVal] } })
 
         handleClose()
       }}
@@ -127,8 +117,8 @@ const BooksForm = ({
         <LabelContainer>
           <SmallLabel>Title</SmallLabel>
           <Input
-            value={bookTitle}
-            onChange={handleTitle}
+            defaultValue={book ? book.title : bookDetail.title}
+            onChange={handleChange('title')}
             placeholder="Strides"
           />
         </LabelContainer>
@@ -136,33 +126,32 @@ const BooksForm = ({
         <LabelContainer>
           <SmallLabel>Author</SmallLabel>
           <Input
-            value={bookAuthor}
-            onChange={handleAuthor}
+            defaultValue={book ? book.author : bookDetail.author}
+            onChange={handleChange('author')}
             placeholder="Stephen Hill"
           />
         </LabelContainer>
+
         <LabelContainer>
           <SmallLabel>Category</SmallLabel>
           <Select
             name="category"
-            onChange={handleCategory}
-            value={bookCategory}
+            onChange={handleChange('category')}
+            defaultValue={book ? book.category : bookDetail.category}
           >
             {categories.map(category => (
               <option key={category}>{category}</option>
             ))}
           </Select>
         </LabelContainer>
-      </InputWrapper>
 
-      <SmallInputWrapper>
         <SmallLabelContainer>
           <SmallLabel>Number of Pages</SmallLabel>
           <NumberInput
             min="1"
             type="number"
-            value={bookPages}
-            onChange={handlePages}
+            defaultValue={book ? book.pages : bookDetail.pages}
+            onChange={handleChange('pages')}
           />
         </SmallLabelContainer>
 
@@ -171,12 +160,12 @@ const BooksForm = ({
           <NumberInput
             min="1"
             type="number"
-            value={bookChapters}
-            onChange={handleChapters}
+            defaultValue={book ? book.chapters : bookDetail.chapters}
+            onChange={handleChange('chapters')}
           />
         </SmallLabelContainer>
         <SmallButton type="submit">{formType}</SmallButton>
-      </SmallInputWrapper>
+      </InputWrapper>
     </FullWidthForm>
   )
 }
