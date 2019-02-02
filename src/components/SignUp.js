@@ -13,20 +13,15 @@ import {
 } from '../constants'
 
 const SignUp = ({ history, updateLoginStatus }) => {
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [signUpDetail, setSignUpDetail] = useState({
+    username: '',
+    email: '',
+    password: ''
+  })
 
-  const handleUsernameChange = e => {
-    setUsername(e.target.value)
-  }
-
-  const handleEmailChange = e => {
-    setEmail(e.target.value)
-  }
-
-  const handlePasswordChange = e => {
-    setPassword(e.target.value)
+  const handleChange = key => e => {
+    const updatedValue = { [key]: e.target.value }
+    setSignUpDetail(prevState => ({ ...prevState, ...updatedValue }))
   }
 
   const openSesame = token => {
@@ -56,9 +51,12 @@ const SignUp = ({ history, updateLoginStatus }) => {
         <RegistrationForm
           onSubmit={async e => {
             e.preventDefault()
+            const { email, username, password } = signUpDetail
             await signUp({
               variables: { input: { email, username, password } }
             })
+
+            setSignUpDetail({ email: '', username: '', password: '' })
           }}
         >
           <InputWrapper>
@@ -66,20 +64,24 @@ const SignUp = ({ history, updateLoginStatus }) => {
               <Label>Username</Label>
               <Input
                 type="text"
-                value={username}
-                onChange={handleUsernameChange}
+                value={signUpDetail.username}
+                onChange={handleChange('username')}
               />
             </LabelContainer>
             <LabelContainer>
               <Label>Email</Label>
-              <Input type="email" value={email} onChange={handleEmailChange} />
+              <Input
+                type="email"
+                value={signUpDetail.email}
+                onChange={handleChange('email')}
+              />
             </LabelContainer>
             <LabelContainer>
               <Label>Password</Label>
               <Input
                 type="password"
-                value={password}
-                onChange={handlePasswordChange}
+                value={signUpDetail.password}
+                onChange={handleChange('password')}
               />
             </LabelContainer>
             <LabelContainer>
