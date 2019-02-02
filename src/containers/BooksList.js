@@ -4,6 +4,8 @@ import { Query, compose, graphql } from 'react-apollo'
 import Book from '../components/Book'
 import { Button, MYBOOKS, GETCATEGORYFILTER } from '../constants'
 
+
+
 const filterBooksByCategoryFilter = (data, selectedCategory) =>
   selectedCategory === 'All'
     ? data

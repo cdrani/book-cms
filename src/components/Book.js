@@ -2,12 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 import { useMutation } from 'react-apollo-hooks'
 
-import DashBoard from '../containers/DashBoard'
 import BooksForm from '../containers/BooksForm'
 import CompletionCircle from './CompletionCircle'
+import DashBoard from '../containers/DashBoard'
+import UpdateForm from '../containers/UpdateForm'
 import { MYBOOKS, DELETEBOOK } from '../constants'
 
 const BooksWrapper = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -143,6 +145,24 @@ const CurrentChapter = styled.p`
   font-size: 1.1rem;
 `
 
+const LinkButton = styled.button`
+  position: relative;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  border: none;
+  color: white;
+  padding: 0 20px;
+  font-size: 1.25rem;
+  left: 100%;
+  width: 40px;
+  height: 40px;
+  z-index: 1;
+  transform: translate(-50%, 50%);
+  background-color: pink;
+  border-radius: 50%;
+`
+
 const Book = ({ book }) => {
   const percentComplete = book.currentPage / book.pages
 
@@ -177,36 +197,46 @@ const Book = ({ book }) => {
   })
 
   return (
-    <BooksWrapper>
-      <BookInfoWrapper>
-        <BookDetail>
-          <Genre>{book.category}</Genre>
-          <H3>{book.title}</H3>
-          <Author>{book.author}</Author>
-        </BookDetail>
-        <ChapterWrapper>
-          <ChapterHeader>CHAPTER</ChapterHeader>
-          <CurrentChapter>
-            {book.currentChapter} / {book.chapters}
-          </CurrentChapter>
-        </ChapterWrapper>
-      </BookInfoWrapper>
-      <BookCompletionWrapper>
-        <AmountCompletedWrapper>
-          <LargeCompletionText>
-            {Math.round(percentComplete * 100)}%
-          </LargeCompletionText>
-          <CompletionText>Completed</CompletionText>
-        </AmountCompletedWrapper>
-        <CompletionCircle percentage={percentComplete} />
-      </BookCompletionWrapper>
-      <LinksWrapper>
-        <BorderedLink onClick={handleBookDelete}>Remove</BorderedLink>
-        <DashBoard buttonText="Edit">
-          <BooksForm book={book} bookId={book.id} formType="Update" />
-        </DashBoard>
-      </LinksWrapper>
-    </BooksWrapper>
+    <>
+      <DashBoard buttonText="+">
+        <UpdateForm
+          book={book}
+          bookId={book.id}
+          formType="Update"
+          ButtonComponent={LinkButton}
+        />
+      </DashBoard>
+      <BooksWrapper>
+        <BookInfoWrapper>
+          <BookDetail>
+            <Genre>{book.category}</Genre>
+            <H3>{book.title}</H3>
+            <Author>{book.author}</Author>
+          </BookDetail>
+          <ChapterWrapper>
+            <ChapterHeader>CHAPTER</ChapterHeader>
+            <CurrentChapter>
+              {book.currentChapter} / {book.chapters}
+            </CurrentChapter>
+          </ChapterWrapper>
+        </BookInfoWrapper>
+        <BookCompletionWrapper>
+          <AmountCompletedWrapper>
+            <LargeCompletionText>
+              {Math.round(percentComplete * 100)}%
+            </LargeCompletionText>
+            <CompletionText>Completed</CompletionText>
+          </AmountCompletedWrapper>
+          <CompletionCircle percentage={percentComplete} />
+        </BookCompletionWrapper>
+        <LinksWrapper>
+          <BorderedLink onClick={handleBookDelete}>Remove</BorderedLink>
+          <DashBoard buttonText="Edit">
+            <BooksForm book={book} bookId={book.id} formType="Update" />
+          </DashBoard>
+        </LinksWrapper>
+      </BooksWrapper>
+    </>
   )
 }
 
