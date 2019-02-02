@@ -39,10 +39,9 @@ const stateLink = withClientState({
         return null
       },
       addToFilterables: (_, { cats }, { cache }) => {
-        const previous = cache.readQuery({ query: GETFILTERABLECATEGORIES })
         const {
           filterable: { categories }
-        } = previous
+        } = cache.readQuery({ query: GETFILTERABLECATEGORIES })
 
         const removeDups = [...new Set(categories.concat(cats))]
 
@@ -58,8 +57,10 @@ const stateLink = withClientState({
       },
       updateLoginStatus: (_, { loggedIn }, { cache }) => {
         const data = {
-          __typename: 'Auth',
-          loggedIn
+          auth: {
+            __typename: 'Auth',
+            loggedIn
+          }
         }
 
         cache.writeData({ data })

@@ -21,19 +21,17 @@ const renderNavButton = (history, loggedState, updateLoginStatus) => {
     })
   }
 
+  const handleClick = () => {
+    localStorage.removeItem('token')
+    updateLoginStatus({
+      variables: { loggedIn: false },
+      update: updateCache
+    })
+    history.push('/')
+  }
+
   return loggedState ? (
-    <Button
-      onClick={() => {
-        localStorage.removeItem('token')
-        updateLoginStatus({
-          variables: { loggedIn: false },
-          update: updateCache
-        })
-        history.push('/')
-      }}
-    >
-      SignOut
-    </Button>
+    <Button onClick={handleClick}>SignOut</Button>
   ) : (
     <div
       styles={{
