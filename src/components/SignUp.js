@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { compose, graphql, Mutation } from 'react-apollo'
+import { compose, graphql } from 'react-apollo'
+import { useMutation } from 'react-apollo-hooks'
 
 import {
   RegistrationForm,
@@ -28,69 +29,63 @@ const SignUp = ({ history, updateLoginStatus }) => {
     if (token) {
       localStorage.setItem('token', token)
       updateLoginStatus({
-        variables: { loggedIn: true },
-        update: (cache, _) => {
-          cache.writeData({
-            data: { auth: { __typename: 'Auth', loggedIn: true } }
-          })
-        }
+        variables: { loggedIn: true }
       })
       history.push('/books')
     }
   }
 
+  const signUpUser = useMutation(SIGNUP)
+
   return (
-    <Mutation
-      mutation={SIGNUP}
-      onCompleted={({ signUp: { token } }) => {
+    <RegistrationForm
+      onSubmit={async e => {
+        e.preventDefault()
+        const { email, username, password } = signUpDetail
+
+        const {
+          data: {
+            signUp: { token }
+          }
+        } = await signUpUser({
+          variables: { input: { email, username, password } }
+        })
+
         openSesame(token)
-        history.push('/books')
+
+        setSignUpDetail({ email: '', username: '', password: '' })
       }}
     >
-      {(signUp, { data }) => (
-        <RegistrationForm
-          onSubmit={async e => {
-            e.preventDefault()
-            const { email, username, password } = signUpDetail
-            await signUp({
-              variables: { input: { email, username, password } }
-            })
-
-            setSignUpDetail({ email: '', username: '', password: '' })
-          }}
-        >
-          <InputWrapper>
-            <LabelContainer>
-              <Label>Username</Label>
-              <Input
-                type="text"
-                value={signUpDetail.username}
-                onChange={handleChange('username')}
-              />
-            </LabelContainer>
-            <LabelContainer>
-              <Label>Email</Label>
-              <Input
-                type="email"
-                value={signUpDetail.email}
-                onChange={handleChange('email')}
-              />
-            </LabelContainer>
-            <LabelContainer>
-              <Label>Password</Label>
-              <Input
-                type="password"
-                value={signUpDetail.password}
-                onChange={handleChange('password')}
-              />
-            </LabelContainer>
-            <LabelContainer>
-              <SmallButton type="submit">SignUp</SmallButton>
-            </LabelContainer>
-          </InputWrapper>
-        </RegistrationForm>
-      )}
-    </Mutation>
+      <InputWrapper>
+        <LabelContainer>
+          <Label>Username</Label>
+          <Input
+            type="text"
+            value={signUpDetail.username}
+            onChange={handleChange('username')}
+          />
+        </LabelContainer>
+        <LabelContainer>
+          <Label>Email</Label>
+          <Input
+            type="email"
+            value={signUpDetail.email}
+            onChange={handleChange('email')}
+          />
+        </LabelContainer>
+        <LabelContainer>
+          <Label>Password</Label>
+          <Input
+            type="password"
+            value={signUpDetail.password}
+            onChange={handleChange('password')}
+          />
+        </LabelContainer>
+        <LabelContainer>
+          <SmallButton type="submit">SignUp</SmallButton>
+        </LabelContainer>
+      </InputWrapper>
+    </RegistrationForm>
   )
 }
 

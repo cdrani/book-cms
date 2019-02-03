@@ -1,6 +1,6 @@
 import React from 'react'
-import { compose, graphql } from 'react-apollo'
 import { withRouter } from 'react-router'
+import { useMutation, useQuery } from 'react-apollo-hooks'
 
 import {
   Anchor,
@@ -13,24 +13,22 @@ import {
 } from '../constants'
 import NavLink from './Link'
 
-const renderNavButton = (history, loggedState, updateLoginStatus) => {
-  const updateCache = cache => {
-    cache.writeQuery({
-      query: GETLOGINSTATUS,
-      data: { auth: { __typename: 'Auth', loggedIn: false } }
-    })
-  }
-
+const renderNavButton = ({ history }) => {
   const handleClick = () => {
     localStorage.removeItem('token')
-    updateLoginStatus({
-      variables: { loggedIn: false },
-      update: updateCache
+    useMutation(UPDATELOGINSTATUS, {
+      variables: { loggedIn: false }
     })
     history.push('/')
   }
 
-  return loggedState ? (
+  const {
+    data: {
+      auth: { loggedIn }
+    }
+  } = useQuery(GETLOGINSTATUS)
+
+  return loggedIn ? (
     <Button onClick={handleClick}>SignOut</Button>
   ) : (
     <div
@@ -57,6 +55,4 @@ const Header = ({ history, loggedState, updateLoginStatus }) => (
   </HeaderWrapper>
 )
 
-export default compose(
-  graphql(UPDATELOGINSTATUS, { name: 'updateLoginStatus' })
-)(withRouter(Header))
+export default withRouter(Header)

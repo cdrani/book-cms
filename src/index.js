@@ -15,7 +15,7 @@ import App from './components/App'
 import * as serviceWorker from './serviceWorker'
 
 import { GETFILTERABLECATEGORIES } from './constants'
-const BOOKCMS_API = 'https://bookcms-api.herokuapp.com/graphql'
+const BOOKCMS_API = 'https://bookcms-api.herokuapp.com'
 
 const cache = new InMemoryCache()
 

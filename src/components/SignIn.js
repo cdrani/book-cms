@@ -46,6 +46,7 @@ const SignIn = ({ history, updateLoginStatus }) => {
           variables: { input: { login, password } }
         })
         openSesame(token)
+        setSignInDetail({ login: '', password: '' })
       }}
     >
       <InputWrapper>
