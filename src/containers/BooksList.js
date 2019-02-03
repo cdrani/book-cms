@@ -43,7 +43,7 @@ const BooksList = ({ category, categories }) => {
     <Query query={MYBOOKS} variables={{ input: { limit: 5 } }}>
       {({ loading, data, fetchMore }) => {
         if (data === undefined || Object.keys(data).length === 0) {
-          return <p>Add a new book below</p>
+          return null
         }
 
         const {

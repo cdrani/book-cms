@@ -90,11 +90,11 @@ const BookCompletionWrapper = styled.div`
   justify-content: center;
   align-content: center;
   width: 30%;
-  //padding: 2.5% 2.2%;
   @media only screen and (max-device-width: 480px) {
     width: 100%;
     margin-top: 20px;
     margin: 10px auto;
+    width: 30%;
   }
 `
 

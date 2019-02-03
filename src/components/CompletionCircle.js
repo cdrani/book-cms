@@ -35,9 +35,9 @@ const CompletionCircle = ({ percentage, children, completionText }) => {
         strokeWidth={`${strokeWidth}px`}
       />
       <Text
-        x="30%"
+        x="50%"
         y="50%"
-        text-anchor="middle"
+        textAnchor="middle"
         dy="0.3em"
       >
         {completionText}%

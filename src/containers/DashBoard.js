@@ -8,6 +8,7 @@ const Link = styled.a`
   postion: relative;
   top: 0;
   left: 100%;
+  width: ${props => (props.buttonText === 'ADD BOOK' ? '150px' : '100px')};
   padding: 1% 2%;
   cursor: pointer
   text-decoration: none;
@@ -50,7 +51,14 @@ export default class DashBoard extends Component {
         <span>{this.props.buttonText}</span>
       </LinkButton>
     ) : (
-      <Link onClick={this.showModal}>{this.props.buttonText}</Link>
+      <Link
+        onClick={this.showModal}
+        style={{
+          width: `${this.props.buttonText === 'ADD BOOK' ? '120px' : '100px'}`
+        }}
+      >
+        {this.props.buttonText}
+      </Link>
     )
   }
 
