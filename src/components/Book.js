@@ -87,34 +87,15 @@ const Author = styled(Link)`
 
 const BookCompletionWrapper = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  align-content: center;
   width: 30%;
-  padding: 2.5% 2.2%;
+  //padding: 2.5% 2.2%;
   @media only screen and (max-device-width: 480px) {
     width: 100%;
     margin-top: 20px;
     margin: 10px auto;
   }
-`
-
-const AmountCompletedWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-content: space-between;
-  margin-right: 30px;
-`
-
-const CompletionText = styled.p`
-  margin: 0;
-  padding: 0;
-  opacity: 0.5;
-  color: #121212;
-`
-
-const LargeCompletionText = styled(CompletionText)`
-  font-size: 2rem;
-  margin: 0;
-  margin-top: 10px;
 `
 
 const ChapterWrapper = styled.div`
@@ -144,7 +125,6 @@ const CurrentChapter = styled.p`
   padding: 0;
   font-size: 1.1rem;
 `
-
 
 const Book = ({ book }) => {
   const percentComplete = book.currentPage / book.pages
@@ -182,11 +162,7 @@ const Book = ({ book }) => {
   return (
     <>
       <DashBoard buttonText="+">
-        <UpdateForm
-          book={book}
-          bookId={book.id}
-          formType="Update"
-        />
+        <UpdateForm book={book} bookId={book.id} formType="Update" />
       </DashBoard>
       <BooksWrapper>
         <BookInfoWrapper>
@@ -203,13 +179,7 @@ const Book = ({ book }) => {
           </ChapterWrapper>
         </BookInfoWrapper>
         <BookCompletionWrapper>
-          <AmountCompletedWrapper>
-            <LargeCompletionText>
-              {Math.round(percentComplete * 100)}%
-            </LargeCompletionText>
-            <CompletionText>Completed</CompletionText>
-          </AmountCompletedWrapper>
-          <CompletionCircle percentage={percentComplete} />
+          <CompletionCircle percentage={percentComplete} completionText={`${Math.round(percentComplete * 100)}`} />
         </BookCompletionWrapper>
         <LinksWrapper>
           <BorderedLink onClick={handleBookDelete}>Remove</BorderedLink>

@@ -12,9 +12,15 @@ const CircleCompletion = styled(Circle)`
   stroke-linejoin: round;
 `
 
-const CompletionCircle = ({ percentage }) => {
-  const sqSize = 80
-  const strokeWidth = 6 
+const Text = styled.text`
+  opacity: 0.5;
+  color: #121212;
+  font-size: 2rem;
+`
+
+const CompletionCircle = ({ percentage, children, completionText }) => {
+  const sqSize = 120
+  const strokeWidth = 8
   const radius = (sqSize - strokeWidth) / 2
   const viewBox = `0 0 ${sqSize} ${sqSize}`
   const dashArray = radius * Math.PI * 2
@@ -28,6 +34,14 @@ const CompletionCircle = ({ percentage }) => {
         r={radius}
         strokeWidth={`${strokeWidth}px`}
       />
+      <Text
+        x="30%"
+        y="50%"
+        text-anchor="middle"
+        dy="0.3em"
+      >
+        {completionText}%
+      </Text>
       <CircleCompletion
         cx={sqSize / 2}
         cy={sqSize / 2}
