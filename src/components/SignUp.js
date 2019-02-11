@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { compose, graphql } from 'react-apollo'
 import { useMutation } from 'react-apollo-hooks'
+import history from '../history'
 
 import {
   RegistrationForm,
@@ -13,7 +14,7 @@ import {
   UPDATELOGINSTATUS
 } from '../constants'
 
-const SignUp = ({ history, updateLoginStatus }) => {
+const SignUp = ({ updateLoginStatus }) => {
   const [signUpDetail, setSignUpDetail] = useState({
     username: '',
     email: '',
@@ -25,9 +26,10 @@ const SignUp = ({ history, updateLoginStatus }) => {
     setSignUpDetail(prevState => ({ ...prevState, ...updatedValue }))
   }
 
-  const openSesame = token => {
-    if (token) {
+  const openSesame = (token, refreshToken) => {
+    if (token && refreshToken) {
       localStorage.setItem('token', token)
+      localStorage.setItem('refreshToken', refreshToken)
       updateLoginStatus({
         variables: { loggedIn: true }
       })
@@ -45,13 +47,13 @@ const SignUp = ({ history, updateLoginStatus }) => {
 
         const {
           data: {
-            signUp: { token }
+            signUp: { token, refreshToken }
           }
         } = await signUpUser({
           variables: { input: { email, username, password } }
         })
 
-        openSesame(token)
+        openSesame(token, refreshToken)
 
         setSignUpDetail({ email: '', username: '', password: '' })
       }}
