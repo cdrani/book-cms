@@ -36,10 +36,13 @@ const FilterCategories = ({
   categories,
   addToCategories
 }) => {
-  const bookQuery = useQuery(MYBOOKS, { variables: { input: { limit: 10 } } })
+  const {
+    data: {
+      myBooks: { edges: books }
+    }
+  } = useQuery(MYBOOKS, { variables: { input: { limit: 10 } } })
 
-  if (bookQuery.data.myBooks) {
-    const books = bookQuery.data.myBooks.edges
+  if (books && books.length) {
     const bookCategories = extractCategories(books)
     addToCategories({
       variables: { cats: bookCategories }

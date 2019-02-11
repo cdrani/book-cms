@@ -48,11 +48,11 @@ const BooksList = ({ category, categories }) => {
           myBooks: { edges: books, pageInfo }
         } = data
 
-        const filteredBooks = filterBooksByCategoryFilter(books, category)
-
-        if (!Boolean(books.length)) {
+        if (!books) {
           return <p>Add a new book below</p>
         }
+
+        const filteredBooks = filterBooksByCategoryFilter(books, category)
 
         return (
           <>
