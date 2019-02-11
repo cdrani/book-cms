@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { compose, graphql } from 'react-apollo'
 import { useMutation } from 'react-apollo-hooks'
-import history from '../history'
 
 import {
   RegistrationForm,
@@ -14,7 +13,7 @@ import {
   UPDATELOGINSTATUS
 } from '../constants'
 
-const SignUp = ({ updateLoginStatus }) => {
+const SignUp = ({ history, updateLoginStatus }) => {
   const [signUpDetail, setSignUpDetail] = useState({
     username: '',
     email: '',
