@@ -14,7 +14,6 @@ import {
   LabelContainer,
   NumberInput,
   SmallButton,
-  // SmallInputWrapper,
   SmallLabel,
   SmallLabelContainer,
   Select

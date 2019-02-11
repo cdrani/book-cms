@@ -4,8 +4,6 @@ import { Query, compose, graphql } from 'react-apollo'
 import Book from '../components/Book'
 import { Button, MYBOOKS, GETCATEGORYFILTER } from '../constants'
 
-
-
 const filterBooksByCategoryFilter = (data, selectedCategory) =>
   selectedCategory === 'All'
     ? data
@@ -58,13 +56,10 @@ const BooksList = ({ category, categories }) => {
 
         return (
           <>
-            {filteredBooks.map(book => (
-              <Book
-                key={book.id}
-                book={book}
-                pageInfo={pageInfo}
-              />
-            ))}
+            {filteredBooks &&
+              filteredBooks.map(book => (
+                <Book key={book.id} book={book} pageInfo={pageInfo} />
+              ))}
             {pageInfo.hasNextPage && (
               <Button
                 type="button"

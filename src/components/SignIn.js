@@ -21,9 +21,10 @@ const SignIn = ({ history, updateLoginStatus }) => {
     setSignInDetail(prevState => ({ ...prevState, ...updatedValue }))
   }
 
-  const openSesame = token => {
-    if (token) {
+  const openSesame = (token, refreshToken) => {
+    if (token && refreshToken) {
       localStorage.setItem('token', token)
+      localStorage.setItem('refreshToken', refreshToken)
       updateLoginStatus({
         variables: { loggedIn: true }
       })
@@ -40,12 +41,12 @@ const SignIn = ({ history, updateLoginStatus }) => {
         const { login, password } = signInDetail
         const {
           data: {
-            signIn: { token }
+            signIn: { token, refreshToken }
           }
         } = await signInUser({
           variables: { input: { login, password } }
         })
-        openSesame(token)
+        openSesame(token, refreshToken)
         setSignInDetail({ login: '', password: '' })
       }}
     >

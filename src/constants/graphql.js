@@ -86,6 +86,7 @@ const SIGNIN = gql`
   mutation SignIn($input: signInInput!) {
     signIn(input: $input) {
       token
+      refreshToken
     }
   }
 `
@@ -94,6 +95,7 @@ const SIGNUP = gql`
   mutation SignUp($input: signUpInput!) {
     signUp(input: $input) {
       token
+      refreshToken
     }
   }
 `
