@@ -5,52 +5,66 @@ import {
   Switch,
   BrowserRouter as Router
 } from 'react-router-dom'
-import { compose, graphql } from 'react-apollo'
+import decode from 'jwt-decode'
 
-import { GETLOGINSTATUS } from '../constants'
 import MainPage from './MainPage'
 import Header from './Header'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
 
-const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => {
+const checkAuth = () => {
+  const token = localStorage.getItem('token')
+  const refreshToken = localStorage.getItem('refreshToken')
+
+  if (!token || !refreshToken) {
+    return false
+  }
+
+  try {
+    const currentTime = Date.now().valueOf() / 1000
+    const tokenExpiration = decode(refreshToken).exp
+
+    if (currentTime > tokenExpiration) {
+      return false
+    }
+  } catch (e) {
+    return false
+  }
+
+  return true
+}
+
+const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
       render={props =>
-        loggedIn ? (
+        checkAuth() ? (
           <Component {...props} />
         ) : (
-          <Redirect
-            to={{ pathname: '/signin', state: { from: props.location } }}
-          />
+          <Redirect to={{ pathname: '/signin' }} />
         )
       }
     />
   )
 }
 
-const App = ({ loggedIn }) => {
+const App = () => {
   return (
     <Router>
       <>
-        <Route path="/" component={Header} />
+        <Route
+          path="/"
+          render={props => <Header {...props} isAuthed={checkAuth()} />}
+        />
         <Switch>
-          <Route path="/signup" component={SignUp} />
-          <Route path="/signin" component={SignIn} />
-          <PrivateRoute loggedIn path="/books" component={MainPage} />
+          <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/signin" component={SignIn} />
+          <PrivateRoute exact path="/books" component={MainPage} />
         </Switch>
       </>
     </Router>
   )
 }
 
-export default compose(
-  graphql(GETLOGINSTATUS, {
-    props: ({
-      data: {
-        auth: { loggedIn }
-      }
-    }) => ({ loggedIn })
-  })
-)(App)
+export default App

@@ -1,27 +1,24 @@
 import React from 'react'
-import { withRouter } from 'react-router'
-import { useMutation, useQuery } from 'react-apollo-hooks'
+import { useMutation } from 'react-apollo-hooks'
 
 import {
   Anchor,
-  Button,
   AnchorWrapper,
   HeaderWrapper,
   Nav,
   UPDATELOGINSTATUS,
-  GETLOGINSTATUS
 } from '../constants'
 import NavLink from './Link'
 
-const renderNavButton = (history, authorized, updateLoginStatus) => {
-  const handleClick = e => {
-    e.preventDefault()
+const renderNavButton = (isAuthed, updateLoginStatus) => {
+  const handleClick = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('refreshToken')
     updateLoginStatus({ variables: { loggedIn: false } })
-    history.push('/signin')
   }
 
-  if (authorized) {
-    return <Button onClick={handleClick}>SignOut</Button>
+  if (isAuthed) {
+    return <NavLink to="/" onClick={handleClick}>SignOut</NavLink>
   } else {
     return (
       <div
@@ -38,25 +35,18 @@ const renderNavButton = (history, authorized, updateLoginStatus) => {
   }
 }
 
-const Header = ({ history }) => {
-  const {
-    data: {
-      auth: { loggedIn }
-    }
-  } = useQuery(GETLOGINSTATUS)
-
+const Header = ({ isAuthed }) => {
   const updateLoginStatus = useMutation(UPDATELOGINSTATUS)
-
   return (
     <HeaderWrapper>
       <Nav>
         <AnchorWrapper>
           <Anchor>BookCMS</Anchor>
-          {renderNavButton(history, loggedIn, updateLoginStatus)}
+          {renderNavButton(isAuthed, updateLoginStatus)}
         </AnchorWrapper>
       </Nav>
     </HeaderWrapper>
   )
 }
 
-export default withRouter(Header)
+export default Header
