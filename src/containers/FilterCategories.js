@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useQuery } from 'react-apollo-hooks'
-import { graphql, compose } from 'react-apollo'
+import { useQuery, useMutation } from 'react-apollo-hooks'
 
 import {
   ADDTOFILTERABLECATEGORIES,
@@ -30,17 +29,28 @@ const extractCategories = books => {
   return [...new Set(bookCategories)]
 }
 
-const FilterCategories = ({
-  filter: { category },
-  setCategory,
-  categories,
-  addToCategories
-}) => {
+const FilterCategories = () => {
   const {
     data: {
       myBooks: { edges: books }
     }
   } = useQuery(MYBOOKS, { variables: { input: { limit: 10 } } })
+
+  const {
+    data: {
+      filterable: { categories }
+    }
+  } = useQuery(GETFILTERABLECATEGORIES)
+
+  const {
+    data: {
+      filter: { category }
+    }
+  } = useQuery(GETCATEGORYFILTER)
+
+  const setCategory = useMutation(SETCATEGORYFILTER)
+
+  const addToCategories = useMutation(ADDTOFILTERABLECATEGORIES)
 
   if (books && books.length) {
     const bookCategories = extractCategories(books)
@@ -62,17 +72,4 @@ const FilterCategories = ({
   )
 }
 
-export default compose(
-  graphql(SETCATEGORYFILTER, { name: 'setCategory' }),
-  graphql(ADDTOFILTERABLECATEGORIES, { name: 'addToCategories' }),
-  graphql(GETCATEGORYFILTER, {
-    props: ({ data: { filter } }) => ({ filter })
-  }),
-  graphql(GETFILTERABLECATEGORIES, {
-    props: ({
-      data: {
-        filterable: { categories }
-      }
-    }) => ({ categories })
-  })
-)(FilterCategories)
+export default FilterCategories

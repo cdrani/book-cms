@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { compose, graphql } from 'react-apollo'
+import { withApollo, compose } from 'react-apollo'
 import { useMutation } from 'react-apollo-hooks'
+import { withRouter } from 'react-router-dom'
 
 import {
   RegistrationForm,
@@ -10,10 +11,9 @@ import {
   LabelContainer,
   SmallButton,
   SIGNUP,
-  UPDATELOGINSTATUS
 } from '../constants'
 
-const SignUp = ({ history, updateLoginStatus }) => {
+const SignUp = ({ client, history }) => {
   const [signUpDetail, setSignUpDetail] = useState({
     username: '',
     email: '',
@@ -29,9 +29,7 @@ const SignUp = ({ history, updateLoginStatus }) => {
     if (token && refreshToken) {
       localStorage.setItem('token', token)
       localStorage.setItem('refreshToken', refreshToken)
-      updateLoginStatus({
-        variables: { loggedIn: true }
-      })
+      client.cache.reset()
       history.push('/books')
     }
   }
@@ -91,5 +89,6 @@ const SignUp = ({ history, updateLoginStatus }) => {
 }
 
 export default compose(
-  graphql(UPDATELOGINSTATUS, { name: 'updateLoginStatus' })
+  withRouter,
+  withApollo
 )(SignUp)

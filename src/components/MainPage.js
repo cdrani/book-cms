@@ -30,9 +30,11 @@ const MainPage = () => (
         <FilterCategories />
       </Suspense>
       <DashBoard buttonText="ADD BOOK">
-        <BooksForm  formType="SAVE" />
+        <BooksForm formType="SAVE" />
       </DashBoard>
-      <BooksList />
+      <Suspense fallback={<span>Loading books</span>}>
+        <BooksList />
+      </Suspense>
     </MainContent>
   </MainContainer>
 )

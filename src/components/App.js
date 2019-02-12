@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-  Redirect,
-  Route,
-  Switch,
-  BrowserRouter as Router
-} from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
 import decode from 'jwt-decode'
 
 import MainPage from './MainPage'
@@ -49,22 +44,18 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   )
 }
 
-const App = () => {
-  return (
-    <Router>
-      <>
-        <Route
-          path="/"
-          render={props => <Header {...props} isAuthed={checkAuth()} />}
-        />
-        <Switch>
-          <Route exact path="/signup" component={SignUp} />
-          <Route exact path="/signin" component={SignIn} />
-          <PrivateRoute exact path="/books" component={MainPage} />
-        </Switch>
-      </>
-    </Router>
-  )
-}
+const App = () => (
+  <>
+    <Route
+      path="/"
+      render={props => <Header {...props} isAuthed={checkAuth()} />}
+    />
+    <Switch>
+      <Route exact path="/signup" component={SignUp} />
+      <Route exact path="/signin" component={SignIn} />
+      <PrivateRoute exact path="/books" component={MainPage} />
+    </Switch>
+  </>
+)
 
 export default App

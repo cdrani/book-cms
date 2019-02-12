@@ -1,5 +1,6 @@
 import React from 'react'
-import { Query, compose, graphql } from 'react-apollo'
+import { Query } from 'react-apollo'
+import { useQuery } from 'react-apollo-hooks'
 
 import Book from '../components/Book'
 import { Button, MYBOOKS, GETCATEGORYFILTER } from '../constants'
@@ -36,7 +37,12 @@ const updateQuery = (
   }
 }
 
-const BooksList = ({ category, categories }) => {
+const BooksList = () => {
+  const {
+    data: {
+      filter: { category }
+    }
+  } = useQuery(GETCATEGORYFILTER)
   return (
     <Query query={MYBOOKS} variables={{ input: { limit: 5 } }}>
       {({ loading, data, fetchMore }) => {
@@ -82,12 +88,4 @@ const BooksList = ({ category, categories }) => {
   )
 }
 
-export default compose(
-  graphql(GETCATEGORYFILTER, {
-    props: ({
-      data: {
-        filter: { category }
-      }
-    }) => ({ category })
-  })
-)(BooksList)
+export default BooksList
