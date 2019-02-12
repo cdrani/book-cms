@@ -1,24 +1,20 @@
 import React from 'react'
-import { useMutation } from 'react-apollo-hooks'
+import { compose, withApollo } from 'react-apollo'
+import { withRouter } from 'react-router-dom'
 
-import {
-  Anchor,
-  AnchorWrapper,
-  HeaderWrapper,
-  Nav,
-  UPDATELOGINSTATUS,
-} from '../constants'
+import { Anchor, AnchorWrapper, HeaderWrapper, Nav, Button } from '../constants'
 import NavLink from './Link'
 
-const renderNavButton = (isAuthed, updateLoginStatus) => {
+const renderNavButton = (history, client, isAuthed) => {
   const handleClick = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('refreshToken')
-    updateLoginStatus({ variables: { loggedIn: false } })
+    client.cache.reset()
+    history.push('/signin')
   }
 
   if (isAuthed) {
-    return <NavLink to="/" onClick={handleClick}>SignOut</NavLink>
+    return <Button onClick={handleClick}>SignOut</Button>
   } else {
     return (
       <div
@@ -35,18 +31,20 @@ const renderNavButton = (isAuthed, updateLoginStatus) => {
   }
 }
 
-const Header = ({ isAuthed }) => {
-  const updateLoginStatus = useMutation(UPDATELOGINSTATUS)
+const Header = ({ history, client, isAuthed }) => {
   return (
     <HeaderWrapper>
       <Nav>
         <AnchorWrapper>
           <Anchor>BookCMS</Anchor>
-          {renderNavButton(isAuthed, updateLoginStatus)}
+          {renderNavButton(history, client, isAuthed)}
         </AnchorWrapper>
       </Nav>
     </HeaderWrapper>
   )
 }
 
-export default Header
+export default compose(
+  withApollo,
+  withRouter
+)(Header)

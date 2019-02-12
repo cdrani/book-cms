@@ -31,7 +31,7 @@ const BooksForm = ({
     author: book ? book.author : '',
     category: book ? book.category : 'Novel',
     pages: book ? book.pages : 125,
-    chapters: book? book.chapters : 13
+    chapters: book ? book.chapters : 13
   })
 
   const handleChange = key => e => {
@@ -40,13 +40,13 @@ const BooksForm = ({
   }
 
   const addBook = useMutation(CREATEBOOK, {
-    update: (cache, { data: { createBook } }) => {
-      createBook.currentPage = 0
+    update: async (cache, { data: { createBook } }) => {
+      createBook.currentPage = 1
       createBook.currentChapter = 1
 
       const {
         myBooks: { edges, pageInfo }
-      } = cache.readQuery({
+      } = await cache.readQuery({
         query: MYBOOKS,
         variables: { input: { limit: 5 } }
       })
@@ -57,11 +57,14 @@ const BooksForm = ({
         data: {
           myBooks: {
             __typename: 'BookConnection',
-            edges: [
-              Object.assign(createBook, { __typename: 'Book' }),
-              ...edges
-            ],
-            pageInfo
+            edges: edges
+              ? [Object.assign(createBook, { __typename: 'Book' }), ...edges]
+              : [Object.assign(createBook, { __typename: 'Book' })],
+            pageInfo: pageInfo || {
+              __typename: 'PageInfo',
+              endCursor: '',
+              hasNextPage: false
+            }
           }
         }
       })
@@ -101,7 +104,7 @@ const BooksForm = ({
             data: { editBook }
           } = await editBookData({ variables })
 
-          setBookDetail(prevState => ({...prevState, ...variables.input}))
+          setBookDetail(prevState => ({ ...prevState, ...variables.input }))
           categoryVal = editBook.category
         }
 

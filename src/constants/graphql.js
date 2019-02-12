@@ -53,7 +53,6 @@ const MYBOOKS = gql`
   query GetMyBooks($input: booksInput!) {
     myBooks(input: $input) {
       edges {
-        __typename
         id
         title
         author
@@ -63,7 +62,6 @@ const MYBOOKS = gql`
         currentChapter
         chapters
       }
-
       pageInfo {
         endCursor
         hasNextPage

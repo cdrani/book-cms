@@ -20,9 +20,7 @@ import * as serviceWorker from './serviceWorker'
 import { GETFILTERABLECATEGORIES } from './constants'
 const BOOKCMS_API = 'https://bookcms-api.herokuapp.com'
 
-const cache = new InMemoryCache({
-  dataIdFromObject: e => `${e.__typename}_%${e.id}` || null
-})
+const cache = new InMemoryCache()
 
 const httpLink = new HttpLink({
   uri: BOOKCMS_API
@@ -59,17 +57,6 @@ const stateLink = withClientState({
 
         cache.writeData({ data })
         return null
-      },
-      updateLoginStatus: (_, { loggedIn }, { cache }) => {
-        const data = {
-          auth: {
-            __typename: 'Auth',
-            loggedIn
-          }
-        }
-
-        cache.writeData({ data })
-        return null
       }
     }
   },
@@ -81,10 +68,6 @@ const stateLink = withClientState({
     filterable: {
       __typename: 'Filterable',
       categories: ['All']
-    },
-    auth: {
-      __typename: 'Auth',
-      loggedIn: false
     }
   }
 })
@@ -116,7 +99,9 @@ const authLink = setContext((req, prev) => {
 const afterwareLink = new ApolloLink((operation, forward) =>
   forward(operation).map(response => {
     const context = operation.getContext()
-    const { response: { headers } } = context
+    const {
+      response: { headers }
+    } = context
 
     if (headers) {
       const token = headers.get('token')
@@ -172,13 +157,13 @@ const client = new ApolloClient({
 })
 
 ReactDOM.render(
-  <Router>
-    <ApolloProvider client={client}>
-      <ApolloHooksProvider client={client}>
+  <ApolloProvider client={client}>
+    <ApolloHooksProvider client={client}>
+      <Router>
         <App />
-      </ApolloHooksProvider>
-    </ApolloProvider>
-  </Router>,
+      </Router>
+    </ApolloHooksProvider>
+  </ApolloProvider>,
   document.getElementById('root')
 )
 
