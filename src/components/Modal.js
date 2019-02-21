@@ -38,6 +38,7 @@ const Modal = ({ bookId, handleClose, show, children }) => {
     font-weight: bold;
     font-size: 1.5rem;
     border: none;
+    cursor: pointer;
   `
 
   const childrenWithProps = React.Children.map(children, child =>
@@ -45,7 +46,7 @@ const Modal = ({ bookId, handleClose, show, children }) => {
   )
 
   return (
-    <ModalContainer onClick={handleClose}>
+    <ModalContainer>
       <ButtonContainer>
         <CloseButton onClick={handleClose}>X</CloseButton>
       </ButtonContainer>
