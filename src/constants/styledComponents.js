@@ -28,8 +28,8 @@ const AnchorWrapper = styled.div`
 
 const Button = styled.button`
   align-self: flex-end;
-  height: 40px;
-  width: 15%;
+  height: 50px;
+  width: 120px;
   font-size: 1.25em;
   cursor: pointer;
   color: #fff;
