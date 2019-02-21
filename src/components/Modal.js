@@ -45,7 +45,7 @@ const Modal = ({ bookId, handleClose, show, children }) => {
   )
 
   return (
-    <ModalContainer>
+    <ModalContainer onClick={handleClose}>
       <ButtonContainer>
         <CloseButton onClick={handleClose}>X</CloseButton>
       </ButtonContainer>
