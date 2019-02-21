@@ -21,6 +21,9 @@ const Modal = ({ bookId, handleClose, show, children }) => {
     left: 50%;
     transform: translate(-50%, -50%);
     background: #fff;
+    @media only screen and (min-device-width: 768px) {
+      width: 380px;
+    }
   `
 
   const ButtonContainer = styled.div`

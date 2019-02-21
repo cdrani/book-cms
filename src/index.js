@@ -122,11 +122,10 @@ const afterwareLink = new ApolloLink((operation, forward) =>
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors && graphQLErrors.filter(e => e).length > 0) {
     graphQLErrors.map(({ message = '', status = 200 }) => {
-      if ('UNAUTHORIZED' === message || status === 401) {
+      if ('Not authenticated as user.' === message || status === 401) {
         if (
           history &&
-          history.location &&
-          history.location.pathname !== '/signin'
+          history.location & (history.location.pathname !== '/signin')
         ) {
           history.push('/signin')
         }
